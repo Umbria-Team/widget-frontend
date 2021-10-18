@@ -16,13 +16,7 @@ function tradeMeaningfullyDiffers(
   ...args: [V2Trade<Currency, Currency, TradeType>, V2Trade<Currency, Currency, TradeType>]
 ): boolean {
   const [tradeA, tradeB] = args
-  return (
-    tradeA.tradeType !== tradeB.tradeType ||
-    !tradeA.inputAmount.currency.equals(tradeB.inputAmount.currency) ||
-    !tradeA.inputAmount.equalTo(tradeB.inputAmount) ||
-    !tradeA.outputAmount.currency.equals(tradeB.outputAmount.currency) ||
-    !tradeA.outputAmount.equalTo(tradeB.outputAmount)
-  )
+  return false
 }
 
 export default function ConfirmSwapModal({
@@ -102,7 +96,7 @@ export default function ConfirmSwapModal({
         <TransactionErrorContent onDismiss={onDismiss} message={swapErrorMessage} />
       ) : (
         <ConfirmationModalContent
-          title="Confirm Swap"
+          title="Confirm Bridge"
           onDismiss={onDismiss}
           topContent={modalHeader}
           bottomContent={modalBottom}

@@ -173,6 +173,12 @@ export const SUPPORTED_NETWORKS: {
   },
 }
 
+var destinationModalVisible = false
+
+function showDestinationModal(visible: boolean) {
+  destinationModalVisible = !destinationModalVisible
+}
+
 export default function NetworkModal(): JSX.Element | null {
   const { chainId, library, account } = useActiveWeb3React()
   const networkModalOpen = useModalOpen(ApplicationModal.NETWORK)
@@ -182,28 +188,13 @@ export default function NetworkModal(): JSX.Element | null {
 
   return (
     <Modal isOpen={networkModalOpen} onDismiss={toggleNetworkModal} maxWidth={672}>
-      <ModalHeader onClose={toggleNetworkModal} title="Select a Network" />
       <div className="mb-6 text-lg text-primary">
-        You are currently browsing <span className="font-bold text-pink">SUSHI</span>
-        <br /> on the <span className="font-bold text-blue">{NETWORK_LABEL[chainId]}</span> network
+        You are currently connected to the <span className="font-bold text-blue">{NETWORK_LABEL[chainId]}</span> network
+        and are bridging to the <span className="font-bold text-blue">{NETWORK_LABEL[cookie.get('otherChainId')]}</span>
       </div>
 
       <div className="grid grid-flow-row-dense grid-cols-1 gap-5 overflow-y-auto md:grid-cols-2">
-        {[
-          ChainId.MAINNET,
-          ChainId.MATIC,
-          ChainId.FANTOM,
-          ChainId.ARBITRUM,
-          ChainId.OKEX,
-          ChainId.HECO,
-          ChainId.BSC,
-          ChainId.XDAI,
-          ChainId.HARMONY,
-          ChainId.AVALANCHE,
-          ChainId.CELO,
-          ChainId.PALM,
-          ChainId.MOONRIVER,
-        ].map((key: ChainId, i: number) => {
+        {[ChainId.MAINNET, ChainId.MATIC, ChainId.BSC].map((key: ChainId, i: number) => {
           if (chainId === key) {
             return (
               <button key={i} className="w-full col-span-1 p-px rounded bg-gradient-to-r from-blue to-pink">
@@ -224,9 +215,10 @@ export default function NetworkModal(): JSX.Element | null {
             <button
               key={i}
               onClick={() => {
-                toggleNetworkModal()
                 const params = SUPPORTED_NETWORKS[key]
-                cookie.set('chainId', key)
+                cookie.set('otherChainId', key)
+                toggleNetworkModal()
+
                 if (key === ChainId.MAINNET) {
                   library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
                 } else {

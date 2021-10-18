@@ -57,7 +57,7 @@ export default function SwapModalHeader({
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <CurrencyLogo currency={trade.outputAmount.currency} size={48} />
+            <CurrencyLogo currency={trade.inputAmount.currency} size={48} />
             <div
               className={`overflow-ellipsis w-[220px] overflow-hidden font-bold text-2xl ${
                 priceImpactSeverity > 2 ? 'text-red' : 'text-high-emphesis'
@@ -66,7 +66,7 @@ export default function SwapModalHeader({
               {trade.outputAmount.toSignificant(6)}
             </div>
           </div>
-          <div className="ml-3 text-2xl font-medium text-high-emphesis">{trade.outputAmount.currency.symbol}</div>
+          <div className="ml-3 text-2xl font-medium text-high-emphesis">{trade.inputAmount.currency.symbol}</div>
         </div>
       </div>
 
@@ -78,39 +78,6 @@ export default function SwapModalHeader({
       />
 
       <AdvancedSwapDetails trade={trade} allowedSlippage={allowedSlippage} minerBribe={minerBribe} />
-
-      {showAcceptChanges ? (
-        <div className="flex items-center justify-between p-2 px-3 border border-gray-800 rounded">
-          <div className="flex items-center justify-start text-sm font-bold uppercase text-high-emphesis">
-            <div className="mr-3 min-w-[24px]">
-              <AlertTriangle size={24} />
-            </div>
-            <span>{i18n._(t`Price Updated`)}</span>
-          </div>
-          <span className="text-sm cursor-pointer text-blue" onClick={onAcceptChanges}>
-            {i18n._(t`Accept`)}
-          </span>
-        </div>
-      ) : null}
-      <div className="justify-start text-sm text-secondary">
-        {trade.tradeType === TradeType.EXACT_INPUT ? (
-          <>
-            {i18n._(t`Output is estimated. You will receive at least`)}{' '}
-            <b>
-              {trade.minimumAmountOut(allowedSlippage).toSignificant(6)} {trade.outputAmount.currency.symbol}
-            </b>{' '}
-            {i18n._(t`or the transaction will revert.`)}
-          </>
-        ) : (
-          <>
-            {i18n._(t`Input is estimated. You will sell at most`)}{' '}
-            <b>
-              {trade.maximumAmountIn(allowedSlippage).toSignificant(6)} {trade.inputAmount.currency.symbol}
-            </b>{' '}
-            {i18n._(t`or the transaction will revert.`)}
-          </>
-        )}
-      </div>
 
       {recipient !== null ? (
         <div className="flex-start">

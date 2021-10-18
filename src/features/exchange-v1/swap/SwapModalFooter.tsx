@@ -97,7 +97,7 @@ export default function SwapModalFooter({
         id="confirm-swap-or-send"
         className="text-xl font-semibold"
       >
-        {i18n._(t`Confirm Swap`)}
+        {i18n._(t`Confirm Bridge`)}
       </ButtonError>
 
       {swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}

@@ -21,6 +21,12 @@ export function useToggleModal(modal: ApplicationModal): () => void {
   return useCallback(() => dispatch(setOpenModal(open ? null : modal)), [dispatch, modal, open])
 }
 
+export function toggleNetworkWS(modal: ApplicationModal): () => void {
+  const open = useModalOpen(modal)
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback(() => dispatch(setOpenModal(open ? null : modal)), [dispatch, modal, open])
+}
+
 export function useOpenModal(modal: ApplicationModal): () => void {
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(() => dispatch(setOpenModal(modal)), [dispatch, modal])

@@ -40,29 +40,6 @@ export default function TradePrice({ price, showInverted, setShowInverted, class
         'flex justify-between w-full px-5 py-1 cursor-pointer rounded-b-md text-secondary hover:text-primary',
         className
       )}
-    >
-      <Typography variant="sm" className="select-none">
-        {i18n._(t`Exchange Rate`)}
-      </Typography>
-      <div className="flex items-center space-x-4">
-        <Typography variant="sm" className="select-none">
-          {text}
-        </Typography>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-4 h-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-          />
-        </svg>
-      </div>
-    </div>
+    ></div>
   )
 }

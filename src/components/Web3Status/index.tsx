@@ -115,22 +115,24 @@ function Web3StatusInner() {
 
   if (account) {
     return (
-      <div
-        id="web3-status-connected"
-        className="flex items-center px-3 py-2 text-sm rounded-lg bg-dark-1000 text-secondary"
-        onClick={toggleWalletModal}
-      >
-        {hasPendingTransactions ? (
-          <div className="flex items-center justify-between">
-            <div className="pr-2">
-              {pending?.length} {i18n._(t`Pending`)}
-            </div>{' '}
-            <Loader stroke="white" />
-          </div>
-        ) : (
-          <div className="mr-2">{ENSName || shortenAddress(account)}</div>
-        )}
-        {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
+      <div>
+        <div
+          id="web3-status-connected"
+          className="flex items-center px-3 py-2 text-sm rounded-lg bg-dark-1000 text-secondary"
+          onClick={toggleWalletModal}
+        >
+          {hasPendingTransactions ? (
+            <div className="flex items-center justify-between">
+              <div className="pr-2">
+                {pending?.length} {i18n._(t`Pending`)}
+              </div>{' '}
+              <Loader stroke="white" />
+            </div>
+          ) : (
+            <div className="mr-2">{ENSName || shortenAddress(account)}</div>
+          )}
+          {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
+        </div>
       </div>
     )
   } else {

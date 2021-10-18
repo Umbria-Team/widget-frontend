@@ -39,6 +39,7 @@ import {
   SUSHI,
   UMA,
   USDC,
+  UMBR,
   USDP,
   USDT,
   UST,
@@ -180,10 +181,6 @@ export const ADDITIONAL_BASES: {
     [CRV.address]: [CVXCRV],
   },
   [ChainId.MATIC]: {
-    [MATIC.FRAX.address]: [MATIC.FXS],
-    [MATIC.FXS.address]: [MATIC.FRAX],
-    [MATIC.DRAX.address]: [MATIC.DMAGIC],
-    [MATIC.AXMATIC.address]: [MATIC.DMAGIC],
     //[MATIC.DMAGIC.address]: [MATIC.DRAX, MATIC.AXMATIC],
   },
 }
@@ -198,25 +195,15 @@ export const CUSTOM_BASES: {
   [ChainId.MAINNET]: {
     [AMPL.address]: [DAI, WNATIVE[ChainId.MAINNET]],
   },
-  [ChainId.MATIC]: {
-    [MATIC.TEL.address]: [MATIC.SUSHI, MATIC.AAVE],
-  },
+  [ChainId.MATIC]: {},
 }
 
 /**
  * Shows up in the currency select for swap and add liquidity
  */
 export const COMMON_BASES: ChainTokenList = {
-  [ChainId.MAINNET]: [...WRAPPED_NATIVE_ONLY[ChainId.MAINNET], DAI, USDC, USDT, WBTC, SUSHI[ChainId.MAINNET]],
-  [ChainId.MATIC]: [
-    ...WRAPPED_NATIVE_ONLY[ChainId.MATIC],
-    MATIC.USDC,
-    MATIC.WBTC,
-    MATIC.DAI,
-    MATIC.WETH,
-    MATIC.USDT,
-    SUSHI[ChainId.MATIC],
-  ],
+  [ChainId.MAINNET]: [...WRAPPED_NATIVE_ONLY[ChainId.MAINNET], USDC, USDT, WBTC, UMBR],
+  [ChainId.MATIC]: [...WRAPPED_NATIVE_ONLY[ChainId.MATIC], MATIC.USDC, MATIC.WBTC, MATIC.WETH, MATIC.USDT, MATIC.UMBR],
   [ChainId.FANTOM]: [
     ...WRAPPED_NATIVE_ONLY[ChainId.FANTOM],
     FANTOM.DAI,
@@ -225,16 +212,7 @@ export const COMMON_BASES: ChainTokenList = {
     FANTOM.WETH,
     SUSHI[ChainId.FANTOM],
   ],
-  [ChainId.BSC]: [
-    ...WRAPPED_NATIVE_ONLY[ChainId.BSC],
-    BSC.DAI,
-    BSC.USD,
-    BSC.USDC,
-    BSC.USDT,
-    BSC.BTCB,
-    BSC.WETH,
-    SUSHI[ChainId.BSC],
-  ],
+  [ChainId.BSC]: [...WRAPPED_NATIVE_ONLY[ChainId.BSC], BSC.USDC, BSC.USDT, BSC.WETH],
   [ChainId.ARBITRUM]: [...WRAPPED_NATIVE_ONLY[ChainId.ARBITRUM], ARBITRUM.WBTC, ARBITRUM.USDC],
   [ChainId.XDAI]: [
     ...WRAPPED_NATIVE_ONLY[ChainId.XDAI],
@@ -288,10 +266,10 @@ export const COMMON_BASES: ChainTokenList = {
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WRAPPED_NATIVE_ONLY,
-  [ChainId.MAINNET]: [...WRAPPED_NATIVE_ONLY[ChainId.MAINNET], DAI, USDC, USDT, WBTC],
-  [ChainId.MATIC]: [...WRAPPED_NATIVE_ONLY[ChainId.MATIC], MATIC.USDC, MATIC.WBTC, MATIC.DAI, MATIC.WETH, MATIC.USDT],
+  [ChainId.MAINNET]: [...WRAPPED_NATIVE_ONLY[ChainId.MAINNET], USDC, USDT, WBTC],
+  [ChainId.MATIC]: [...WRAPPED_NATIVE_ONLY[ChainId.MATIC], MATIC.USDC, MATIC.WBTC, MATIC.WETH, MATIC.USDT],
   [ChainId.FANTOM]: [...WRAPPED_NATIVE_ONLY[ChainId.FANTOM], FANTOM.DAI, FANTOM.USDC, FANTOM.WBTC, FANTOM.WETH],
-  [ChainId.BSC]: [...WRAPPED_NATIVE_ONLY[ChainId.BSC], BSC.DAI, BSC.USD, BSC.USDC, BSC.USDT, BSC.BTCB, BSC.WETH],
+  [ChainId.BSC]: [...WRAPPED_NATIVE_ONLY[ChainId.BSC], BSC.USDC, BSC.WETH],
   [ChainId.ARBITRUM]: [...WRAPPED_NATIVE_ONLY[ChainId.ARBITRUM], ARBITRUM.WBTC, ARBITRUM.USDC],
   [ChainId.XDAI]: [...WRAPPED_NATIVE_ONLY[ChainId.XDAI], XDAI.USDC, XDAI.USDT, XDAI.WBTC, XDAI.WETH],
   [ChainId.AVALANCHE]: [

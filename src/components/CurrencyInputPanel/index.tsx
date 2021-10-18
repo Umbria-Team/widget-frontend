@@ -15,6 +15,7 @@ import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import { useLingui } from '@lingui/react'
+import Web3Network from '../../components/Web3Network'
 
 interface CurrencyInputPanelProps {
   value?: string

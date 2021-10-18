@@ -99,12 +99,6 @@ const ConfirmLimitOrderBottomContent: FC<ConfirmLimitOrderBottomContentProps> = 
     <div className="flex flex-col gap-6 px-6 py-8 -m-6 bg-dark-800">
       <div className="flex flex-col gap-1">
         <div className="flex items-center justify-between">
-          <span className="text-secondary">{i18n._(t`Minimum Received`)}</span>
-          <span className="font-bold text-high-emphesis">
-            {parsedAmounts[Field.OUTPUT]?.toSignificant(6)} {currencies[Field.OUTPUT]?.symbol}
-          </span>
-        </div>
-        <div className="flex items-center justify-between">
           <span className="text-secondary">{i18n._(t`Order Expiration`)}</span>
           <span className="font-bold text-high-emphesis">{orderExpiration.label}</span>
         </div>

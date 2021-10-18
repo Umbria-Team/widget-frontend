@@ -241,12 +241,6 @@ export default function Add() {
           {currencies[Field.CURRENCY_A]?.symbol}/{currencies[Field.CURRENCY_B]?.symbol}
           &nbsp;{i18n._(t`Pool Tokens`)}
         </div>
-        <div className="pt-3 text-xs italic text-secondary">
-          {i18n._(t`Output is estimated. If the price changes by more than ${allowedSlippage.toSignificant(
-            4
-          )}% your transaction
-            will revert.`)}
-        </div>
       </div>
     )
   }

@@ -52,12 +52,6 @@ export const BLOCKED_ADDRESSES: string[] = [
 ]
 
 export const ANALYTICS_URL: { [chainId in ChainId]?: string } = {
-  [ChainId.MAINNET]: 'https://analytics.sushi.com',
-  [ChainId.MATIC]: 'https://analytics-polygon.sushi.com',
-  [ChainId.FANTOM]: 'https://analytics-ftm.sushi.com',
-  [ChainId.BSC]: 'https://analytics-bsc.sushi.com',
-  [ChainId.XDAI]: 'https://analytics-xdai.sushi.com',
-  [ChainId.HARMONY]: 'https://analytics-harmony.sushi.com',
   [ChainId.ARBITRUM]: undefined,
 }
 

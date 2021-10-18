@@ -177,59 +177,9 @@ export function CurrencySearch({
   return (
     <div className="flex flex-col max-h-[inherit]">
       <ModalHeader className="h-full" onClose={onDismiss} title="Select a token" />
-      {!currencyList && (
-        <div className="mt-0 mb-3 sm:mt-3 sm:mb-8">
-          <input
-            type="text"
-            id="token-search-input"
-            placeholder={i18n._(t`Search name or paste address`)}
-            autoComplete="off"
-            value={searchQuery}
-            ref={inputRef as RefObject<HTMLInputElement>}
-            onChange={handleInput}
-            onKeyDown={handleEnter}
-            className="w-full bg-transparent border border-dark-700 focus:border-transparent focus:border-gradient-r-blue-pink-dark-900 rounded placeholder-secondary focus:placeholder-primary font-bold text-base px-6 py-3.5"
-          />
-        </div>
-      )}
       {showCommonBases && (
         <div className="mb-4">
           <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
-        </div>
-      )}
-
-      {searchToken && !searchTokenIsAdded ? (
-        <Column style={{ padding: '20px 0', height: '100%' }}>
-          <ImportRow token={searchToken} showImportView={showImportView} setImportToken={setImportToken} />
-        </Column>
-      ) : filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
-        <div className="h-screen">
-          <AutoSizer disableWidth>
-            {({ height }) => (
-              <CurrencyList
-                height={height}
-                currencies={includeNativeCurrency ? filteredSortedTokensWithETH : filteredSortedTokens}
-                otherListTokens={filteredInactiveTokens}
-                onCurrencySelect={handleCurrencySelect}
-                otherCurrency={otherSelectedCurrency}
-                selectedCurrency={selectedCurrency}
-                fixedListRef={fixedList}
-                showImportView={showImportView}
-                setImportToken={setImportToken}
-              />
-            )}
-          </AutoSizer>
-        </div>
-      ) : (
-        <Column style={{ padding: '20px', height: '100%' }}>
-          <div className="mb-8 text-center">{i18n._(t`No results found`)}</div>
-        </Column>
-      )}
-      {allowManageTokenList && (
-        <div className="mt-3">
-          <Button id="list-token-manage-button" onClick={showManageView} color="gray">
-            {i18n._(t`Manage Token Lists`)}
-          </Button>
         </div>
       )}
     </div>
