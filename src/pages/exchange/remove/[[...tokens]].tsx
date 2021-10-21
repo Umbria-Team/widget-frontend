@@ -595,7 +595,7 @@ export default function Remove() {
                 {parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}
               </div>
             </div>
-            <div className="ml-3 text-2xl font-medium text-high-emphesis">{currencyB?.symbol}</div>
+            <div className="ml-3 text-2xl font-medium text-high-emphesis">{currencyA?.symbol}</div>
           </div>
         </div>
         <div className="justify-start text-sm text-secondary">

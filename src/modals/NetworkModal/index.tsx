@@ -1,4 +1,4 @@
-import { NETWORK_ICON, NETWORK_LABEL } from '../../config/networks'
+import { NETWORK_ICON, NETWORK_LABEL, BRIDGE_PAIRS } from '../../config/networks'
 import { useModalOpen, useNetworkModalToggle } from '../../state/application/hooks'
 
 import { ApplicationModal } from '../../state/application/actions'
@@ -187,22 +187,10 @@ export default function NetworkModal(): JSX.Element | null {
 
   if (!chainId) return null
 
-  const pairs = [
-    {
-      source: ChainId.MATIC,
-      destination: ChainId.MAINNET,
-      address: '0x',
-    },
-    {
-      source: ChainId.MAINNET,
-      destination: ChainId.MATIC,
-      address: '0x',
-    },
-  ]
 
   let networkButtons = []
 
-  pairs.forEach((pair, index) => {
+  BRIDGE_PAIRS.forEach((pair, index) => {
     networkButtons.push(
       <div>
         <button
@@ -212,6 +200,12 @@ export default function NetworkModal(): JSX.Element | null {
             const params = SUPPORTED_NETWORKS[pair.source]
             cookie.set('chainId', pair.source)
             cookie.set('otherChainId', pair.destination)
+
+            if (chainId != pair.source) {
+              library?.send('wallet_addEthereumChain', [params, account])
+              library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
+            }
+
             toggleNetworkModal()
           }}
         >
