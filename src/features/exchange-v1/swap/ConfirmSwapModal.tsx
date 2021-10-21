@@ -76,20 +76,9 @@ export default function ConfirmSwapModal({
   }, [onConfirm, showAcceptChanges, swapErrorMessage, trade])
 
   // text to show while loading
-  const pendingText = `Swapping ${trade?.inputAmount?.toSignificant(6)} ${
-    trade?.inputAmount?.currency?.symbol
-  } for ${trade?.outputAmount?.toSignificant(6)} ${trade?.outputAmount?.currency?.symbol}`
+  const pendingText = ''
 
-  const pendingText2 = minerBribe
-    ? trade?.outputAmount.currency.isNative
-      ? `Minus ${CurrencyAmount.fromRawAmount(Ether.onChain(ChainId.MAINNET), minerBribe).toSignificant(
-          6
-        )} ETH Miner Tip`
-      : `Plus ${CurrencyAmount.fromRawAmount(Ether.onChain(ChainId.MAINNET), minerBribe).toSignificant(
-          6
-        )} ETH Miner Tip`
-    : undefined
-
+  const pendingText2 = ''
   const confirmationContent = useCallback(
     () =>
       swapErrorMessage ? (

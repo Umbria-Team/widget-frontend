@@ -9,6 +9,7 @@ import ModalHeader from '../../components/ModalHeader'
 import React from 'react'
 import cookie from 'cookie-cutter'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
+import { forEach } from 'lodash'
 
 export const SUPPORTED_NETWORKS: {
   [chainId in ChainId]?: {
@@ -186,68 +187,58 @@ export default function NetworkModal(): JSX.Element | null {
 
   if (!chainId) return null
 
+  const pairs = [
+    {
+      source: ChainId.MATIC,
+      destination: ChainId.MAINNET,
+      address: '0x',
+    },
+    {
+      source: ChainId.MAINNET,
+      destination: ChainId.MATIC,
+      address: '0x',
+    },
+  ]
+
+  let networkButtons = []
+
+  pairs.forEach((pair, index) => {
+    networkButtons.push(
+      <div>
+        <button
+          key={index}
+          className="w-full col-span-1 p-px rounded bg-gradient-to-r from-blue to-pink"
+          onClick={() => {
+            const params = SUPPORTED_NETWORKS[pair.source]
+            cookie.set('chainId', pair.source)
+            cookie.set('otherChainId', pair.destination)
+            toggleNetworkModal()
+          }}
+        >
+          <div className="flex items-center w-full h-full p-3 space-x-3 rounded bg-dark-1000">
+            <Image
+              src={NETWORK_ICON[pair.source]}
+              alt={`Switch to ${NETWORK_LABEL[pair.source]} Network`}
+              className="rounded-md"
+              width="32px"
+              height="32px"
+            />
+            <div className="font-bold text-primary">
+              {NETWORK_LABEL[pair.source]} to {NETWORK_LABEL[pair.destination]}
+            </div>
+          </div>
+        </button>
+      </div>
+    )
+  })
+
   return (
     <Modal isOpen={networkModalOpen} onDismiss={toggleNetworkModal} maxWidth={672}>
       <div className="mb-6 text-lg text-primary">
         You are currently connected to the <span className="font-bold text-blue">{NETWORK_LABEL[chainId]}</span> network
         and are bridging to the <span className="font-bold text-blue">{NETWORK_LABEL[cookie.get('otherChainId')]}</span>
       </div>
-
-      <div className="grid grid-flow-row-dense grid-cols-1 gap-5 overflow-y-auto md:grid-cols-2">
-        {[ChainId.MAINNET, ChainId.MATIC, ChainId.BSC].map((key: ChainId, i: number) => {
-          if (chainId === key) {
-            return (
-              <button key={i} className="w-full col-span-1 p-px rounded bg-gradient-to-r from-blue to-pink">
-                <div className="flex items-center w-full h-full p-3 space-x-3 rounded bg-dark-1000">
-                  <Image
-                    src={NETWORK_ICON[key]}
-                    alt={`Switch to ${NETWORK_LABEL[key]} Network`}
-                    className="rounded-md"
-                    width="32px"
-                    height="32px"
-                  />
-                  <div className="font-bold text-primary">{NETWORK_LABEL[key]}</div>
-                </div>
-              </button>
-            )
-          }
-          return (
-            <button
-              key={i}
-              onClick={() => {
-                const params = SUPPORTED_NETWORKS[key]
-                cookie.set('otherChainId', key)
-                toggleNetworkModal()
-
-                if (key === ChainId.MAINNET) {
-                  library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
-                } else {
-                  library?.send('wallet_addEthereumChain', [params, account])
-                }
-              }}
-              className="flex items-center w-full col-span-1 p-3 space-x-3 rounded cursor-pointer bg-dark-800 hover:bg-dark-700"
-            >
-              <Image src={NETWORK_ICON[key]} alt="Switch Network" className="rounded-md" width="32px" height="32px" />
-              <div className="font-bold text-primary">{NETWORK_LABEL[key]}</div>
-            </button>
-          )
-        })}
-        {/* {['Clover', 'Telos', 'Optimism'].map((network, i) => (
-          <button
-            key={i}
-            className="flex items-center w-full col-span-1 p-3 space-x-3 rounded cursor-pointer bg-dark-800 hover:bg-dark-700"
-          >
-            <Image
-              src="/images/tokens/unknown.png"
-              alt="Switch Network"
-              className="rounded-md"
-              width="32px"
-              height="32px"
-            />
-            <div className="font-bold text-primary">{network} (Coming Soon)</div>
-          </button>
-        ))} */}
-      </div>
+      {networkButtons}
     </Modal>
   )
 }

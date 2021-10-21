@@ -175,8 +175,6 @@ const TransactionConfirmationModal: FC<ConfirmationModalProps> = ({
   onDismiss,
   attemptingTxn,
   hash,
-  pendingText,
-  pendingText2,
   content,
   currencyToAdd,
 }) => {

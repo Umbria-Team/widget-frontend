@@ -12,6 +12,7 @@ import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../../hooks/useActiveWeb3React'
 import { useLingui } from '@lingui/react'
 import { NETWORK_ICON, NETWORK_LABEL } from '../../../config/networks'
+import cookie from 'cookie-cutter'
 
 export interface AdvancedSwapDetailsProps {
   trade?: V2Trade<Currency, Currency, TradeType>
@@ -24,13 +25,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
 
   const { chainId } = useActiveWeb3React()
 
-  var otherChainId = 0
-
-  if (chainId == 1) {
-    otherChainId = 137
-  } else {
-    otherChainId = 1
-  }
+  var otherChainId = cookie.get('otherChainId')
 
   const { realizedLPFee, priceImpact } = useMemo(() => {
     if (!trade) return { realizedLPFee: undefined, priceImpact: undefined }

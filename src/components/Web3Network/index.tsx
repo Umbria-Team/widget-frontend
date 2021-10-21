@@ -15,18 +15,11 @@ function Web3Network(): JSX.Element | null {
 
   var otherChainId = 0
 
-  if (!cookie.get('chainId')) {
+  if (!cookie.get('chainId') || cookie.get()) {
     cookie.set('chainId', 1)
   }
 
   if (!cookie.get('otherChainId')) {
-    cookie.set('otherChainId', 137)
-  }
-
-  if (chainId == 1) {
-    otherChainId = 137
-  } else {
-    otherChainId = 1
   }
 
   if (!chainId) return null
@@ -38,14 +31,14 @@ function Web3Network(): JSX.Element | null {
         onClick={() => toggleSourceModal()}
       >
         <Image
-          src={NETWORK_ICON[chainId]}
+          src={NETWORK_ICON[cookie.get('chainId')]}
           alt="Switch Source Network"
           className="rounded-md"
           width="22px"
           height="22px"
         />
         <span className="text-primary">
-          Bridging from {NETWORK_LABEL[chainId]} to {NETWORK_LABEL[otherChainId]}
+          Bridging from {NETWORK_LABEL[cookie.get('chainId')]} to {NETWORK_LABEL[cookie.get('otherChainId')]}
         </span>
       </div>
       <NetworkModel />
