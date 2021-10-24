@@ -25,7 +25,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
 
   const { chainId } = useActiveWeb3React()
 
-  var otherChainId = cookie.get("otherChainId")
+  var otherChainId = cookie.get('otherChainId')
 
   const { realizedLPFee, priceImpact } = useMemo(() => {
     if (!trade) return { realizedLPFee: undefined, priceImpact: undefined }
@@ -35,33 +35,16 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
 
   return !trade ? null : (
     <div className="flex flex-col space-y-2">
-
       <div className="flex flex-row items-center justify-between">
         <span className="flex items-center">
-          <div className="text-sm text-secondary">{i18n._(t`Estimated output gas fee`)}</div>
+          <div className="text-sm text-secondary">{i18n._(t`Fee`)}</div>
           <QuestionHelper
             text={i18n._(
               t`This is an estimate of how much it will cost for us to transfer funds to you on the destination network. We calculate this amount and take the equivalent amount from your sent funds to pay for gas`
             )}
           />
         </span>
-        <p>
-          0 MATIC
-        </p>
-      </div>
-
-      <div className="flex flex-row items-center justify-between">
-        <span className="flex items-center">
-          <div className="text-sm text-secondary">{i18n._(t`Fee`)}</div>
-          <QuestionHelper
-            text={i18n._(
-              t`The fee is used to maintain and fund the bridge`
-            )}
-          />
-        </span>
-        <p>
-          0 MATIC
-        </p>
+        <p>0 MATIC</p>
       </div>
 
       <div className="flex flex-row items-center justify-between">

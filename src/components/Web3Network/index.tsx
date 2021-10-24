@@ -15,11 +15,9 @@ function Web3Network(): JSX.Element | null {
 
   var otherChainId = 0
 
-  if (!cookie.get('chainId') || cookie.get()) {
+  if (!cookie.get('chainId') || !cookie.get('otherChainId')) {
     cookie.set('chainId', 1)
-  }
-
-  if (!cookie.get('otherChainId')) {
+    cookie.set('otherChainId', 137)
   }
 
   if (!chainId) return null

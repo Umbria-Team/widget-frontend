@@ -187,12 +187,11 @@ export default function NetworkModal(): JSX.Element | null {
 
   if (!chainId) return null
 
-
   let networkButtons = []
 
   BRIDGE_PAIRS.forEach((pair, index) => {
     networkButtons.push(
-      <div>
+      <div key={index}>
         <button
           key={index}
           className="w-full col-span-1 p-px rounded bg-gradient-to-r from-blue to-pink"
@@ -231,8 +230,8 @@ export default function NetworkModal(): JSX.Element | null {
       <div className="mb-6 text-lg text-primary">
         You are currently connected to the <span className="font-bold text-blue">{NETWORK_LABEL[chainId]}</span> network
         and are bridging to the <span className="font-bold text-blue">{NETWORK_LABEL[cookie.get('otherChainId')]}</span>
+        {networkButtons}
       </div>
-      {networkButtons}
     </Modal>
   )
 }
