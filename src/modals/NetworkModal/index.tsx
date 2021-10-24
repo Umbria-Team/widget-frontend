@@ -204,6 +204,8 @@ export default function NetworkModal(): JSX.Element | null {
               library?.send('wallet_addEthereumChain', [params, account])
               library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
             }
+
+            toggleNetworkModal()
           }}
         >
           <div className="flex items-center w-full h-full p-3 space-x-3 rounded bg-dark-1000">
