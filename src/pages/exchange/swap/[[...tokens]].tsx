@@ -462,56 +462,6 @@ export default function Swap() {
                     ? i18n._(t`Unwrap`)
                     : null)}
               </Button>
-            ) : showApproveFlow ? (
-              <div>
-                {approvalState !== ApprovalState.APPROVED && (
-                  <ButtonConfirmed
-                    onClick={handleApprove}
-                    disabled={approvalState !== ApprovalState.NOT_APPROVED || approvalSubmitted}
-                    size="lg"
-                  >
-                    {approvalState === ApprovalState.PENDING ? (
-                      <div className="flex items-center justify-center h-full space-x-2">
-                        <div>Approving</div>
-                        <Loader stroke="white" />
-                      </div>
-                    ) : (
-                      i18n._(t`Approve ${currencies[Field.INPUT]?.symbol}`)
-                    )}
-                  </ButtonConfirmed>
-                )}
-                {approvalState === ApprovalState.APPROVED && (
-                  <ButtonError
-                    onClick={() => {
-                      if (isExpertMode) {
-                        handleSwap()
-                      } else {
-                        setSwapState({
-                          tradeToConfirm: trade,
-                          attemptingTxn: false,
-                          swapErrorMessage: undefined,
-                          showConfirm: true,
-                          txHash: undefined,
-                        })
-                      }
-                    }}
-                    style={{
-                      width: '100%',
-                    }}
-                    id="swap-button"
-                    disabled={
-                      !isValid || approvalState !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)
-                    }
-                    error={isValid && priceImpactSeverity > 2}
-                  >
-                    {priceImpactSeverity > 3 && !isExpertMode
-                      ? i18n._(t`Price Impact High`)
-                      : priceImpactSeverity > 2
-                      ? i18n._(t`Swap Anyway`)
-                      : i18n._(t`Bridge`)}
-                  </ButtonError>
-                )}
-              </div>
             ) : (
               <ButtonError
                 onClick={() => {
@@ -532,18 +482,9 @@ export default function Swap() {
                 error={isValid && priceImpactSeverity > 2 && !swapCallbackError}
               >
                 {swapInputError
-                  ? swapInputError
-                  : priceImpactSeverity > 3 && !isExpertMode
-                  ? i18n._(t`Bridge`)
-                  : priceImpactSeverity > 2
                   ? i18n._(t`Bridge`)
                   : i18n._(t`Bridge`)}
               </ButtonError>
-            )}
-            {showApproveFlow && (
-              <Column style={{ marginTop: '1rem' }}>
-                <ProgressSteps steps={[approvalState === ApprovalState.APPROVED]} />
-              </Column>
             )}
             {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
           </BottomGrouping>
