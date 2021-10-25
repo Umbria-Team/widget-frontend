@@ -17,6 +17,7 @@ import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useDispatch } from 'react-redux'
 import { useLingui } from '@lingui/react'
+import { getTransactionDetails } from '../../services/umbria/fetchers/service'
 
 const WalletIcon: FC<{ size?: number; src: string; alt: string }> = ({ size, src, alt, children }) => {
   return (
@@ -31,7 +32,10 @@ function renderTransactions(transactions: string[]) {
   return (
     <div className="flex flex-col gap-2 flex-nowrap">
       {transactions.map((hash, i) => {
-        return <Transaction key={i} hash={hash} />
+
+        var transaction = <Transaction key={i} hash={hash} />
+
+        return transaction
       })}
     </div>
   )

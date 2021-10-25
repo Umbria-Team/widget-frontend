@@ -3,8 +3,15 @@ import { request } from 'http'
 
 
 export const getFee = async (chain: string) => {
-    const response = await fetch(`http://bridgeapi.umbria.network/api/bridge/getGasPrice/?network=${chain}`)
+    const response = await fetch(`https://bridgeapi.umbria.network/api/bridge/getGasPrice/?network=${chain}`)
     const json = await response.json()
+}
+
+export const getTransactionDetails = async (transactionHash: string) => {
+    const response = await fetch(`https://bridgeapi.umbria.network/api/bridge/getTransactionInfo/?txhash=${transactionHash}`)
+    const json = await response.json()
+    
+    return json
 }
 
 export const getAvailability = async () => {

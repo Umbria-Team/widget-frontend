@@ -16,6 +16,8 @@ import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useAllTransactions } from '../../state/transactions/hooks'
 import { useDispatch } from 'react-redux'
 import { useLingui } from '@lingui/react'
+import { getTransactionDetails } from '../../services/umbria/fetchers/service'
+import { transactionsQuery } from '../../services/graph/queries'
 
 const calculateSecondsUntilDeadline = (tx: TransactionDetails): number => {
   if (tx?.archer?.deadline && tx?.addedTime) {
@@ -38,8 +40,9 @@ const Transaction: FC<{ hash: string }> = ({ hash }) => {
   const archer = tx?.archer
   const secondsUntilDeadline = useMemo(() => calculateSecondsUntilDeadline(tx), [tx])
   const mined = tx?.receipt && tx.receipt.status !== 1337
-  const cancelled = tx?.receipt && tx.receipt.status === 1337
+  var cancelled = tx?.receipt && tx.receipt.status === 1337
   const expired = secondsUntilDeadline === -1
+  
 
   const cancelPending = useCallback(() => {
     const relayURI = ARCHER_RELAY_URI[chainId]
@@ -80,6 +83,10 @@ const Transaction: FC<{ hash: string }> = ({ hash }) => {
 
   if (!chainId) return null
 
+  getTransactionDetails(hash).then((res) => {
+
+  })
+
   return (
     <div className="flex flex-col w-full gap-2 px-3 py-1 rounded bg-dark-800">
       <ExternalLink href={getExplorerLink(chainId, hash, 'transaction')} className="flex items-center gap-2">
@@ -102,30 +109,6 @@ const Transaction: FC<{ hash: string }> = ({ hash }) => {
           )}
         </div>
       </ExternalLink>
-      {archer && (
-        <Typography variant="sm" weight={400} className="flex items-center justify-between pb-1 text-decoration-none">
-          {`#${archer.nonce} - Tip ${CurrencyAmount.fromRawAmount(
-            Ether.onChain(ChainId.MAINNET),
-            archer.ethTip
-          ).toSignificant(6)} ETH`}
-          {pending ? (
-            <>
-              {secondsUntilDeadline >= 60 ? (
-                <span className="text-high-emphesis">&#128337; {`${Math.ceil(secondsUntilDeadline / 60)} mins`} </span>
-              ) : (
-                <span className="text-high-emphesis">&#128337; {`<1 min`} </span>
-              )}
-              <div className="flex items-center cursor-pointer" onClick={cancelPending}>
-                {i18n._(t`Cancel`)}
-              </div>
-            </>
-          ) : cancelled ? (
-            <span className="text-red">{i18n._(t`Cancelled`)}</span>
-          ) : (
-            !mined && expired && <span className="text-red">{i18n._(t`Expired`)}</span>
-          )}
-        </Typography>
-      )}
     </div>
   )
 }
