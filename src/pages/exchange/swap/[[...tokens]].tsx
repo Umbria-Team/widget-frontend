@@ -204,15 +204,13 @@ export default function Swap() {
   }, [router])
 
   // modal and loading
-  const [{ showConfirm, tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
+  const [{ showConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
     showConfirm: boolean
-    tradeToConfirm: V2Trade<Currency, Currency, TradeType> | undefined
     attemptingTxn: boolean
     swapErrorMessage: string | undefined
     txHash: string | undefined
   }>({
     showConfirm: false,
-    tradeToConfirm: undefined,
     attemptingTxn: false,
     swapErrorMessage: undefined,
     txHash: undefined,
@@ -294,6 +292,14 @@ export default function Swap() {
           value: formattedAmounts[Field.INPUT].toBigNumber(),
         }).then((res) => {
           addTransaction(res)
+
+          setSwapState({
+            attemptingTxn: false,
+            showConfirm,
+            swapErrorMessage: undefined,
+            txHash: res.hash,
+          })
+
         }).catch((err) => {
           console.log(err)
         })
@@ -336,7 +342,6 @@ export default function Swap() {
   const handleConfirmDismiss = useCallback(() => {
     setSwapState({
       showConfirm: false,
-      tradeToConfirm,
       attemptingTxn,
       swapErrorMessage,
       txHash,
@@ -345,11 +350,10 @@ export default function Swap() {
     if (txHash) {
       onUserInput(Field.INPUT, '')
     }
-  }, [attemptingTxn, onUserInput, swapErrorMessage, tradeToConfirm, txHash])
+  }, [attemptingTxn, onUserInput, swapErrorMessage, txHash])
 
   const handleAcceptChanges = useCallback(() => {
     setSwapState({
-      tradeToConfirm: trade,
       swapErrorMessage,
       txHash,
       attemptingTxn,
@@ -429,7 +433,7 @@ export default function Swap() {
           <ConfirmSwapModal
             isOpen={showConfirm}
             trade={trade}
-            originalTrade={tradeToConfirm}
+            originalTrade={null}
             onAcceptChanges={handleAcceptChanges}
             attemptingTxn={attemptingTxn}
             txHash={txHash}
@@ -487,7 +491,6 @@ export default function Swap() {
                     handleSwap()
                   } else {
                     setSwapState({
-                      tradeToConfirm: trade,
                       attemptingTxn: false,
                       swapErrorMessage: undefined,
                       showConfirm: true,

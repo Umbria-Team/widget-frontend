@@ -79,27 +79,6 @@ export const TransactionSubmittedContent: FC<TransactionSubmittedContentProps> =
             <div className="font-bold text-blue">View on explorer</div>
           </ExternalLink>
         )}
-        {currencyToAdd && library?.provider?.isMetaMask && (
-          <Button color="gradient" onClick={addToken} className="w-auto mt-4">
-            {!success ? (
-              <RowFixed className="mx-auto space-x-2">
-                <span>{i18n._(t`Add ${currencyToAdd.symbol} to MetaMask`)}</span>
-                <Image
-                  src="/images/wallets/metamask.png"
-                  alt={i18n._(t`Add ${currencyToAdd.symbol} to MetaMask`)}
-                  width={24}
-                  height={24}
-                  className="ml-1"
-                />
-              </RowFixed>
-            ) : (
-              <RowFixed>
-                {i18n._(t`Added`)} {currencyToAdd.symbol}
-                {/* <CheckCircle className="ml-1.5 text-2xl text-green" size="16px" /> */}
-              </RowFixed>
-            )}
-          </Button>
-        )}
         {/* <Button color="gradient" onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
           Close
         </Button> */}
