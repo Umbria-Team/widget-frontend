@@ -9,7 +9,6 @@ import {
   Trade as V2Trade,
 } from '@sushiswap/sdk'
 import { getAddress } from '@ethersproject/address'
-
 import { ApprovalState, useApproveCallbackFromTrade } from '../../../hooks/useApproveCallback'
 import { ArrowWrapper, BottomGrouping, SwapCallbackError } from '../../../features/exchange-v1/swap/styleds'
 import { ButtonConfirmed, ButtonError } from '../../../components/Button'
@@ -82,6 +81,10 @@ import { warningSeverity } from '../../../functions/prices'
 import Web3Network from '../../../components/Web3Network'
 import Web3Status from '../../../components/Web3Status'
 import { BigNumber } from 'ethers'
+
+import { getAvailability } from '../../../services/umbria/fetchers/service'
+
+import { useTransactionAdder } from '../../../state/transactions/hooks'
 
 export default function Swap() {
   const { i18n } = useLingui()
@@ -268,6 +271,7 @@ export default function Swap() {
 
   const maxInputAmount: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   const showMaxButton = Boolean(maxInputAmount?.greaterThan(0) && !parsedAmounts[Field.INPUT]?.equalTo(maxInputAmount))
+  const addTransaction = useTransactionAdder()
 
   // the callback to execute the swap
   const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(
@@ -281,10 +285,24 @@ export default function Swap() {
   const [singleHopOnly] = useUserSingleHopOnly()
 
   const handleSwap = () => {
-    library.getSigner().sendTransaction({
-      to: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
-      value: formattedAmounts[Field.INPUT].toBigNumber(),
-    })
+
+
+    getAvailability().then(((res) => {
+      if(res) {
+        library.getSigner().sendTransaction({
+          to: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
+          value: formattedAmounts[Field.INPUT].toBigNumber(),
+        }).then((res) => {
+          addTransaction(res)
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
+      else {
+        alert('The bridge is currently down for maintenance. Please try again later.')
+      }
+    }))
+
   }
 
   // errors
