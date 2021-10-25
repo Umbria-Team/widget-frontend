@@ -195,15 +195,15 @@ export default function CurrencyList({
 }) {
   const itemData: (Currency | BreakLine)[] = useMemo(() => {
     if (otherListTokens && otherListTokens?.length > 0) {
-      return [...currencies, BREAK_LINE, ...otherListTokens]
+      return [...currencies, BREAK_LINE]
     }
     return currencies
-  }, [currencies, otherListTokens])
+  }, [currencies])
 
   const Row = useCallback(
     function TokenRow({ data, index, style }) {
       const row: Currency | BreakLine = data[index]
-
+      
       if (isBreakLine(row)) {
         return <BreakLineComponent style={style} />
       }
@@ -216,13 +216,14 @@ export default function CurrencyList({
 
       const token = currency?.wrapped
 
+
       const showImport = index > currencies.length
 
       if (showImport && token) {
         return (
           <ImportRow style={style} token={token} showImportView={showImportView} setImportToken={setImportToken} dim />
         )
-      } else if (currency) {
+      } else if (currency && currency.isNative) {
         return (
           <CurrencyRow
             style={style}
