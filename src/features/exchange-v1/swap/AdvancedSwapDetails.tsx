@@ -44,7 +44,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
             )}
           />
         </span>
-        <p>0 MATIC</p>
+        <p>{parseFloat(trade.inputAmount.toSignificant(4)) * 0.002}</p>
       </div>
 
       <div className="flex flex-row items-center justify-between">
