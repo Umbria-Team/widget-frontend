@@ -63,7 +63,7 @@ export default function SwapModalHeader({
                 priceImpactSeverity > 2 ? 'text-red' : 'text-high-emphesis'
               }`}
             >
-              {trade.outputAmount.toSignificant(6)}
+              {trade.inputAmount}
             </div>
           </div>
           <div className="ml-3 text-2xl font-medium text-high-emphesis">{trade.inputAmount.currency.symbol}</div>
