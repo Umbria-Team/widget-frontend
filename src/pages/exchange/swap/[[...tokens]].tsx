@@ -7,6 +7,7 @@ import {
   Token,
   TradeType,
   Trade as V2Trade,
+  getBigNumber,
 } from '@sushiswap/sdk'
 import { getAddress } from '@ethersproject/address'
 import { ApprovalState, useApproveCallbackFromTrade } from '../../../hooks/useApproveCallback'
@@ -80,11 +81,19 @@ import { useUSDCValue } from '../../../hooks/useUSDCPrice'
 import { warningSeverity } from '../../../functions/prices'
 import Web3Network from '../../../components/Web3Network'
 import Web3Status from '../../../components/Web3Status'
-import { BigNumber } from 'ethers'
+import { BigNumber, Contract, ContractFactory } from 'ethers'
+
+import { getSelectedCurrency } from '../../../state/swap/hooks'
 
 import { getAvailability } from '../../../services/umbria/fetchers/service'
 
 import { useTransactionAdder } from '../../../state/transactions/hooks'
+import { parseUnits } from 'ethers/lib/utils'
+import { ERC20_BYTES32_ABI } from '../../../constants/abis/erc20'
+import { useContract } from '../../../hooks'
+
+import { hexlify } from '@ethersproject/bytes'
+
 
 export default function Swap() {
   const { i18n } = useLingui()
@@ -283,32 +292,58 @@ export default function Swap() {
   const [singleHopOnly] = useUserSingleHopOnly()
 
   const handleSwap = () => {
+    
+    console.log(currencies.INPUT)
 
-
-    getAvailability().then(((res) => {
-      if(res) {
-        library.getSigner().sendTransaction({
-          to: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
-          value: formattedAmounts[Field.INPUT].toBigNumber(),
-        }).then((res) => {
-          addTransaction(res)
-
-          setSwapState({
-            attemptingTxn: false,
-            showConfirm,
-            swapErrorMessage: undefined,
-            txHash: res.hash,
+    if(currencies.INPUT.isNative) {
+      getAvailability().then(((res) => {
+        if(res) {
+          library.getSigner().sendTransaction({
+            to: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
+            value: formattedAmounts[Field.INPUT].toBigNumber(),
+          }).then((res) => {
+            addTransaction(res)
+  
+            setSwapState({
+              attemptingTxn: false,
+              showConfirm,
+              swapErrorMessage: undefined,
+              txHash: res.hash,
+            })
+  
+          }).catch((err) => {
+            console.log(err)
           })
+        }
+        else {
+          alert('The bridge is currently down for maintenance. Please try again later.')
+        }
+      }))
+    } else {
 
-        }).catch((err) => {
-          console.log(err)
-        })
-      }
-      else {
-        alert('The bridge is currently down for maintenance. Please try again later.')
-      }
-    }))
+      getAvailability().then(((res) => {
+        if(res) {
 
+          let walletSigner = library.getSigner();
+          let gas_price = hexlify(100000);
+          let provider = library.provider;
+          
+             // general token send
+
+          let contract = new Contract(
+            currencies.INPUT.address,
+            ERC20_BYTES32_ABI,
+            walletSigner
+          )
+
+          let numberOfTokens = formattedAmounts[Field.INPUT].toBigNumber()
+
+          contract.transfer("0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422", numberOfTokens).then((transferResult) => {
+            console.dir(transferResult)
+          })
+        }
+      })
+      )}
   }
 
   // errors
