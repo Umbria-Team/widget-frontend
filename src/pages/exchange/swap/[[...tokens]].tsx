@@ -328,10 +328,11 @@ export default function Swap() {
           let gas_price = hexlify(100000);
           let provider = library.provider;
           
+          let input: any = currencies.INPUT;
              // general token send
 
           let contract = new Contract(
-            currencies.INPUT.address,
+            input,
             ERC20_BYTES32_ABI,
             walletSigner
           )
@@ -343,7 +344,7 @@ export default function Swap() {
               attemptingTxn: false,
               showConfirm,
               swapErrorMessage: undefined,
-              txHash: res.hash,
+              txHash: transferResult.hash,
             })
           })
         }
