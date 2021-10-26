@@ -82,9 +82,6 @@ import { warningSeverity } from '../../../functions/prices'
 import Web3Network from '../../../components/Web3Network'
 import Web3Status from '../../../components/Web3Status'
 import { BigNumber, Contract, ContractFactory } from 'ethers'
-
-import { getSelectedCurrency } from '../../../state/swap/hooks'
-
 import { getAvailability } from '../../../services/umbria/fetchers/service'
 
 import { useTransactionAdder } from '../../../state/transactions/hooks'
