@@ -18,6 +18,7 @@ import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useETHBalances } from '../../state/wallet/hooks'
 import { useLingui } from '@lingui/react'
+import cookie from "cookie-cutter"
 
 // import { ExternalLink, NavLink } from "./Link";
 // import { ReactComponent as Burger } from "../assets/images/burger.svg";
@@ -26,6 +27,11 @@ function AppBar(): JSX.Element {
   const { i18n } = useLingui()
   const { account, chainId, library } = useActiveWeb3React()
 
+  if (!cookie.get('chainId') || !cookie.get('otherChainId')) {
+    cookie.set('chainId', 1)
+    cookie.set('otherChainId', 137)
+  }
+  
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   return (

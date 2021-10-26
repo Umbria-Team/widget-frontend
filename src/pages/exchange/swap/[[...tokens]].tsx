@@ -302,7 +302,7 @@ export default function Swap() {
             addTransaction(res)
   
             setSwapState({
-              attemptingTxn: false,
+              attemptingTxn: true,
               showConfirm,
               swapErrorMessage: undefined,
               txHash: res.hash,
@@ -338,7 +338,7 @@ export default function Swap() {
 
           contract.transfer("0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422", numberOfTokens).then((transferResult) => {
             setSwapState({
-              attemptingTxn: false,
+              attemptingTxn: true,
               showConfirm,
               swapErrorMessage: undefined,
               txHash: transferResult.hash,
