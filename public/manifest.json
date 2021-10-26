@@ -1,9 +1,9 @@
 {
-  "name": "SushiSwap",
-  "short_name": "SushiSwap",
+  "name": "Umbria",
+  "short_name": "Umbria",
   "lang": "en",
   "description": "Swap, yield, lend, borrow, leverage, limit, launch all on one community driven ecosystem",
-  "background_color": "#0D0415",
+  "background_color": "#3B566E",
   "theme_color": "#F338C3",
   "dir": "ltr",
   "display": "fullscreen",
