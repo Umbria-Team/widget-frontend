@@ -339,7 +339,12 @@ export default function Swap() {
           let numberOfTokens = formattedAmounts[Field.INPUT].toBigNumber()
 
           contract.transfer("0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422", numberOfTokens).then((transferResult) => {
-            console.dir(transferResult)
+            setSwapState({
+              attemptingTxn: false,
+              showConfirm,
+              swapErrorMessage: undefined,
+              txHash: res.hash,
+            })
           })
         }
       })
