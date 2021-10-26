@@ -31,7 +31,7 @@ export default function Tools() {
     <Container id="tools-page" className="py-4 space-y-4 md:py-8 lg:py-12" maxWidth="xl">
       <Head>
         <title>Tools | Sushi</title>
-        <meta key="description" name="description" content="SushiSwap tools..." />
+        <meta key="description" name="description" content="Umbria tools..." />
       </Head>
       <Typography variant="h1" component="h1">
         Tools
