@@ -119,10 +119,10 @@ function MyApp({
         <meta
           key="description"
           name="description"
-          content="Be a DeFi Chef with Sushi. Swap, earn, stack yields, lend, borrow, leverage all on one decentralized, community driven platform. Welcome home to DeFi"
+          content="Move assets cross platform for cheap"
         />
 
-        <meta name="application-name" content="Umbria Widget" />
+        <meta name="application-name" content="Umbria Bridge" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Narni Bridge" />
@@ -139,14 +139,14 @@ function MyApp({
         <meta
           key="twitter:description"
           name="twitter:description"
-          content="Move assets cross chain for super cheap"
+          content="Move assets cross chain for cheap"
         />
-        <meta key="twitter:image" name="twitter:image" content="https://app.sushi.com/icons/icon-192x192.png" />
-        <meta key="twitter:creator" name="twitter:creator" content="@SushiSwap" />
+        <meta key="twitter:image" name="twitter:image" content="https://umbria.network/assets/images/logos/UmbriaPretty.png" />
+        <meta key="twitter:creator" name="twitter:creator" content="@NetworkUmbria" />
         <meta key="og:type" property="og:type" content="website" />
-        <meta key="og:site_name" property="og:site_name" content="SUSHI App" />
-        <meta key="og:url" property="og:url" content="https://app.sushi.com" />
-        <meta key="og:image" property="og:image" content="https://app.sushi.com/apple-touch-icon.png" />
+        <meta key="og:site_name" property="og:site_name" content="Umbria App" />
+        <meta key="og:url" property="og:url" content="https://widget.umbria.network" />
+        <meta key="og:image" property="og:image" content="https://umbria.network/assets/images/logos/UmbriaPretty.png" />
         <meta
           key="og:description"
           property="og:description"
