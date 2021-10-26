@@ -329,7 +329,7 @@ export default function Swap() {
              // general token send
 
           let contract = new Contract(
-            input,
+            input.address,
             ERC20_BYTES32_ABI,
             walletSigner
           )
