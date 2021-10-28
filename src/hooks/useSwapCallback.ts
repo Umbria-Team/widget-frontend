@@ -27,7 +27,6 @@ import { keccak256 } from '@ethersproject/keccak256'
 import { shortenAddress } from '../functions/format'
 import { t } from '@lingui/macro'
 import { useActiveWeb3React } from './useActiveWeb3React'
-import { useArgentWalletContract } from './useArgentWalletContract'
 import { useBlockNumber } from '../state/application/hooks'
 import useENS from './useENS'
 import { useMemo } from 'react'
@@ -86,8 +85,6 @@ export function useSwapCallArguments(
   const routerContract = useRouterContract(useArcher)
   const factoryContract = useFactoryContract()
 
-  const argentWalletContract = useArgentWalletContract()
-
   const [archerETHTip] = useUserArcherETHTip()
 
   return useMemo(() => {
@@ -126,37 +123,11 @@ export function useSwapCallArguments(
           })
         )
       }
-      return swapMethods.map(({ methodName, args, value }) => {
-        if (argentWalletContract && trade.inputAmount.currency.isToken) {
-          return {
-            address: argentWalletContract.address,
-            calldata: argentWalletContract.interface.encodeFunctionData('wc_multiCall', [
-              [
-                approveAmountCalldata(trade.maximumAmountIn(allowedSlippage), routerContract.address),
-                {
-                  to: routerContract.address,
-                  value: value,
-                  data: routerContract.interface.encodeFunctionData(methodName, args),
-                },
-              ],
-            ]),
-            value: '0x0',
-          }
-        } else {
-          // console.log({ methodName, args })
-          return {
-            address: routerContract.address,
-            calldata: routerContract.interface.encodeFunctionData(methodName, args),
-            value,
-          }
-        }
-      })
-    }
+         }
   }, [
     account,
     allowedSlippage,
     archerETHTip,
-    argentWalletContract,
     chainId,
     deadline,
     library,

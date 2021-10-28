@@ -1,22 +1,15 @@
 import {
-  ARCHER_ROUTER_ADDRESS,
   ChainId,
   Currency,
   CurrencyAmount,
   JSBI,
   Token,
-  TradeType,
   Trade as V2Trade,
-  getBigNumber,
 } from '@sushiswap/sdk'
-import { getAddress } from '@ethersproject/address'
 import { ApprovalState, useApproveCallbackFromTrade } from '../../../hooks/useApproveCallback'
-import { ArrowWrapper, BottomGrouping, SwapCallbackError } from '../../../features/exchange-v1/swap/styleds'
-import { ButtonConfirmed, ButtonError } from '../../../components/Button'
-import Column, { AutoColumn } from '../../../components/Column'
-import AccountDetails from '../../../components/AccountDetails'
+import { BottomGrouping, SwapCallbackError } from '../../../features/exchange-v1/swap/styleds'
+import {  ButtonError } from '../../../components/Button'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { UseERC20PermitState, useERC20PermitFromTrade } from '../../../hooks/useERC20Permit'
 import { useAllTokens, useCurrency } from '../../../hooks/Tokens'
 import {
   useDefaultsFromURLSearch,
@@ -39,11 +32,6 @@ import useWrapCallback, { WrapType } from '../../../hooks/useWrapCallback'
 import { BRIDGE_PAIRS } from '../../../config/networks'
 
 import { ARCHER_RELAY_URI } from '../../../config/archer'
-import AddressInputPanel from '../../../components/AddressInputPanel'
-import { AdvancedSwapDetails } from '../../../features/exchange-v1/swap/AdvancedSwapDetails'
-import AdvancedSwapDetailsDropdown from '../../../features/exchange-v1/swap/AdvancedSwapDetailsDropdown'
-import Alert from '../../../components/Alert'
-import { ArrowDownIcon } from '@heroicons/react/outline'
 import Button from '../../../components/Button'
 import ConfirmSwapModal from '../../../features/exchange-v1/swap/ConfirmSwapModal'
 import Container from '../../../components/Container'
@@ -51,27 +39,15 @@ import CurrencyInputPanel from '../../../components/CurrencyInputPanel'
 import DoubleGlowShadow from '../../../components/DoubleGlowShadow'
 import { Field } from '../../../state/swap/actions'
 import Head from 'next/head'
-import { INITIAL_ALLOWED_SLIPPAGE } from '../../../constants'
-import Loader from '../../../components/Loader'
-import Lottie from 'lottie-react'
-import MinerTip from '../../../features/exchange-v1/swap/MinerTip'
-import ProgressSteps from '../../../components/ProgressSteps'
-import ReactGA from 'react-ga'
 import SwapHeader from '../../../features/trade/Header'
 import TokenWarningModal from '../../../modals/TokenWarningModal'
-import TradePrice from '../../../features/exchange-v1/swap/TradePrice'
-import Typography from '../../../components/Typography'
 import UnsupportedCurrencyFooter from '../../../features/exchange-v1/swap/UnsupportedCurrencyFooter'
 import Web3Connect from '../../../components/Web3Connect'
-import { classNames } from '../../../functions'
 import { computeFiatValuePriceImpact } from '../../../functions/trade'
-import confirmPriceImpactWithoutFee from '../../../features/exchange-v1/swap/confirmPriceImpactWithoutFee'
 import { maxAmountSpend } from '../../../functions/currency'
-import swapArrowsAnimationData from '../../../animation/swap-arrows.json'
 import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../../hooks/useActiveWeb3React'
 import useENSAddress from '../../../hooks/useENSAddress'
-import useIsArgentWallet from '../../../hooks/useIsArgentWallet'
 import { useIsSwapUnsupported } from '../../../hooks/useIsSwapUnsupported'
 import { useLingui } from '@lingui/react'
 import usePrevious from '../../../hooks/usePrevious'
@@ -80,14 +56,11 @@ import { useSwapCallback } from '../../../hooks/useSwapCallback'
 import { useUSDCValue } from '../../../hooks/useUSDCPrice'
 import { warningSeverity } from '../../../functions/prices'
 import Web3Network from '../../../components/Web3Network'
-import Web3Status from '../../../components/Web3Status'
-import { BigNumber, Contract, ContractFactory } from 'ethers'
+import { Contract } from 'ethers'
 import { getAvailability } from '../../../services/umbria/fetchers/service'
 
 import { useTransactionAdder } from '../../../state/transactions/hooks'
-import { parseUnits } from 'ethers/lib/utils'
 import { ERC20_BYTES32_ABI } from '../../../constants/abis/erc20'
-import { useContract } from '../../../hooks'
 
 import { hexlify } from '@ethersproject/bytes'
 
@@ -365,12 +338,9 @@ export default function Swap() {
     )
   }, [priceImpact, trade])
 
-  const isArgentWallet = useIsArgentWallet()
-
   // show approve flow when: no error on inputs, not approved or pending, or approved in current session
   // never show if price impact is above threshold in non expert mode
   const showApproveFlow =
-    !isArgentWallet &&
     !swapInputError &&
     (approvalState === ApprovalState.NOT_APPROVED ||
       approvalState === ApprovalState.PENDING ||

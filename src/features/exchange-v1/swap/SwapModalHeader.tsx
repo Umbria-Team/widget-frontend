@@ -38,6 +38,7 @@ export default function SwapModalHeader({
   const fiatValueInput = useUSDCValue(trade.inputAmount)
   const fiatValueOutput = useUSDCValue(trade.outputAmount)
 
+
   const priceImpactSeverity = warningSeverity(trade.priceImpact)
 
   return (

@@ -22,10 +22,12 @@ export interface AdvancedSwapDetailsProps {
 
 export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: AdvancedSwapDetailsProps) {
   const { i18n } = useLingui()
-
   const { chainId } = useActiveWeb3React()
 
-  var otherChainId = cookie.get('otherChainId')
+  const formattedInputAmount = parseFloat(trade.inputAmount.toSignificant(4))
+  const intermediateOutput = parseFloat(trade.inputAmount.toSignificant(4))
+  const fee = intermediateOutput * 0.002
+
 
   const { realizedLPFee, priceImpact } = useMemo(() => {
     if (!trade) return { realizedLPFee: undefined, priceImpact: undefined }
@@ -44,7 +46,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
             )}
           />
         </span>
-        <p>{parseFloat(trade.inputAmount.toSignificant(4)) * 0.002}</p>
+        <p>{fee}</p>
       </div>
 
       <div className="flex flex-row items-center justify-between">
@@ -57,7 +59,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
           />
         </span>
         <p>
-          {NETWORK_LABEL[chainId]} to {NETWORK_LABEL[otherChainId]}
+          {NETWORK_LABEL[cookie.get('chainId')]} to {NETWORK_LABEL[cookie.get('otherChainId')]}
         </p>
       </div>
 

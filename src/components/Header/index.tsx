@@ -3,7 +3,6 @@ import { Feature, featureEnabled } from '../../functions/feature'
 import React, { useEffect, useState } from 'react'
 
 import { ANALYTICS_URL } from '../../constants'
-import Buy from '../../features/on-ramp/ramp'
 import ExternalLink from '../ExternalLink'
 import Image from 'next/image'
 import LanguageSwitch from '../LanguageSwitch'
@@ -27,11 +26,19 @@ function AppBar(): JSX.Element {
   const { i18n } = useLingui()
   const { account, chainId, library } = useActiveWeb3React()
 
-  if (!cookie.get('chainId') || !cookie.get('otherChainId')) {
-    cookie.set('chainId', 1)
-    cookie.set('otherChainId', 137)
-  }
   
+  if (!cookie.get('chainId') || !cookie.get('otherChainId')) {
+    if(chainId == 1 || !chainId) {
+      cookie.set('chainId', 1)
+      cookie.set('otherChainId', 137)
+    }
+
+    cookie.set('chainId', 137)
+    cookie.set('otherChainId', 1)
+
+
+  }
+
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
   return (
