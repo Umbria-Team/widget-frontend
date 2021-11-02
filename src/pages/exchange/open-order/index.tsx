@@ -1,4 +1,3 @@
-import useLimitOrderApproveCallback, { BentoApprovalState } from '../../../hooks/useLimitOrderApproveCallback'
 
 import Alert from '../../../components/Alert'
 import { ArrowLeftIcon } from '@heroicons/react/solid'
@@ -17,7 +16,6 @@ import { useLingui } from '@lingui/react'
 
 function OpenOrdersPage() {
   const { i18n } = useLingui()
-  const [approvalState] = useLimitOrderApproveCallback()
   const { pending } = useLimitOrders()
 
   return (
@@ -35,17 +33,6 @@ function OpenOrdersPage() {
             </a>
           </NavLink>
         </div>
-        {pending.totalOrders > 0 && approvalState === BentoApprovalState.NOT_APPROVED && (
-          <div className="flex pb-6">
-            <Alert
-              type="error"
-              title={i18n._(t`Not approved`)}
-              message={i18n._(t`It seems like you have some open orders while the limit order master contract is not yet approved. Please make
-          sure you have approved the limit order master contract or the order will not execute`)}
-              dismissable={false}
-            />
-          </div>
-        )}
         <DoubleGlowShadow>
           <div id="limit-order-page" className="flex flex-col w-full gap-4 p-3 rounded md:p-5 bg-dark-900">
             <OpenOrders />
