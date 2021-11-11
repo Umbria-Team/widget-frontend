@@ -10,6 +10,7 @@ import React from 'react'
 import cookie from 'cookie-cutter'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { forEach } from 'lodash'
+import { useWalletModalToggle } from '../../state/application/hooks'
 
 export const SUPPORTED_NETWORKS: {
   [chainId in ChainId]?: {
@@ -184,6 +185,7 @@ export default function NetworkModal(): JSX.Element | null {
   const { chainId, library, account } = useActiveWeb3React()
   const networkModalOpen = useModalOpen(ApplicationModal.NETWORK)
   const toggleNetworkModal = useNetworkModalToggle()
+  const toggleWalletModal = useWalletModalToggle()
 
   if (!chainId) return null
 
@@ -200,12 +202,13 @@ export default function NetworkModal(): JSX.Element | null {
             cookie.set('chainId', pair.source)
             cookie.set('otherChainId', pair.destination)
 
-            if (chainId != pair.source) {
+            if (!account) {
+              toggleWalletModal()
+            } else {
               library?.send('wallet_addEthereumChain', [params, account])
               library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
+              toggleNetworkModal()
             }
-
-            toggleNetworkModal()
           }}
         >
           <div className="flex items-center w-full h-full p-3 space-x-3 rounded bg-dark-1000">

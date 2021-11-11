@@ -2,41 +2,27 @@ import { ChainId, Currency, NATIVE, SUSHI_ADDRESS } from '@sushiswap/sdk'
 import { Feature, featureEnabled } from '../../functions/feature'
 import React, { useEffect, useState } from 'react'
 
-import { ANALYTICS_URL } from '../../constants'
-import ExternalLink from '../ExternalLink'
-import Image from 'next/image'
-import LanguageSwitch from '../LanguageSwitch'
-import Link from 'next/link'
 import More from './More'
-import NavLink from '../NavLink'
 import { Popover } from '@headlessui/react'
-import QuestionHelper from '../QuestionHelper'
-import Web3Network from '../Web3Network'
 import Web3Status from '../Web3Status'
 import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useETHBalances } from '../../state/wallet/hooks'
 import { useLingui } from '@lingui/react'
-import cookie from "cookie-cutter"
-
-// import { ExternalLink, NavLink } from "./Link";
-// import { ReactComponent as Burger } from "../assets/images/burger.svg";
+import cookie from 'cookie-cutter'
 
 function AppBar(): JSX.Element {
   const { i18n } = useLingui()
   const { account, chainId, library } = useActiveWeb3React()
 
-  
   if (!cookie.get('chainId') || !cookie.get('otherChainId')) {
-    if(chainId == 1 || !chainId) {
+    if (chainId == 1 || !chainId) {
       cookie.set('chainId', 1)
       cookie.set('otherChainId', 137)
     }
 
     cookie.set('chainId', 137)
     cookie.set('otherChainId', 1)
-
-
   }
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
@@ -49,14 +35,9 @@ function AppBar(): JSX.Element {
           <>
             <div className="px-4 py-4">
               <div className="flex items-center justify-between">
-            
                 <div className="fixed bottom-0 left-0 z-10 flex flex-row items-center justify-center w-full p-4 lg:w-auto bg-dark-1000 lg:relative lg:p-0 lg:bg-transparent">
                   <div className="flex items-center justify-between w-full space-x-2 sm:justify-end">
-
-                    {library && library.provider.isMetaMask && (
-                      <div className="hidden sm:inline-block">
-                      </div>
-                    )}
+                    {library && library.provider.isMetaMask && <div className="hidden sm:inline-block"></div>}
 
                     <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       {account && chainId && userEthBalance && (
@@ -75,7 +56,6 @@ function AppBar(): JSX.Element {
                   {/* Mobile menu button */}
                   <Popover.Button className="inline-flex items-center justify-center p-2 rounded-md text-primary hover:text-high-emphesis focus:outline-none">
                     <span className="sr-only">{i18n._(t`Open main menu`)}</span>
-
                   </Popover.Button>
                 </div>
               </div>

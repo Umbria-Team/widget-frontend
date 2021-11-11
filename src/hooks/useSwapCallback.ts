@@ -123,7 +123,7 @@ export function useSwapCallArguments(
           })
         )
       }
-         }
+    }
   }, [
     account,
     allowedSlippage,

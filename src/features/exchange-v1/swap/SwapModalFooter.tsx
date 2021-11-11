@@ -18,6 +18,7 @@ export default function SwapModalFooter({
   disabledConfirm: boolean
 }) {
   const { i18n } = useLingui()
+
   return (
     <div className="p-6 mt-0 -m-6 rounded bg-dark-800">
       {/* <div className="grid gap-1 pb-6">

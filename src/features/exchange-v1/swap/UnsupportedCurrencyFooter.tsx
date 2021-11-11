@@ -96,9 +96,6 @@ export default function UnsupportedCurrencyFooter({
           </AutoColumn>
         </div>
       </Modal>
-      <Button variant="empty" style={{ padding: '0px' }} onClick={() => setShowDetails(true)}>
-        <div>Read more about unsupported assets</div>
-      </Button>
     </DetailsFooter>
   )
 }

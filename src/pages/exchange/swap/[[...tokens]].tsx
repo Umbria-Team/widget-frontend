@@ -1,14 +1,7 @@
-import {
-  ChainId,
-  Currency,
-  CurrencyAmount,
-  JSBI,
-  Token,
-  Trade as V2Trade,
-} from '@sushiswap/sdk'
+import { ChainId, Currency, CurrencyAmount, JSBI, Token, Trade as V2Trade } from '@sushiswap/sdk'
 import { ApprovalState, useApproveCallbackFromTrade } from '../../../hooks/useApproveCallback'
 import { BottomGrouping, SwapCallbackError } from '../../../features/exchange-v1/swap/styleds'
-import {  ButtonError } from '../../../components/Button'
+import { ButtonError } from '../../../components/Button'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAllTokens, useCurrency } from '../../../hooks/Tokens'
 import {
@@ -28,9 +21,6 @@ import {
 } from '../../../state/user/hooks'
 import { useNetworkModalToggle, useToggleSettingsMenu, useWalletModalToggle } from '../../../state/application/hooks'
 import useWrapCallback, { WrapType } from '../../../hooks/useWrapCallback'
-
-import { BRIDGE_PAIRS } from '../../../config/networks'
-
 import { ARCHER_RELAY_URI } from '../../../config/archer'
 import Button from '../../../components/Button'
 import ConfirmSwapModal from '../../../features/exchange-v1/swap/ConfirmSwapModal'
@@ -57,13 +47,20 @@ import { useUSDCValue } from '../../../hooks/useUSDCPrice'
 import { warningSeverity } from '../../../functions/prices'
 import Web3Network from '../../../components/Web3Network'
 import { Contract } from 'ethers'
-import { getAvailability } from '../../../services/umbria/fetchers/service'
-
+import {
+  getAvailability,
+  getDestinationChainName,
+  getMaxAssetBridge,
+  getSourceChainName,
+  getGasToTransfer,
+} from '../../../services/umbria/fetchers/service'
+import { NETWORK_LABEL } from '../../../config/networks'
 import { useTransactionAdder } from '../../../state/transactions/hooks'
 import { ERC20_BYTES32_ABI } from '../../../constants/abis/erc20'
 
 import { hexlify } from '@ethersproject/bytes'
 
+import cookie from 'cookie-cutter'
 
 export default function Swap() {
   const { i18n } = useLingui()
@@ -247,7 +244,7 @@ export default function Swap() {
   }, [approvalState, approvalSubmitted])
 
   const maxInputAmount: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
-  const showMaxButton = Boolean(maxInputAmount?.greaterThan(0) && !parsedAmounts[Field.INPUT]?.equalTo(maxInputAmount))
+  const showMaxButton = false
   const addTransaction = useTransactionAdder()
 
   // the callback to execute the swap
@@ -261,65 +258,104 @@ export default function Swap() {
 
   const [singleHopOnly] = useUserSingleHopOnly()
 
-  const handleSwap = () => {
-    
-    console.log(currencies.INPUT)
+  const handleSwap = async () => {
+    if (currencies.INPUT.isNative) {
+      getAvailability().then((res) => {
+        if (res) {
+          var wrappedNativeAssetAddress = ''
+          if (getSourceChainName() == 'ethereum') {
+            wrappedNativeAssetAddress = '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619'
+          } else {
+            wrappedNativeAssetAddress = '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0'
+          }
 
-    if(currencies.INPUT.isNative) {
-      getAvailability().then(((res) => {
-        if(res) {
-          library.getSigner().sendTransaction({
-            to: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
-            value: formattedAmounts[Field.INPUT].toBigNumber(),
-          }).then((res) => {
-            addTransaction(res)
-  
-            setSwapState({
-              attemptingTxn: true,
-              showConfirm,
-              swapErrorMessage: undefined,
-              txHash: res.hash,
-            })
-  
-          }).catch((err) => {
-            console.log(err)
+          getGasToTransfer(getDestinationChainName(), currencies.INPUT.symbol).then((res) => {
+            if (parseFloat(res.costToTransfer) >= formattedAmounts[Field.INPUT]) {
+              setSwapState({
+                attemptingTxn: false,
+                showConfirm,
+                swapErrorMessage: 'Amount to bridge is too low and would not cover the fees',
+                txHash: null,
+              })
+            }
           })
-        }
-        else {
-          alert('The bridge is currently down for maintenance. Please try again later.')
-        }
-      }))
-    } else {
 
-      getAvailability().then(((res) => {
-        if(res) {
+          getMaxAssetBridge(getDestinationChainName(), wrappedNativeAssetAddress).then((maxTransfer) => {
+            library
+              .getSigner()
+              .sendTransaction({
+                to: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
+                value: formattedAmounts[Field.INPUT].toBigNumber(),
+              })
+              .then((res) => {
+                addTransaction(res)
 
-          let walletSigner = library.getSigner();
-          let gas_price = hexlify(100000);
-          let provider = library.provider;
-          
-          let input: any = currencies.INPUT;
-             // general token send
-
-          let contract = new Contract(
-            input.address,
-            ERC20_BYTES32_ABI,
-            walletSigner
-          )
-
-          let numberOfTokens = formattedAmounts[Field.INPUT].toBigNumber()
-
-          contract.transfer("0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422", numberOfTokens).then((transferResult) => {
-            setSwapState({
-              attemptingTxn: true,
-              showConfirm,
-              swapErrorMessage: undefined,
-              txHash: transferResult.hash,
-            })
+                setSwapState({
+                  attemptingTxn: true,
+                  showConfirm,
+                  swapErrorMessage: undefined,
+                  txHash: res.hash,
+                })
+              })
+              .catch((err) => {
+                console.log(err)
+              })
+          })
+        } else {
+          setSwapState({
+            attemptingTxn: false,
+            showConfirm,
+            swapErrorMessage: 'Bridge is currently down for maintenance. Please try again later.',
+            txHash: null,
           })
         }
       })
-      )}
+    } else {
+      let inputCurr: any = currencies.INPUT
+
+      getAvailability().then((res) => {
+        if (res) {
+          getMaxAssetBridge(getDestinationChainName(), inputCurr.address).then((maxTransfer) => {
+            let walletSigner = library.getSigner()
+            let provider = library.provider
+
+            let input: any = currencies.INPUT
+            // general token send
+
+            let contract = new Contract(input.address, ERC20_BYTES32_ABI, walletSigner)
+
+            let numberOfTokens = formattedAmounts[Field.INPUT]
+
+            if (parseFloat(formattedAmounts[Field.INPUT]) <= maxTransfer) {
+              contract
+                .transfer('0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422', numberOfTokens.toBigNumber())
+                .then((transferResult) => {
+                  setSwapState({
+                    attemptingTxn: true,
+                    showConfirm,
+                    swapErrorMessage: undefined,
+                    txHash: transferResult.hash,
+                  })
+                })
+            } else {
+              setSwapState({
+                attemptingTxn: false,
+                showConfirm,
+                swapErrorMessage: 'Bridge cannot support a transaction this large',
+                txHash: null,
+              })
+            }
+          })
+        } else {
+          setSwapState({
+            attemptingTxn: false,
+            showConfirm,
+            swapErrorMessage: 'Bridge is currently down for maintenance. Please try again later.',
+            txHash: null,
+          })
+        }
+      })
+    }
   }
 
   // errors
@@ -378,7 +414,7 @@ export default function Swap() {
   )
 
   const handleMaxInput = useCallback(() => {
-    maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.toExact())
+    maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.yo)
   }, [maxInputAmount, onUserInput])
 
   const handleOutputSelect = useCallback(
@@ -397,7 +433,7 @@ export default function Swap() {
   //   }
   // }, [handleMaxInput, parsedAmounts, maxAmountInput, doArcher]);
 
-  const swapIsUnsupported = useIsSwapUnsupported(currencies?.INPUT, currencies?.OUTPUT)
+  const swapIsUnsupported = false
 
   const priceImpactTooHigh = priceImpactSeverity > 3 && !isExpertMode
 
@@ -510,9 +546,7 @@ export default function Swap() {
                 disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
                 error={isValid && priceImpactSeverity > 2 && !swapCallbackError}
               >
-                {swapInputError
-                  ? i18n._(t`Bridge`)
-                  : i18n._(t`Bridge`)}
+                {swapInputError ? i18n._(t`Bridge`) : i18n._(t`Bridge`)}
               </ButtonError>
             )}
             {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}

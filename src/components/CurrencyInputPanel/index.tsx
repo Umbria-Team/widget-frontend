@@ -154,7 +154,6 @@ export default function CurrencyInputPanel({
                 id="token-amount-input"
                 value={value}
                 onUserInput={(val) => {
-                  console.log(val)
                   onUserInput(val)
                 }}
               />

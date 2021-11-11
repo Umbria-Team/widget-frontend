@@ -45,7 +45,6 @@ interface useFarmsProps {
   chainId: number
 }
 
-
 export function useMasterChefV1PairAddresses() {
   const { chainId } = useActiveWeb3React()
   const shouldFetch = chainId && chainId === ChainId.MAINNET
