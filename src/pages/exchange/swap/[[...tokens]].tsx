@@ -414,7 +414,7 @@ export default function Swap() {
   )
 
   const handleMaxInput = useCallback(() => {
-    maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.yo)
+    //maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.)
   }, [maxInputAmount, onUserInput])
 
   const handleOutputSelect = useCallback(
