@@ -23,48 +23,90 @@ export const getDestinationChainName = function () {
   return null
 }
 
-export const getFee = async (chain: string) => {
-  const response = await fetch(`https://bridgeapi.umbria.network/api/bridge/getGasPrice/?network=${chain}`)
-  const json = await response.json()
+export const getAssetPriceUSD = async (ticker: string) => {
+  const prices = await getAssetPricesUSD()
+  return prices[ticker]
+}
 
-  return json
+export const getAssetPricesUSD = async () => {
+  try {
+    const response = await fetch(`https://bridgeapi.umbria.network/api/getAllPrices/`)
+    const json = await response.json()
+
+    let resultArray = []
+    json.forEach((result) => {
+      resultArray[result.ticker] = result.currentPrice
+    })
+    return resultArray
+  } catch (ex) {
+    return []
+  }
 }
 
 export const getGasToTransfer = async (network: string, ticker: string) => {
+  try {
+    const response = await fetch(
+      `https://bridgeapi.umbria.network/api/bridge/getGasToTransfer/?network=${network}&ticker=${ticker}`
+    )
+    const json = await response.json()
+
+    return json
+  } catch (ex) {
+    return 0
+  }
+}
+
+export const getGasInNativeTokenPrice = async (network: string, ticker: string) => {
   const response = await fetch(
     `https://bridgeapi.umbria.network/api/bridge/getGasToTransfer/?network=${network}&ticker=${ticker}`
   )
+
   const json = await response.json()
 
-  return json
+  let costToTransferEth = parseFloat(json.costToTransfer)
+
+  let ethPrice = await getAssetPriceUSD('ETH')
+
+  let tokenPrice = await getAssetPriceUSD(ticker)
+
+  let ethToTokenRatio = ethPrice / tokenPrice
+
+  let costToTransferToken = ethToTokenRatio * costToTransferEth
+
+  let costToTransferTokenWithLiquidityProviderFee = costToTransferToken * 1.006
+
+  return costToTransferTokenWithLiquidityProviderFee
 }
 
 export const getTransactionDetails = async (transactionHash: string) => {
-  const response = await fetch(
-    `https://bridgeapi.umbria.network/api/bridge/getTransactionInfo/?txhash=${transactionHash}`
-  )
-  const json = await response.json()
+  try {
+    const response = await fetch(
+      `https://bridgeapi.umbria.network/api/bridge/getTransactionInfo/?txhash=${transactionHash}`
+    )
+    const json = await response.json()
 
-  return json
-}
-
-export const getFeeForTransactionType = async (network: string, ticker: string) => {
-  const response = await fetch(
-    `https://bridgeapi.umbria.network/api/bridge/getGasToTransfer/?network=${network}&ticker=${ticker}`
-  )
-  const json = await response.json()
-  return json
+    return json
+  } catch (ex) {
+    return {}
+  }
 }
 
 export const getMaxAssetBridge = async (destinationNetwork: string, ticker: string) => {
-  const response = await fetch(
-    `https://bridgeapi.umbria.network/api/bridge/getAvailableLiquidity/?network=${destinationNetwork}&currency=${ticker}`
-  )
+  try {
+    const response = await fetch(
+      `https://bridgeapi.umbria.network/api/bridge/getAvailableLiquidity/?network=${destinationNetwork}&currency=${ticker}`
+    )
 
-  console.log(destinationNetwork, ticker)
+    console.log(destinationNetwork, ticker)
 
-  const json = await response.json()
-  return json.totalLiquidity * 0.2
+    const json = await response.json()
+    if (json && json.totalLiquidity) {
+      return json.totalLiquidity * 0.2
+    }
+    return 0
+  } catch (ex) {
+    return 0
+  }
 }
 
 export const getAvailability = async () => {

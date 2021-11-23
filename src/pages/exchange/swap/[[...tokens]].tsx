@@ -270,36 +270,36 @@ export default function Swap() {
           }
 
           getGasToTransfer(getDestinationChainName(), currencies.INPUT.symbol).then((res) => {
-            if (parseFloat(res.costToTransfer) >= formattedAmounts[Field.INPUT]) {
-              setSwapState({
-                attemptingTxn: false,
-                showConfirm,
-                swapErrorMessage: 'Amount to bridge is too low and would not cover the fees',
-                txHash: null,
-              })
-            }
-          })
-
-          getMaxAssetBridge(getDestinationChainName(), wrappedNativeAssetAddress).then((maxTransfer) => {
-            library
-              .getSigner()
-              .sendTransaction({
-                to: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
-                value: formattedAmounts[Field.INPUT].toBigNumber(),
-              })
-              .then((res) => {
-                addTransaction(res)
-
+            getMaxAssetBridge(getDestinationChainName(), wrappedNativeAssetAddress).then((maxTransfer) => {
+              if (parseFloat(res.costToTransfer) >= formattedAmounts[Field.INPUT]) {
                 setSwapState({
-                  attemptingTxn: true,
+                  attemptingTxn: false,
                   showConfirm,
-                  swapErrorMessage: undefined,
-                  txHash: res.hash,
+                  swapErrorMessage: 'Amount to bridge is too low and would not cover the fees',
+                  txHash: null,
                 })
-              })
-              .catch((err) => {
-                console.log(err)
-              })
+              } else {
+                library
+                  .getSigner()
+                  .sendTransaction({
+                    to: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
+                    value: formattedAmounts[Field.INPUT].toBigNumber(),
+                  })
+                  .then((res) => {
+                    addTransaction(res)
+
+                    setSwapState({
+                      attemptingTxn: true,
+                      showConfirm,
+                      swapErrorMessage: undefined,
+                      txHash: res.hash,
+                    })
+                  })
+                  .catch((err) => {
+                    console.log(err)
+                  })
+              }
+            })
           })
         } else {
           setSwapState({

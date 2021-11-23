@@ -1,6 +1,6 @@
 import { AlertTriangle, ArrowDown } from 'react-feather'
 import { Currency, Percent, TradeType, Trade as V2Trade } from '@sushiswap/sdk'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { isAddress, shortenAddress } from '../../../functions'
 
 import { AdvancedSwapDetails } from './AdvancedSwapDetails'
@@ -15,6 +15,11 @@ import { useActiveWeb3React } from '../../../hooks/useActiveWeb3React'
 import { useLingui } from '@lingui/react'
 import { useUSDCValue } from '../../../hooks/useUSDCPrice'
 import { warningSeverity } from '../../../functions'
+import { updateOutputAmount } from '../../../state/application/actions'
+import { useAppDispatch } from '../../../state/hooks'
+
+import { getGasInNativeTokenPrice, getDestinationChainName } from '../../../services/umbria/fetchers/service'
+import { useOutputAmount, useBlockNumber, useCloseModals } from '../../../state/application/hooks'
 
 export default function SwapModalHeader({
   trade,
@@ -38,7 +43,39 @@ export default function SwapModalHeader({
   const fiatValueInput = useUSDCValue(trade.inputAmount)
   const fiatValueOutput = useUSDCValue(trade.outputAmount)
 
+  const feePercentage = 0.006
+
+  const dispatch = useAppDispatch()
+
+  let inputAmount = parseFloat(trade.inputAmount.toSignificant(6))
+  let outputFee = inputAmount * 0.005
+  const outputAmount = useOutputAmount()
+
+  let gasAmount = 0
+
   const priceImpactSeverity = warningSeverity(trade.priceImpact)
+  let failed = false
+
+  let outputAmount1 = 9000
+
+  useEffect(() => {
+    async function getToken() {
+      getGasInNativeTokenPrice(getDestinationChainName(), trade.inputAmount.currency.symbol).then(
+        (costToTransferToken) => {
+          if (costToTransferToken >= inputAmount) {
+            console.log(outputAount)
+          } else {
+            dispatch(
+              updateOutputAmount({ amount: costToTransferToken, gasFee: 0, liquidityProviderFee: 0.005 * inputAmount })
+            )
+          }
+        }
+      )
+    }
+    getToken()
+  }, [])
+
+  const outputAount = useOutputAmount()
 
   return (
     <div className="grid gap-4">
@@ -63,7 +100,7 @@ export default function SwapModalHeader({
                 priceImpactSeverity > 2 ? 'text-red' : 'text-high-emphesis'
               }`}
             >
-              {trade.inputAmount.toSignificant(6)}
+              {!failed ? inputAmount - outputAmount.amount : 0}
             </div>
           </div>
           <div className="ml-3 text-2xl font-medium text-high-emphesis">{trade.inputAmount.currency.symbol}</div>

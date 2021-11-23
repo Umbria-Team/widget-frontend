@@ -14,6 +14,8 @@ import { useLingui } from '@lingui/react'
 import { NETWORK_ICON, NETWORK_LABEL } from '../../../config/networks'
 import cookie from 'cookie-cutter'
 
+import { useOutputAmount } from '../../../state/application/hooks'
+
 export interface AdvancedSwapDetailsProps {
   trade?: V2Trade<Currency, Currency, TradeType>
   allowedSlippage: Percent
@@ -28,6 +30,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
   const intermediateOutput = parseFloat(trade.inputAmount.toSignificant(4))
   const fee = intermediateOutput * 0.002
 
+  const outputAmount = useOutputAmount()
 
   const { realizedLPFee, priceImpact } = useMemo(() => {
     if (!trade) return { realizedLPFee: undefined, priceImpact: undefined }
@@ -46,7 +49,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
             )}
           />
         </span>
-        <p>{fee}</p>
+        <p>{outputAmount.liquidityProviderFee}</p>
       </div>
 
       <div className="flex flex-row items-center justify-between">

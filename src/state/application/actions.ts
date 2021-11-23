@@ -31,6 +31,11 @@ export enum ApplicationModal {
   NETWORK,
 }
 
+export const updateOutputAmount = createAction<{
+  amount: number
+  gasFee: number
+  liquidityProviderFee: number
+}>('application/updateOutputAmount')
 export const updateBlockNumber = createAction<{
   chainId: number
   blockNumber: number
