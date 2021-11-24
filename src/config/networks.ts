@@ -49,7 +49,7 @@ export const NETWORK_ICON = {
   [ChainId.MOONRIVER]: Moonriver,
 }
 
-export const BRIDGE_ADDRESS_DEFAULT = '0xA2C1246Fc0bd728E23F76A6cCAbfB2685B2105F3'
+export const BRIDGE_ADDRESS_DEFAULT = '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422'
 
 export const BRIDGE_PAIRS = [
   {
