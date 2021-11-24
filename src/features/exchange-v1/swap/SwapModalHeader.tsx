@@ -54,21 +54,25 @@ export default function SwapModalHeader({
   let gasAmount = 0
 
   const priceImpactSeverity = warningSeverity(trade.priceImpact)
-  let failed = false
-
-  let outputAmount1 = 9000
+  let transactionTooSmall = false
 
   useEffect(() => {
     async function getToken() {
       getGasInNativeTokenPrice(getDestinationChainName(), trade.inputAmount.currency.symbol).then(
         (costToTransferToken) => {
           if (costToTransferToken >= inputAmount) {
-            console.log(outputAount)
+            transactionTooSmall = false
           } else {
-            dispatch(
-              updateOutputAmount({ amount: costToTransferToken, gasFee: 0, liquidityProviderFee: 0.005 * inputAmount })
-            )
+            transactionTooSmall = true
           }
+          dispatch(
+            updateOutputAmount({
+              amount: costToTransferToken,
+              gasFee: 0,
+              liquidityProviderFee: 0.005 * inputAmount,
+              transactionTooSmall: transactionTooSmall,
+            })
+          )
         }
       )
     }
@@ -100,7 +104,7 @@ export default function SwapModalHeader({
                 priceImpactSeverity > 2 ? 'text-red' : 'text-high-emphesis'
               }`}
             >
-              {!failed ? inputAmount - outputAmount.amount : 0}
+              {outputAmount.transactionTooSmall ? inputAmount - outputAmount.amount : 0}
             </div>
           </div>
           <div className="ml-3 text-2xl font-medium text-high-emphesis">{trade.inputAmount.currency.symbol}</div>

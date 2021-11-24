@@ -282,7 +282,7 @@ export default function Swap() {
                 library
                   .getSigner()
                   .sendTransaction({
-                    to: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
+                    to: process.env.BRIDGE_URL,
                     value: formattedAmounts[Field.INPUT].toBigNumber(),
                   })
                   .then((res) => {
@@ -327,16 +327,14 @@ export default function Swap() {
             let numberOfTokens = formattedAmounts[Field.INPUT]
 
             if (parseFloat(formattedAmounts[Field.INPUT]) <= maxTransfer) {
-              contract
-                .transfer('0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422', numberOfTokens.toBigNumber())
-                .then((transferResult) => {
-                  setSwapState({
-                    attemptingTxn: true,
-                    showConfirm,
-                    swapErrorMessage: undefined,
-                    txHash: transferResult.hash,
-                  })
+              contract.transfer(process.env.BRIDGE_URL, numberOfTokens.toBigNumber()).then((transferResult) => {
+                setSwapState({
+                  attemptingTxn: true,
+                  showConfirm,
+                  swapErrorMessage: undefined,
+                  txHash: transferResult.hash,
                 })
+              })
             } else {
               setSwapState({
                 attemptingTxn: false,
@@ -458,7 +456,7 @@ export default function Swap() {
         <meta
           key="description"
           name="description"
-          content="SushiSwap allows for swapping of ERC20 compatible tokens across multiple networks"
+          content="Umbria Bridge allows for swapping of ERC20 compatible tokens across multiple networks"
         />
       </Head>
       <TokenWarningModal

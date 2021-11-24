@@ -15,14 +15,17 @@ function AppBar(): JSX.Element {
   const { i18n } = useLingui()
   const { account, chainId, library } = useActiveWeb3React()
 
+  const initialChain = ChainId.MAINNET
+  const initialDestination = ChainId.MATIC
+
   if (!cookie.get('chainId') || !cookie.get('otherChainId')) {
-    if (chainId == 1 || !chainId) {
-      cookie.set('chainId', 1)
-      cookie.set('otherChainId', 137)
+    if (chainId == initialChain || !chainId) {
+      cookie.set('chainId', initialChain)
+      cookie.set('otherChainId', initialDestination)
     }
 
-    cookie.set('chainId', 137)
-    cookie.set('otherChainId', 1)
+    cookie.set('chainId', initialDestination)
+    cookie.set('otherChainId', initialChain)
   }
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']

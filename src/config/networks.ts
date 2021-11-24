@@ -53,22 +53,12 @@ export const BRIDGE_PAIRS = [
   {
     source: ChainId.MATIC,
     destination: ChainId.MAINNET,
-    address: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
+    address: process.env.BRIDGE_ADDRESS,
   },
   {
     source: ChainId.MAINNET,
     destination: ChainId.MATIC,
-    address: '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422',
-  },
-  {
-    source: ChainId.MAINNET,
-    destination: ChainId.BSC,
-    address: '0xa781a3bab62cdd3031d90c4c4740dbc719a3921c',
-  },
-  {
-    source: ChainId.BSC,
-    destination: ChainId.MAINNET,
-    address: '0xa781a3bab62cdd3031d90c4c4740dbc719a3921c',
+    address: process.env.BRIDGE_ADDRESS,
   },
 ]
 

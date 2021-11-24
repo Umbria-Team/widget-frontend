@@ -15,7 +15,12 @@ export function useModalOpen(modal: ApplicationModal): boolean {
   return openModal === modal
 }
 
-export function useOutputAmount(): { amount: number; gasFee: number; liquidityProviderFee: number } {
+export function useOutputAmount(): {
+  amount: number
+  gasFee: number
+  liquidityProviderFee: number
+  transactionTooSmall: boolean
+} {
   const outputAmount = useSelector((state: AppState) => state.application.outputAmount)
   return outputAmount
 }
@@ -24,14 +29,15 @@ export function useSetOutputAmount(
   amount: number,
   gasFee: number,
   liquidityProviderFee: number,
-  blockUpdated: number
+  transactionTooSmall: boolean
 ): () => void {
   const outputAmount = useSelector((state: AppState) => state.application.outputAmount)
 
-  if (outputAmount.blockUpdated != blockUpdated) {
-    const dispatch = useDispatch<AppDispatch>()
-    return useCallback(() => dispatch(updateOutputAmount({ amount, gasFee, liquidityProviderFee })), [dispatch])
-  }
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback(
+    () => dispatch(updateOutputAmount({ amount, gasFee, liquidityProviderFee, transactionTooSmall })),
+    [dispatch]
+  )
 }
 
 export function useToggleModal(modal: ApplicationModal): () => void {

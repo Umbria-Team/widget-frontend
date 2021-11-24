@@ -8,6 +8,8 @@ import TransactionConfirmationModal, {
 import SwapModalFooter from './SwapModalFooter'
 import SwapModalHeader from './SwapModalHeader'
 
+import { useOutputAmount } from '../../../state/application/hooks'
+
 /**
  * Returns true if the trade requires a confirmation of details before we can submit it
  * @param args either a pair of V2 trades or a pair of V3 trades
@@ -46,6 +48,8 @@ export default function ConfirmSwapModal({
   swapErrorMessage: string | undefined
   onDismiss: () => void
 }) {
+  const outputAmount = useOutputAmount()
+
   const showAcceptChanges = useMemo(
     () => Boolean(trade && originalTrade && tradeMeaningfullyDiffers(trade, originalTrade)),
     [originalTrade, trade]
@@ -69,8 +73,8 @@ export default function ConfirmSwapModal({
       <SwapModalFooter
         onConfirm={onConfirm}
         trade={trade}
-        disabledConfirm={showAcceptChanges}
-        swapErrorMessage={swapErrorMessage}
+        disabledConfirm={!useOutputAmount().transactionTooSmall}
+        swapErrorMessage={useOutputAmount().transactionTooSmall ? swapErrorMessage : 'Transaction is too small!'}
       />
     ) : null
   }, [onConfirm, showAcceptChanges, swapErrorMessage, trade])
@@ -80,17 +84,14 @@ export default function ConfirmSwapModal({
 
   const pendingText2 = ''
   const confirmationContent = useCallback(
-    () =>
-      swapErrorMessage ? (
-        <TransactionErrorContent onDismiss={onDismiss} message={swapErrorMessage} />
-      ) : (
-        <ConfirmationModalContent
-          title="Confirm Bridge"
-          onDismiss={onDismiss}
-          topContent={modalHeader}
-          bottomContent={modalBottom}
-        />
-      ),
+    () => (
+      <ConfirmationModalContent
+        title="Confirm Bridge"
+        onDismiss={onDismiss}
+        topContent={modalHeader}
+        bottomContent={modalBottom}
+      />
+    ),
     [onDismiss, modalBottom, modalHeader, swapErrorMessage]
   )
 

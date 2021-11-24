@@ -1,6 +1,6 @@
 {
-  "name": "sushiswap-interface",
-  "version": "1.0.0",
+  "name": "umbria-bridge-widget",
+  "version": "0.8.3",
   "private": true,
   "scripts": {
     "analyze": "ANALYZE=true yarn build && serve .next -n",

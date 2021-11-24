@@ -12,7 +12,7 @@ import { Web3Provider } from '@ethersproject/providers'
 const RPC = {
   [ChainId.MAINNET]: 'https://rpc.umbria.network/eth',
   [ChainId.MATIC]: 'https://rpc.umbria.network/matic',
-  //[ChainId.BSC]: 'https://rpc.umbria.network/bsc',
+  [ChainId.BSC]: 'https://rpc.umbria.network/bsc',
 }
 
 export function getNetwork(defaultChainId, urls = RPC) {
@@ -36,6 +36,7 @@ export function getNetworkLibrary(): Web3Provider {
 const supportedChainIds = [
   1, // mainnet
   137, // matic
+  80001, // mumbai
   56, // binance smart chain
 ]
 
