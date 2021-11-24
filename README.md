@@ -22,3 +22,9 @@ We are currently in the process of adding Binance Smart Chain.
 Before sending, this codebase calls a numer of our back-end APIs to ensure that a transaction is supported (i.e. we have enough liquidity, it is a supported asset and the bridge is not under maintenance). In order to use these APIs, a key will be required on a per-project / per-domain basis to prevent abuse. You can get one of these by requesting it on our [discord](https://discord.umbria.network/)
 
 After a user makes a payment is made and confirmed and our oracle detects the payment, the same amount (minus a fee) is sent back from our bridge wallet address back to the same address the payment was work, but on the other network. The fee is used to pay our liquidity providers, as well as the gas fee for us to send the transaction to the user.
+
+## Support
+
+The best place to reach us for support is our [discord](https://discord.umbria.network/).
+
+## License
