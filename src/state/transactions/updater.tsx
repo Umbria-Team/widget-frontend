@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import { useCallback, useEffect, useMemo } from 'react'
 
 import { ChainId } from '@sushiswap/sdk'
-import { updateBlockNumber } from '../application/actions'
+import { updateBlockNumber, setOpenModal } from '../application/actions'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 
 interface TxInterface {
@@ -109,6 +109,8 @@ export default function Updater(): null {
                 hash
               )
 
+              dispatch(setOpenModal(null));
+
               // the receipt was fetched before the block, fast forward to that block to trigger balance updates
               if (receipt.blockNumber > lastBlockNumber) {
                 dispatch(updateBlockNumber({ chainId, blockNumber: receipt.blockNumber }))
@@ -118,6 +120,7 @@ export default function Updater(): null {
             }
           })
           .catch((error) => {
+            console.log(error);
             if (!error.isCancelledError) {
               console.error(`Failed to check transaction hash: ${hash}`, error)
             }

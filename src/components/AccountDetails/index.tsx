@@ -111,34 +111,6 @@ const AccountDetails: FC<AccountDetailsProps> = ({
         <ModalHeader title="Account" onClose={toggleWalletModal} />
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            {formatConnectorName()}
-            <div className="flex space-x-3">
-              {connector === injected &&
-                connector.constructor.name !== 'WalletLinkConnector' &&
-                connector.constructor.name !== 'BscConnector' &&
-                connector.constructor.name !== 'KeystoneConnector' && (
-                  <Button
-                    variant="outlined"
-                    color="gray"
-                    size="xs"
-                    onClick={() => {
-                      ;(connector as any).close()
-                    }}
-                  >
-                    {i18n._(t`Disconnect`)}
-                  </Button>
-                )}
-              <Button
-                variant="outlined"
-                color="gray"
-                size="xs"
-                onClick={() => {
-                  openOptions()
-                }}
-              >
-                {i18n._(t`Change`)}
-              </Button>
-            </div>
           </div>
           <div id="web3-account-identifier-row" className="flex flex-col justify-center space-y-3">
             {ENSName ? (

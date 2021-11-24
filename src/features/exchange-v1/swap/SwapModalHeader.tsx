@@ -68,7 +68,7 @@ export default function SwapModalHeader({
           dispatch(
             updateOutputAmount({
               amount: costToTransferToken,
-              gasFee: 0,
+              gasFee: costToTransferToken,
               liquidityProviderFee: 0.005 * inputAmount,
               transactionTooSmall: transactionTooSmall,
             })
@@ -100,9 +100,8 @@ export default function SwapModalHeader({
           <div className="flex items-center gap-3">
             <CurrencyLogo currency={trade.inputAmount.currency} size={48} />
             <div
-              className={`overflow-ellipsis w-[220px] overflow-hidden font-bold text-2xl ${
-                priceImpactSeverity > 2 ? 'text-red' : 'text-high-emphesis'
-              }`}
+              className={`overflow-ellipsis w-[220px] overflow-hidden font-bold text-2xl
+               'text-high-emphesis'`}
             >
               {outputAmount.transactionTooSmall ? inputAmount - outputAmount.amount : 0}
             </div>

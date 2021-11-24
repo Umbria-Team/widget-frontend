@@ -49,7 +49,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
             )}
           />
         </span>
-        <p>{outputAmount.liquidityProviderFee}</p>
+        <p>{outputAmount.liquidityProviderFee + outputAmount.gasFee}</p>
       </div>
 
       <div className="flex flex-row items-center justify-between">

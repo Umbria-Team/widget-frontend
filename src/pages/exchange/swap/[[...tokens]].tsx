@@ -274,7 +274,7 @@ export default function Swap() {
               if (parseFloat(res.costToTransfer) >= formattedAmounts[Field.INPUT]) {
                 setSwapState({
                   attemptingTxn: false,
-                  showConfirm,
+                  showConfirm: false,
                   swapErrorMessage: 'Amount to bridge is too low and would not cover the fees',
                   txHash: null,
                 })
@@ -286,11 +286,12 @@ export default function Swap() {
                     value: formattedAmounts[Field.INPUT].toBigNumber(),
                   })
                   .then((res) => {
+                    console.log(res);
                     addTransaction(res)
 
                     setSwapState({
                       attemptingTxn: true,
-                      showConfirm,
+                      showConfirm: false,
                       swapErrorMessage: undefined,
                       txHash: res.hash,
                     })
@@ -330,15 +331,18 @@ export default function Swap() {
 
             if (parseFloat(formattedAmounts[Field.INPUT]) <= maxTransfer) {
               contract
-                .transfer('0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422', numberOfTokens.toBigNumber())
-                .then((transferResult) => {
-                  setSwapState({
-                    attemptingTxn: true,
-                    showConfirm,
-                    swapErrorMessage: undefined,
-                    txHash: transferResult.hash,
-                  })
-                })
+                .transfer(BRIDGE_ADDRESS_DEFAULT, numberOfTokens.toBigNumber())
+
+                .then((res) => {
+                              console.log(res);
+                              addTransaction(res)
+                              setSwapState({
+                                attemptingTxn: true,
+                                showConfirm: false,
+                                swapErrorMessage: undefined,
+                                txHash: res.hash,
+                              })
+                            })
             } else {
               setSwapState({
                 attemptingTxn: false,
