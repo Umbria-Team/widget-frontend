@@ -21,7 +21,6 @@ interface ConfirmationPendingContentProps {
   onDismiss: () => void
   pendingText: string
   pendingText2: string
-  visible: boolean
 }
 
 export const ConfirmationPendingContent: FC<ConfirmationPendingContentProps> = ({
