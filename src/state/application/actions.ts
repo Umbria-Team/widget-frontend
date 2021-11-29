@@ -44,6 +44,7 @@ export const updateOutputAmount = createAction<{
   gasFee: number
   liquidityProviderFee: number
   transactionTooSmall: boolean
+  outputCurrencySymbol: string
 }>('application/updateOutputAmount')
 export const updateBlockNumber = createAction<{
   chainId: number

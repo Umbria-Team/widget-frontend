@@ -39,6 +39,7 @@ export function useOutputAmount(): {
   gasFee: number
   liquidityProviderFee: number
   transactionTooSmall: boolean
+  outputCurrencySymbol: string
 } {
   const outputAmount = useSelector((state: AppState) => state.application.outputAmount)
   return outputAmount

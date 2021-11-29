@@ -5,6 +5,8 @@ import TransactionConfirmationModal, {
   TransactionErrorContent,
 } from '../../../modals/TransactionConfirmationModal'
 
+import { useETHBalances } from '../../../state/wallet/hooks'
+
 import SwapModalFooter from './SwapModalFooter'
 import SwapModalHeader from './SwapModalHeader'
 
@@ -106,7 +108,7 @@ export default function ConfirmSwapModal({
       content={confirmationContent}
       pendingText={pendingText}
       pendingText2={pendingText2}
-      currencyToAdd={trade?.outputAmount.currency}
+      currencyToAdd={'test'}
     />
   )
 }

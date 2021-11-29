@@ -76,12 +76,26 @@ export default function SwapModalHeader({
         } else {
           transactionTooSmall = true
         }
+
+        let outputCurrencySymbol = trade.inputAmount.currency.symbol
+
+        if (trade.inputAmount.currency.symbol == 'ETH') {
+          outputCurrencySymbol = 'WETH (On Polygon)'
+        } else if (trade.inputAmount.currency.symbol == 'WETH') {
+          outputCurrencySymbol = 'ETH'
+        } else if (trade.inputAmount.currency.symbol == 'MATIC') {
+          outputCurrencySymbol = 'WMATIC (On Ethereum)'
+        } else if (trade.inputAmount.currency.symbol == 'WMATIC') {
+          outputCurrencySymbol = 'MATIC'
+        }
+
         dispatch(
           updateOutputAmount({
             amount: costToTransferToken,
             gasFee: costToTransferToken,
             liquidityProviderFee: 0.005 * inputAmount,
             transactionTooSmall: transactionTooSmall,
+            outputCurrencySymbol: outputCurrencySymbol,
           })
         )
       }
@@ -112,10 +126,10 @@ export default function SwapModalHeader({
               className={`overflow-ellipsis w-[220px] overflow-hidden font-bold text-2xl
                'text-high-emphesis'`}
             >
-              {outputAmount.transactionTooSmall ? inputAmount - outputAmount.amount : 0}
+              {outputAmount.transactionTooSmall ? (inputAmount - outputAmount.amount).toFixed(6) : 0}
             </div>
           </div>
-          <div className="ml-3 text-2xl font-medium text-high-emphesis">{trade.inputAmount.currency.symbol}</div>
+          <div className="ml-3 text-2xl font-medium text-high-emphesis">{outputAmount.outputCurrencySymbol}</div>
         </div>
       </div>
 
