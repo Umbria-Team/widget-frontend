@@ -61,41 +61,36 @@ export default function SwapModalHeader({
 
   let updatedBlock = 0
 
-  const priceImpactSeverity = warningSeverity(trade.priceImpact)
   let transactionTooSmall = false
 
-  getNetworkLibrary()
-    .getBlockNumber()
-    .then((blockNumber) => {
-      if (updatedBlock < blockNumber) {
-        tokenUpdated = false
-      }
-    })
+  useEffect(() => {
+    // Update debounced value after delay
 
-  async function getToken() {
-    getGasInNativeTokenPrice(NETWORK_LABEL[destinationChain], trade.inputAmount.currency.symbol).then(
-      (costToTransferToken) => {
-        if (costToTransferToken >= inputAmount) {
-          transactionTooSmall = false
-        } else {
-          transactionTooSmall = true
+    // Cancel the timeout if value changes (also on delay change or unmount)
+    // This is how we prevent debounced value from updating if value is changed ...
+    // .. within the delay period. Timeout gets cleared and restarted.
+    return () => {
+      getGasInNativeTokenPrice(NETWORK_LABEL[destinationChain], trade.inputAmount.currency.symbol).then(
+        (costToTransferToken) => {
+          if (costToTransferToken >= inputAmount) {
+            transactionTooSmall = false
+          } else {
+            transactionTooSmall = true
+          }
+          dispatch(
+            updateOutputAmount({
+              amount: costToTransferToken,
+              gasFee: costToTransferToken,
+              liquidityProviderFee: 0.005 * inputAmount,
+              transactionTooSmall: transactionTooSmall,
+            })
+          )
         }
-        dispatch(
-          updateOutputAmount({
-            amount: costToTransferToken,
-            gasFee: costToTransferToken,
-            liquidityProviderFee: 0.005 * inputAmount,
-            transactionTooSmall: transactionTooSmall,
-          })
-        )
-      }
-    )
-  }
+      )
+    }
+  }, [])
 
-  if (!tokenUpdated) {
-    tokenUpdated = true
-    getToken()
-  }
+  const priceImpactSeverity = warningSeverity(trade.priceImpact)
 
   return (
     <div className="grid gap-4">

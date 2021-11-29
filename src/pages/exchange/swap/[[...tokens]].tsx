@@ -19,7 +19,13 @@ import {
   useUserSlippageTolerance,
   useUserTransactionTTL,
 } from '../../../state/user/hooks'
-import { useNetworkModalToggle, useToggleSettingsMenu, useWalletModalToggle } from '../../../state/application/hooks'
+import {
+  useDestinationChain,
+  useNetworkModalToggle,
+  useSourceChain,
+  useToggleSettingsMenu,
+  useWalletModalToggle,
+} from '../../../state/application/hooks'
 import useWrapCallback, { WrapType } from '../../../hooks/useWrapCallback'
 import { ARCHER_RELAY_URI } from '../../../config/archer'
 import Button from '../../../components/Button'
@@ -49,7 +55,6 @@ import Web3Network from '../../../components/Web3Network'
 import { Contract } from 'ethers'
 import {
   getAvailability,
-  getDestinationChainName,
   getMaxAssetBridge,
   getSourceChainName,
   getGasToTransfer,
@@ -69,6 +74,9 @@ export default function Swap() {
   const { i18n } = useLingui()
 
   const loadedUrlParams = useDefaultsFromURLSearch()
+
+  const destinationChain = useDestinationChain()
+  const sourceChain = useSourceChain()
 
   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [
@@ -288,14 +296,17 @@ export default function Swap() {
       getAvailability().then((res) => {
         if (res) {
           var wrappedNativeAssetAddress = ''
-          if (getSourceChainName() == 'ethereum') {
+
+          const destinationChainName = NETWORK_LABEL[destinationChain]
+
+          if (destinationChainName == 'ethereum') {
             wrappedNativeAssetAddress = '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619'
           } else {
             wrappedNativeAssetAddress = '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0'
           }
 
-          getGasToTransfer(getDestinationChainName(), currencies.INPUT.symbol).then((res) => {
-            getMaxAssetBridge(getSourceChainName(), wrappedNativeAssetAddress).then((maxTransfer) => {
+          getGasToTransfer(destinationChainName, currencies.INPUT.symbol).then((res) => {
+            getMaxAssetBridge(destinationChain, wrappedNativeAssetAddress).then((maxTransfer) => {
               if (parseFloat(res.costToTransfer) >= formattedAmounts[Field.INPUT]) {
                 setSwapState({
                   attemptingTxn: false,
@@ -341,7 +352,9 @@ export default function Swap() {
 
       getAvailability().then((res) => {
         if (res) {
-          getMaxAssetBridge(getSourceChainName(), inputCurr.address).then((maxTransfer) => {
+          const destinationChainName = NETWORK_LABEL[sourceChain]
+
+          getMaxAssetBridge(destinationChainName, inputCurr.address).then((maxTransfer) => {
             let walletSigner = library.getSigner()
             let provider = library.provider
 
