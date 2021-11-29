@@ -39,6 +39,7 @@ export const FANTOM: { [key: string]: Token } = {
 export const MATIC: { [key: string]: Token } = {
   USDC: new Token(ChainId.MATIC, '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', 6, 'USDC', 'USD Coin'),
   WBTC: new Token(ChainId.MATIC, '0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6', 8, 'WBTC', 'Wrapped Bitcoin'),
+  GHST: new Token(ChainId.MATIC, '0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7', 18, 'GHST', 'GHST'),
   UMBR: new Token(ChainId.MATIC, '0x2e4b0fb46a46c90cb410fe676f24e466753b469f', 18, 'UMBR', 'UMBR'),
   WETH: new Token(ChainId.MATIC, '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619', 18, 'WETH', 'Wrapped Ether'),
   USDT: new Token(ChainId.MATIC, '0xc2132D05D31c914a87C6611C10748AEb04B58e8F', 6, 'USDT', 'Tether USD'),
@@ -180,9 +181,16 @@ export const XSUSHI_CALL = new Token(
   'XSUSHI 25 Call [31 May 2021]'
 )
 export const WBTC = new Token(ChainId.MAINNET, '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', 8, 'WBTC', 'Wrapped BTC')
-export const UMBR = new Token(ChainId.MATIC, '0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6', 18, 'UMBR', ' UMBR (Eth)')
+export const UMBR = new Token(ChainId.MAINNET, '0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7', 18, 'UMBR', ' UMBR (Eth)')
+export const GHST = new Token(ChainId.MAINNET, '0x3F382DbD960E3a9bbCeaE22651E88158d2791550', 18, 'GHST', ' GHST')
 export const XSUSHI = new Token(ChainId.MAINNET, '0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272', 18, 'xSUSHI', 'SushiBar')
-export const WMATIC = new Token(ChainId.MAINNET, '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0', 18, 'WMATIC', 'Wrapped Matic')
+export const WMATIC = new Token(
+  ChainId.MAINNET,
+  '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
+  18,
+  'WMATIC',
+  'Wrapped Matic'
+)
 export const LIFT = new Token(ChainId.MAINNET, '0xf9209d900f7ad1DC45376a2caA61c78f6dEA53B6', 18, 'LIFT', 'LiftKitchen')
 export const LFBTC = new Token(
   ChainId.MAINNET,

@@ -40,6 +40,7 @@ import {
   UMA,
   USDC,
   UMBR,
+  GHST,
   WMATIC,
   USDP,
   USDT,
@@ -203,8 +204,16 @@ export const CUSTOM_BASES: {
  * Shows up in the currency select for swap and add liquidity
  */
 export const COMMON_BASES: ChainTokenList = {
-  [ChainId.MAINNET]: [...WRAPPED_NATIVE_ONLY[ChainId.MAINNET], USDC, USDT, WBTC, UMBR, WMATIC],
-  [ChainId.MATIC]: [...WRAPPED_NATIVE_ONLY[ChainId.MATIC], MATIC.USDC, MATIC.WBTC, MATIC.WETH, MATIC.USDT, MATIC.UMBR],
+  [ChainId.MAINNET]: [USDC, USDT, WBTC, UMBR, WMATIC, GHST],
+  [ChainId.MATIC]: [
+    ...WRAPPED_NATIVE_ONLY[ChainId.MATIC],
+    MATIC.USDC,
+    MATIC.WBTC,
+    MATIC.WETH,
+    MATIC.USDT,
+    MATIC.UMBR,
+    MATIC.GHST,
+  ],
   [ChainId.FANTOM]: [
     ...WRAPPED_NATIVE_ONLY[ChainId.FANTOM],
     FANTOM.DAI,
