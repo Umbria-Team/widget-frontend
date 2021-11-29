@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { setSourceChain, setDestinationChain } from '../../state/application/actions'
 import { getDestinationChainName, getSourceChainName } from '../../services/umbria/fetchers/service'
+import { ChevronDownIcon } from '@heroicons/react/outline'
 
 function Web3Network(): JSX.Element | null {
   const { account, chainId, library } = useActiveWeb3React()
@@ -53,9 +54,14 @@ function Web3Network(): JSX.Element | null {
         className="grid grid-flow-col px-3 py-2 space-x-2 text-sm rounded-lg pointer-events-auto auto-cols-max bg-dark-1000 text-secondary"
         onClick={() => toggleSourceModal()}
       >
-        <span className="text-primary">
-          Bridging from {NETWORK_LABEL[sourceChain]} to {NETWORK_LABEL[destinationChain]}
-        </span>
+        <div>
+          <span className="text-primary">
+            Bridging from {NETWORK_LABEL[sourceChain]} to {NETWORK_LABEL[destinationChain]}
+          </span>
+        </div>
+        <div>
+          <ChevronDownIcon width={16} height={16} className="ml-2 stroke-current" />
+        </div>
       </div>
       <NetworkModel />
     </div>
