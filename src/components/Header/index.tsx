@@ -42,7 +42,22 @@ function AppBar(): JSX.Element {
                           </div>
                         </>
                       )}
+
                       <Web3Status />
+                    </div>
+                    <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                      <div className="px-3 py-2 text-primary text-bold">
+                        <span>
+                          <a href="https://discord.umbria.network">Discord / Support</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                      <div className="px-3 py-2 text-primary text-bold">
+                        <span>
+                          <a href="https://bridge.umbria.network/docs/docs-page.html">Docs</a>
+                        </span>
+                      </div>
                     </div>
                     <More />
                   </div>

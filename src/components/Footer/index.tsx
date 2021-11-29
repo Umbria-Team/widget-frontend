@@ -13,6 +13,11 @@ const Footer = () => {
     // <footer className="absolute bottom-0 flex items-center justify-between w-screen h-20 p-4 mx-auto text-center text-low-emphesis">
     <footer className="flex-shrink-0 w-full">
       <div className="flex items-center justify-between h-20 px-4">
+        <ExternalLink href="https://www.umbria.network/">
+          <img src="https://bridge.umbria.network/assets/images/logos/UmbriaPretty128x117.png?v1" width="32px"></img>
+          Made with Umbria &lt;3
+        </ExternalLink>
+
         {chainId && chainId in ANALYTICS_URL && (
           <ExternalLink
             id={`analytics-nav-link`}
