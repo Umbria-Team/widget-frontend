@@ -69,25 +69,23 @@ export default function SwapModalHeader({
     // Cancel the timeout if value changes (also on delay change or unmount)
     // This is how we prevent debounced value from updating if value is changed ...
     // .. within the delay period. Timeout gets cleared and restarted.
-    return () => {
-      getGasInNativeTokenPrice(NETWORK_LABEL[destinationChain], trade.inputAmount.currency.symbol).then(
-        (costToTransferToken) => {
-          if (costToTransferToken >= inputAmount) {
-            transactionTooSmall = false
-          } else {
-            transactionTooSmall = true
-          }
-          dispatch(
-            updateOutputAmount({
-              amount: costToTransferToken,
-              gasFee: costToTransferToken,
-              liquidityProviderFee: 0.005 * inputAmount,
-              transactionTooSmall: transactionTooSmall,
-            })
-          )
+    getGasInNativeTokenPrice(NETWORK_LABEL[destinationChain], trade.inputAmount.currency.symbol).then(
+      (costToTransferToken) => {
+        if (costToTransferToken >= inputAmount) {
+          transactionTooSmall = false
+        } else {
+          transactionTooSmall = true
         }
-      )
-    }
+        dispatch(
+          updateOutputAmount({
+            amount: costToTransferToken,
+            gasFee: costToTransferToken,
+            liquidityProviderFee: 0.005 * inputAmount,
+            transactionTooSmall: transactionTooSmall,
+          })
+        )
+      }
+    )
   }, [])
 
   const priceImpactSeverity = warningSeverity(trade.priceImpact)
