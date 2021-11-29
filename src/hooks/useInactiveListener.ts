@@ -1,7 +1,7 @@
 import { injected } from '../config/wallets'
 import { useEffect } from 'react'
 import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
-
+import { setSourceChain, setDestinationChain } from '../state/application/actions'
 /**
  * Use for network and injected - logs user in
  * and out after checking what network theyre on
@@ -15,6 +15,7 @@ function useInactiveListener(suppress = false) {
     if (ethereum && ethereum.on && !active && !error && !suppress) {
       const handleChainChanged = () => {
         // eat errors
+
         activate(injected, undefined, true).catch((error) => {
           console.error('Failed to activate after chain changed', error)
         })

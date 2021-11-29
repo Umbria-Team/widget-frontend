@@ -50,17 +50,21 @@ export const NETWORK_ICON = {
 }
 
 export const BRIDGE_ADDRESS_DEFAULT = '0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422'
+export const BRIDGE_ADDRESS_ETH_MATIC = BRIDGE_ADDRESS_DEFAULT
+export const BRIDGE_ADDRESS_MATIC_ETH = BRIDGE_ADDRESS_DEFAULT
 
 export const BRIDGE_PAIRS = [
   {
     source: ChainId.MATIC,
     destination: ChainId.MAINNET,
     address: BRIDGE_ADDRESS_DEFAULT,
+    enabled: true,
   },
   {
     source: ChainId.MAINNET,
     destination: ChainId.MATIC,
     address: BRIDGE_ADDRESS_DEFAULT,
+    enabled: true,
   },
 ]
 
@@ -72,7 +76,7 @@ export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
   [ChainId.KOVAN]: 'Kovan',
   [ChainId.FANTOM]: 'Fantom',
   [ChainId.FANTOM_TESTNET]: 'Fantom Testnet',
-  [ChainId.MATIC]: 'Matic',
+  [ChainId.MATIC]: 'Polygon',
   [ChainId.MATIC_TESTNET]: 'Matic Testnet',
   [ChainId.XDAI]: 'xDai',
   [ChainId.ARBITRUM]: 'Arbitrum',

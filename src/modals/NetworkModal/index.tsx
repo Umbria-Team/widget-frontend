@@ -10,7 +10,10 @@ import React from 'react'
 import cookie from 'cookie-cutter'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { forEach } from 'lodash'
-import { useWalletModalToggle } from '../../state/application/hooks'
+import { useWalletModalToggle, useSourceChain, useDestinationChain } from '../../state/application/hooks'
+import { setDestinationChain, setSourceChain } from '../../state/application/actions'
+import { useDispatch } from 'react-redux'
+import { getDestinationChainName, getSourceChainName } from '../../services/umbria/fetchers/service'
 
 export const SUPPORTED_NETWORKS: {
   [chainId in ChainId]?: {
@@ -60,7 +63,7 @@ export const SUPPORTED_NETWORKS: {
   },
   [ChainId.MATIC]: {
     chainId: '0x89',
-    chainName: 'Matic',
+    chainName: 'Polygon',
     nativeCurrency: {
       name: 'Matic',
       symbol: 'MATIC',
@@ -191,48 +194,58 @@ export default function NetworkModal(): JSX.Element | null {
 
   let networkButtons = []
 
-  BRIDGE_PAIRS.forEach((pair, index) => {
-    networkButtons.push(
-      <div key={index}>
-        <button
-          key={index}
-          className="w-full col-span-1 p-px rounded bg-gradient-to-r from-blue to-pink"
-          onClick={() => {
-            const params = SUPPORTED_NETWORKS[pair.source]
-            cookie.set('chainId', pair.source)
-            cookie.set('otherChainId', pair.destination)
+  const sourceChain = getSourceChainName()
+  const destinationChain = getDestinationChainName()
 
-            if (!account) {
-              toggleWalletModal()
-            } else {
-              library?.send('wallet_addEthereumChain', [params, account])
-              library?.send('wallet_switchEthereumChain', [{ chainId: '0x1' }, account])
-              toggleNetworkModal()
-            }
-          }}
-        >
-          <div className="flex items-center w-full h-full p-3 space-x-3 rounded bg-dark-1000">
-            <Image
-              src={NETWORK_ICON[pair.source]}
-              alt={`Switch to ${NETWORK_LABEL[pair.source]} Network`}
-              className="rounded-md"
-              width="32px"
-              height="32px"
-            />
-            <div className="font-bold text-primary">
-              {NETWORK_LABEL[pair.source]} to {NETWORK_LABEL[pair.destination]}
+  const dispatch = useDispatch()
+
+  BRIDGE_PAIRS.forEach((pair, index) => {
+    if (pair.enabled) {
+      networkButtons.push(
+        <div key={index}>
+          <button
+            key={index}
+            className="w-full col-span-1 p-px rounded bg-gradient-to-r from-blue to-pink"
+            onClick={() => {
+              const params = SUPPORTED_NETWORKS[pair.source]
+
+              if (!account) {
+                toggleWalletModal()
+              } else {
+                console.log(params)
+                library?.send('wallet_addEthereumChain', [params, account]).then((res) => {})
+                library
+                  ?.send('wallet_switchEthereumChain', [{ chainId: `0x${pair.source}` }, account])
+                  .then((res) => {})
+                dispatch(setDestinationChain({ chainId: pair.destination.toString() }))
+                dispatch(setSourceChain({ chainId: pair.source.toString() }))
+                toggleNetworkModal()
+              }
+            }}
+          >
+            <div className="flex items-center w-full h-full p-3 space-x-3 rounded bg-dark-1000">
+              <Image
+                src={NETWORK_ICON[pair.source]}
+                alt={`Switch to ${NETWORK_LABEL[pair.source]} Network`}
+                className="rounded-md"
+                width="32px"
+                height="32px"
+              />
+              <div className="font-bold text-primary">
+                {NETWORK_LABEL[pair.source]} to {NETWORK_LABEL[pair.destination]}
+              </div>
             </div>
-          </div>
-        </button>
-      </div>
-    )
+          </button>
+        </div>
+      )
+    }
   })
 
   return (
     <Modal isOpen={networkModalOpen} onDismiss={toggleNetworkModal} maxWidth={672}>
       <div className="mb-6 text-lg text-primary">
-        You are currently connected to the <span className="font-bold text-blue">{NETWORK_LABEL[chainId]}</span> network
-        and are bridging to the <span className="font-bold text-blue">{NETWORK_LABEL[cookie.get('otherChainId')]}</span>
+        You are currently connected to the <span className="font-bold text-blue">{sourceChain}</span> network and are
+        bridging to the <span className="font-bold text-blue">{destinationChain}</span>
         {networkButtons}
       </div>
     </Modal>

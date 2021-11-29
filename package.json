@@ -14,11 +14,7 @@
     "circular": "madge --circular src --extensions ts,tsx,js,jsx",
     "unused": "next-unused",
     "prepare": "husky install",
-    "prettier": "prettier --write 'src/**/*.{ts,tsx}'",
-    "cypress": "cypress open",
-    "cypress:headless": "cypress run",
-    "e2e": "start-server-and-test start http://localhost:3000 cypress",
-    "e2e:headless": "start-server-and-test start http://localhost:3000 cypress:headless"
+    "prettier": "prettier --write 'src/**/*.{ts,tsx}'"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

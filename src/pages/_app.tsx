@@ -116,11 +116,7 @@ function MyApp({
         />
         <title key="title">Umbria</title>
 
-        <meta
-          key="description"
-          name="description"
-          content="Move assets cross platform for cheap"
-        />
+        <meta key="description" name="description" content="Move assets cross platform for cheap" />
 
         <meta name="application-name" content="Umbria Bridge" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -136,17 +132,21 @@ function MyApp({
         <meta key="twitter:card" name="twitter:card" content="app" />
         <meta key="twitter:title" name="twitter:title" content="Umbria App" />
         <meta key="twitter:url" name="twitter:url" content="https://bridge.umbria.network" />
+        <meta key="twitter:description" name="twitter:description" content="Move assets cross chain for cheap" />
         <meta
-          key="twitter:description"
-          name="twitter:description"
-          content="Move assets cross chain for cheap"
+          key="twitter:image"
+          name="twitter:image"
+          content="https://umbria.network/assets/images/logos/UmbriaPretty.png"
         />
-        <meta key="twitter:image" name="twitter:image" content="https://umbria.network/assets/images/logos/UmbriaPretty.png" />
         <meta key="twitter:creator" name="twitter:creator" content="@NetworkUmbria" />
         <meta key="og:type" property="og:type" content="website" />
         <meta key="og:site_name" property="og:site_name" content="Umbria App" />
         <meta key="og:url" property="og:url" content="https://widget.umbria.network" />
-        <meta key="og:image" property="og:image" content="https://umbria.network/assets/images/logos/UmbriaPretty.png" />
+        <meta
+          key="og:image"
+          property="og:image"
+          content="https://umbria.network/assets/images/logos/UmbriaPretty.png"
+        />
         <meta
           key="og:description"
           property="og:description"

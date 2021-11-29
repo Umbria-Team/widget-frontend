@@ -8,6 +8,8 @@ import {
   setOpenModal,
   updateBlockNumber,
   updateOutputAmount,
+  setSourceChain,
+  setDestinationChain,
 } from './actions'
 
 type PopupList = Array<{
@@ -20,6 +22,8 @@ type PopupList = Array<{
 export interface ApplicationState {
   readonly blockNumber: { readonly [chainId: number]: number }
   outputAmount: { amount: number; gasFee: number; liquidityProviderFee: number }
+  sourceChain: { chainId: string }
+  destinationChain: { chainId: string }
   readonly popupList: PopupList
   readonly openModal: ApplicationModal | null
   kashiApprovalPending: string
@@ -29,6 +33,8 @@ const initialState: ApplicationState = {
   blockNumber: {},
   popupList: [],
   outputAmount: { amount: 0, gasFee: 0, liquidityProviderFee: 0 },
+  sourceChain: { chainId: '' },
+  destinationChain: { chainId: '' },
   openModal: null,
   kashiApprovalPending: '',
 }
@@ -42,6 +48,12 @@ export default createReducer(initialState, (builder) =>
       } else {
         state.blockNumber[chainId] = Math.max(blockNumber, state.blockNumber[chainId])
       }
+    })
+    .addCase(setSourceChain, (state, action) => {
+      if (state.sourceChain) state.sourceChain = action.payload
+    })
+    .addCase(setDestinationChain, (state, action) => {
+      if (state.destinationChain) state.destinationChain = action.payload
     })
     .addCase(updateOutputAmount, (state, action) => {
       if (state.outputAmount) state.outputAmount = action.payload

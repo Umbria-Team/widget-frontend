@@ -2,22 +2,22 @@ import { ChainId } from '@sushiswap/sdk'
 import { request } from 'http'
 import cookie from 'cookie-cutter'
 import { BRIDGE_PAIRS, NETWORK_LABEL } from '../../../config/networks'
-
+import { useSourceChain, useDestinationChain } from '../../../state/application/hooks'
 export const getSourceChainName = function () {
-  const chainId = cookie.get('chainId')
+  const chainId = useSourceChain()
 
   if (chainId) {
-    return NETWORK_LABEL[chainId].toLowerCase()
+    return NETWORK_LABEL[chainId]
   }
 
   return null
 }
 
 export const getDestinationChainName = function () {
-  const chainId = cookie.get('otherChainId')
+  const chainId = useDestinationChain()
 
   if (chainId) {
-    return NETWORK_LABEL[chainId].toLowerCase()
+    return NETWORK_LABEL[chainId]
   }
 
   return null
@@ -96,10 +96,6 @@ export const getMaxAssetBridge = async (destinationNetwork: string, ticker: stri
     const response = await fetch(
       `https://bridgeapi.umbria.network/api/bridge/getAvailableLiquidity/?network=${destinationNetwork}&currency=${ticker}`
     )
-
-    console.log(destinationNetwork, ticker)
-
-    console.log(response)
 
     const json = await response.json()
     if (json && json.totalLiquidity) {

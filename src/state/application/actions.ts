@@ -31,6 +31,14 @@ export enum ApplicationModal {
   NETWORK,
 }
 
+export const setSourceChain = createAction<{
+  chainId: string
+}>('application/setSourceChain')
+
+export const setDestinationChain = createAction<{
+  chainId: string
+}>('application/setDestinationChain')
+
 export const updateOutputAmount = createAction<{
   amount: number
   gasFee: number

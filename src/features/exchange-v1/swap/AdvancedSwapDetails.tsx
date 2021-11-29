@@ -12,9 +12,8 @@ import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../../hooks/useActiveWeb3React'
 import { useLingui } from '@lingui/react'
 import { NETWORK_ICON, NETWORK_LABEL } from '../../../config/networks'
-import cookie from 'cookie-cutter'
 
-import { useOutputAmount } from '../../../state/application/hooks'
+import { useOutputAmount, useSourceChain, useDestinationChain } from '../../../state/application/hooks'
 
 export interface AdvancedSwapDetailsProps {
   trade?: V2Trade<Currency, Currency, TradeType>
@@ -62,7 +61,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
           />
         </span>
         <p>
-          {NETWORK_LABEL[cookie.get('chainId')]} to {NETWORK_LABEL[cookie.get('otherChainId')]}
+          {NETWORK_LABEL[chainId]} to {NETWORK_LABEL[useDestinationChain()]}
         </p>
       </div>
 

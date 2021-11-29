@@ -8,25 +8,17 @@ import Web3Status from '../Web3Status'
 import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useETHBalances } from '../../state/wallet/hooks'
+import { useSourceChain, useDestinationChain } from '../../state/application/hooks'
 import { useLingui } from '@lingui/react'
 import cookie from 'cookie-cutter'
-
+import { setDestinationChain, setSourceChain } from '../../state/application/actions'
+import { useDispatch } from 'react-redux'
 function AppBar(): JSX.Element {
   const { i18n } = useLingui()
   const { account, chainId, library } = useActiveWeb3React()
-
-  const initialChain = ChainId.MAINNET
-  const initialDestination = ChainId.MATIC
-
-  if (!cookie.get('chainId') || !cookie.get('otherChainId')) {
-    if (chainId == initialChain || !chainId) {
-      cookie.set('chainId', initialChain)
-      cookie.set('otherChainId', initialDestination)
-    }
-
-    cookie.set('chainId', initialDestination)
-    cookie.set('otherChainId', initialChain)
-  }
+  const dispatch = useDispatch()
+  const initialChain = ChainId.MAINNET.toString()
+  const initialDestination = ChainId.MATIC.toString()
 
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 

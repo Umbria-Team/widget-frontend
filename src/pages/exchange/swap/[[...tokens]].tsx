@@ -58,9 +58,12 @@ import { BRIDGE_ADDRESS_DEFAULT, BRIDGE_PAIRS, NETWORK_LABEL } from '../../../co
 import { useTransactionAdder } from '../../../state/transactions/hooks'
 import { ERC20_BYTES32_ABI } from '../../../constants/abis/erc20'
 
+import { setSourceChain, setDestinationChain } from '../../../state/application/actions'
+
 import { hexlify } from '@ethersproject/bytes'
 
 import cookie from 'cookie-cutter'
+import { useDispatch } from 'react-redux'
 
 export default function Swap() {
   const { i18n } = useLingui()
@@ -89,6 +92,8 @@ export default function Swap() {
     urlLoadedTokens.filter((token: Token) => {
       return !Boolean(token.address in defaultTokens)
     })
+
+  const dispatch = useDispatch()
 
   const { account, chainId, library } = useActiveWeb3React()
 
@@ -258,6 +263,26 @@ export default function Swap() {
 
   const [singleHopOnly] = useUserSingleHopOnly()
 
+  dispatch(
+    setSourceChain({
+      chainId: chainId.toString(),
+    })
+  )
+
+  if (chainId.toString() == '1') {
+    dispatch(
+      setDestinationChain({
+        chainId: '137',
+      })
+    )
+  } else {
+    dispatch(
+      setDestinationChain({
+        chainId: '1',
+      })
+    )
+  }
+
   const handleSwap = async () => {
     if (currencies.INPUT.isNative) {
       getAvailability().then((res) => {
@@ -286,7 +311,7 @@ export default function Swap() {
                     value: formattedAmounts[Field.INPUT].toBigNumber(),
                   })
                   .then((res) => {
-                    console.log(res);
+                    console.log(res)
                     addTransaction(res)
 
                     setSwapState({
@@ -334,15 +359,15 @@ export default function Swap() {
                 .transfer(BRIDGE_ADDRESS_DEFAULT, numberOfTokens.toBigNumber())
 
                 .then((res) => {
-                              console.log(res);
-                              addTransaction(res)
-                              setSwapState({
-                                attemptingTxn: true,
-                                showConfirm: false,
-                                swapErrorMessage: undefined,
-                                txHash: res.hash,
-                              })
-                            })
+                  console.log(res)
+                  addTransaction(res)
+                  setSwapState({
+                    attemptingTxn: true,
+                    showConfirm: false,
+                    swapErrorMessage: undefined,
+                    txHash: res.hash,
+                  })
+                })
             } else {
               setSwapState({
                 attemptingTxn: false,

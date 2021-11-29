@@ -2,7 +2,16 @@ import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { AppDispatch, AppState } from '../index'
-import { addPopup, ApplicationModal, PopupContent, removePopup, setOpenModal, updateOutputAmount } from './actions'
+import {
+  addPopup,
+  ApplicationModal,
+  PopupContent,
+  removePopup,
+  setOpenModal,
+  updateOutputAmount,
+  setDestinationChain,
+  setSourceChain,
+} from './actions'
 
 export function useBlockNumber(): number | undefined {
   const { chainId } = useActiveWeb3React()
@@ -15,6 +24,16 @@ export function useModalOpen(modal: ApplicationModal): boolean {
   return openModal === modal
 }
 
+export function useDestinationChain(): string {
+  const destinationChain = useSelector((state: AppState) => state.application.destinationChain.chainId)
+  return destinationChain
+}
+
+export function useSourceChain(): string {
+  const sourceChain = useSelector((state: AppState) => state.application.sourceChain.chainId)
+  return sourceChain
+}
+
 export function useOutputAmount(): {
   amount: number
   gasFee: number
@@ -23,21 +42,6 @@ export function useOutputAmount(): {
 } {
   const outputAmount = useSelector((state: AppState) => state.application.outputAmount)
   return outputAmount
-}
-
-export function useSetOutputAmount(
-  amount: number,
-  gasFee: number,
-  liquidityProviderFee: number,
-  transactionTooSmall: boolean
-): () => void {
-  const outputAmount = useSelector((state: AppState) => state.application.outputAmount)
-
-  const dispatch = useDispatch<AppDispatch>()
-  return useCallback(
-    () => dispatch(updateOutputAmount({ amount, gasFee, liquidityProviderFee, transactionTooSmall })),
-    [dispatch]
-  )
 }
 
 export function useToggleModal(modal: ApplicationModal): () => void {
