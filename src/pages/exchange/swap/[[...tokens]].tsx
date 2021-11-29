@@ -57,14 +57,14 @@ import {
 import { BRIDGE_ADDRESS_DEFAULT, BRIDGE_PAIRS, NETWORK_LABEL } from '../../../config/networks'
 import { useTransactionAdder } from '../../../state/transactions/hooks'
 import { ERC20_BYTES32_ABI } from '../../../constants/abis/erc20'
-
+import { updateOutputAmount } from '../../../state/application/actions'
 import { setSourceChain, setDestinationChain } from '../../../state/application/actions'
 
 import { hexlify } from '@ethersproject/bytes'
 
 import cookie from 'cookie-cutter'
 import { useDispatch } from 'react-redux'
-
+import { getGasInNativeTokenPrice } from '../../../services/umbria/fetchers/service'
 export default function Swap() {
   const { i18n } = useLingui()
 

@@ -46,7 +46,7 @@ export const getAssetPricesUSD = async () => {
 export const getGasToTransfer = async (network: string, ticker: string) => {
   try {
     const response = await fetch(
-      `https://bridgeapi.umbria.network/api/bridge/getGasToTransfer/?network=${network}&ticker=${ticker}`
+      `https://bridgeapi.umbria.network/api/bridge/getGasToTransfer/?network=${network.toLowerCase}&ticker=${ticker}`
     )
     const json = await response.json()
 
@@ -57,8 +57,12 @@ export const getGasToTransfer = async (network: string, ticker: string) => {
 }
 
 export const getGasInNativeTokenPrice = async (network: string, ticker: string) => {
+  if (ticker == 'weth' || ticker == 'WETH') {
+    ticker = 'eth'
+  }
+
   const response = await fetch(
-    `https://bridgeapi.umbria.network/api/bridge/getGasToTransfer/?network=${network}&ticker=${ticker}`
+    `https://bridgeapi.umbria.network/api/bridge/getGasToTransfer/?network=${network.toLowerCase()}&ticker=${ticker}`
   )
 
   const json = await response.json()
@@ -67,7 +71,7 @@ export const getGasInNativeTokenPrice = async (network: string, ticker: string) 
 
   let ethPrice = await getAssetPriceUSD('ETH')
 
-  let tokenPrice = await getAssetPriceUSD(ticker)
+  let tokenPrice = await getAssetPriceUSD(ticker.toUpperCase())
 
   let ethToTokenRatio = ethPrice / tokenPrice
 
@@ -94,7 +98,7 @@ export const getTransactionDetails = async (transactionHash: string) => {
 export const getMaxAssetBridge = async (destinationNetwork: string, ticker: string) => {
   try {
     const response = await fetch(
-      `https://bridgeapi.umbria.network/api/bridge/getAvailableLiquidity/?network=${destinationNetwork}&currency=${ticker}`
+      `https://bridgeapi.umbria.network/api/bridge/getAvailableLiquidity/?network=${destinationNetwork.toLowerCase()}&currency=${ticker}`
     )
 
     const json = await response.json()

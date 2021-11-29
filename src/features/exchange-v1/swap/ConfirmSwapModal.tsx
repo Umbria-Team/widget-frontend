@@ -9,8 +9,12 @@ import SwapModalFooter from './SwapModalFooter'
 import SwapModalHeader from './SwapModalHeader'
 
 import { useOutputAmount } from '../../../state/application/hooks'
+import { getGasInNativeTokenPrice, getDestinationChainName } from '../../../services/umbria/fetchers/service'
 
-/**
+import { useDispatch } from 'react-redux'
+import { updateOutputAmount } from '../../../state/application/actions'
+import { useEffect } from 'react'
+/*
  * Returns true if the trade requires a confirmation of details before we can submit it
  * @param args either a pair of V2 trades or a pair of V3 trades
  */
@@ -48,8 +52,6 @@ export default function ConfirmSwapModal({
   swapErrorMessage: string | undefined
   onDismiss: () => void
 }) {
-  const outputAmount = useOutputAmount()
-
   const showAcceptChanges = useMemo(
     () => Boolean(trade && originalTrade && tradeMeaningfullyDiffers(trade, originalTrade)),
     [originalTrade, trade]

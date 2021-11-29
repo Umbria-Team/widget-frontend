@@ -1,7 +1,7 @@
 import { AlertTriangle, ArrowDown } from 'react-feather'
 import { Currency, Percent, TradeType, Trade as V2Trade } from '@sushiswap/sdk'
 import React, { useState, useEffect } from 'react'
-import { isAddress, shortenAddress } from '../../../functions'
+import { getSigner, isAddress, shortenAddress } from '../../../functions'
 
 import { AdvancedSwapDetails } from './AdvancedSwapDetails'
 import Card from '../../../components/Card'
@@ -16,10 +16,14 @@ import { useLingui } from '@lingui/react'
 import { useUSDCValue } from '../../../hooks/useUSDCPrice'
 import { warningSeverity } from '../../../functions'
 import { updateOutputAmount } from '../../../state/application/actions'
-import { useAppDispatch } from '../../../state/hooks'
-
+import { useDispatch } from 'react-redux'
 import { getGasInNativeTokenPrice, getDestinationChainName } from '../../../services/umbria/fetchers/service'
 import { useOutputAmount, useBlockNumber, useCloseModals } from '../../../state/application/hooks'
+import { getNetworkLibrary } from '../../../functions/getNetworkLibrary'
+import { NETWORK_ICON, NETWORK_LABEL } from '../../../config/networks'
+import { useSourceChain, useDestinationChain } from '../../../state/application/hooks'
+
+var tokenUpdated = false
 
 export default function SwapModalHeader({
   trade,
@@ -38,6 +42,8 @@ export default function SwapModalHeader({
 }) {
   const { i18n } = useLingui()
 
+  const destinationChain = useDestinationChain()
+
   const [showInverted, setShowInverted] = useState<boolean>(false)
 
   const fiatValueInput = useUSDCValue(trade.inputAmount)
@@ -45,7 +51,7 @@ export default function SwapModalHeader({
 
   const feePercentage = 0.006
 
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
 
   let inputAmount = parseFloat(trade.inputAmount.toSignificant(6))
   let outputFee = inputAmount * 0.005
@@ -53,33 +59,43 @@ export default function SwapModalHeader({
 
   let gasAmount = 0
 
+  let updatedBlock = 0
+
   const priceImpactSeverity = warningSeverity(trade.priceImpact)
   let transactionTooSmall = false
 
-  useEffect(() => {
-    async function getToken() {
-      getGasInNativeTokenPrice(getDestinationChainName(), trade.inputAmount.currency.symbol).then(
-        (costToTransferToken) => {
-          if (costToTransferToken >= inputAmount) {
-            transactionTooSmall = false
-          } else {
-            transactionTooSmall = true
-          }
-          dispatch(
-            updateOutputAmount({
-              amount: costToTransferToken,
-              gasFee: costToTransferToken,
-              liquidityProviderFee: 0.005 * inputAmount,
-              transactionTooSmall: transactionTooSmall,
-            })
-          )
-        }
-      )
-    }
-    getToken()
-  }, [])
+  getNetworkLibrary()
+    .getBlockNumber()
+    .then((blockNumber) => {
+      if (updatedBlock < blockNumber) {
+        tokenUpdated = false
+      }
+    })
 
-  const outputAount = useOutputAmount()
+  async function getToken() {
+    getGasInNativeTokenPrice(NETWORK_LABEL[destinationChain], trade.inputAmount.currency.symbol).then(
+      (costToTransferToken) => {
+        if (costToTransferToken >= inputAmount) {
+          transactionTooSmall = false
+        } else {
+          transactionTooSmall = true
+        }
+        dispatch(
+          updateOutputAmount({
+            amount: costToTransferToken,
+            gasFee: costToTransferToken,
+            liquidityProviderFee: 0.005 * inputAmount,
+            transactionTooSmall: transactionTooSmall,
+          })
+        )
+      }
+    )
+  }
+
+  if (!tokenUpdated) {
+    tokenUpdated = true
+    getToken()
+  }
 
   return (
     <div className="grid gap-4">

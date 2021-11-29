@@ -14,7 +14,9 @@ import { useLingui } from '@lingui/react'
 import { NETWORK_ICON, NETWORK_LABEL } from '../../../config/networks'
 
 import { useOutputAmount, useSourceChain, useDestinationChain } from '../../../state/application/hooks'
-
+import { getDestinationChainName, getSourceChainName } from '../../../services/umbria/fetchers/service'
+import { getGasInNativeTokenPrice } from '../../../services/umbria/fetchers/service'
+import { useDispatch } from 'react-redux'
 export interface AdvancedSwapDetailsProps {
   trade?: V2Trade<Currency, Currency, TradeType>
   allowedSlippage: Percent
@@ -29,7 +31,12 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
   const intermediateOutput = parseFloat(trade.inputAmount.toSignificant(4))
   const fee = intermediateOutput * 0.002
 
+  const destinationChain = useDestinationChain()
+  const sourceChain = useSourceChain()
+  const dispatch = useDispatch()
   const outputAmount = useOutputAmount()
+
+  let transactionTooSmall = false
 
   const { realizedLPFee, priceImpact } = useMemo(() => {
     if (!trade) return { realizedLPFee: undefined, priceImpact: undefined }
@@ -61,7 +68,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
           />
         </span>
         <p>
-          {NETWORK_LABEL[chainId]} to {NETWORK_LABEL[useDestinationChain()]}
+          {getSourceChainName()} to {getDestinationChainName()}
         </p>
       </div>
 
