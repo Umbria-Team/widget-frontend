@@ -48,7 +48,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
     <div className="flex flex-col space-y-2">
       <div className="flex flex-row items-center justify-between">
         <span className="flex items-center">
-          <div className="text-sm text-secondary">{i18n._(t`Fee`)}</div>
+          <div className="text-sm text-secondary">{i18n._(t`Network Fee`)}</div>
           <QuestionHelper
             text={i18n._(
               t`This is an estimate of how much it will cost for us to transfer funds to you on the destination network. We calculate this amount and take the equivalent amount from your sent funds to pay for gas`
@@ -56,6 +56,17 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
           />
         </span>
         <p>{outputAmount.liquidityProviderFee + outputAmount.gasFee}</p>
+      </div>
+      <div className="flex flex-row items-center justify-between">
+        <span className="flex items-center">
+          <div className="text-sm text-secondary">{i18n._(t`Bridge Fee`)}</div>
+          <QuestionHelper
+            text={i18n._(
+              t`This is the fee that we charge for using the bridge. This goes to liquidity providers (0.6% of the transaction)`
+            )}
+          />
+        </span>
+        <p>{outputAmount.liquidityProviderFee}</p>
       </div>
 
       <div className="flex flex-row items-center justify-between">
