@@ -68,7 +68,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, minerBribe }: Adva
           />
         </span>
         <p>
-          {sourceChain} to {destinationChain}
+          {NETWORK_LABEL[sourceChain]} to {NETWORK_LABEL[destinationChain]}
         </p>
       </div>
 

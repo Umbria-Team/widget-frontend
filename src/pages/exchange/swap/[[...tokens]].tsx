@@ -307,6 +307,8 @@ export default function Swap() {
 
           getGasToTransfer(destinationChainName, currencies.INPUT.symbol).then((res) => {
             getMaxAssetBridge(destinationChain, wrappedNativeAssetAddress).then((maxTransfer) => {
+              console.log(maxTransfer)
+
               if (parseFloat(res.costToTransfer) >= formattedAmounts[Field.INPUT]) {
                 setSwapState({
                   attemptingTxn: false,

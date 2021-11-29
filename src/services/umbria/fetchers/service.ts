@@ -45,6 +45,9 @@ export const getAssetPricesUSD = async () => {
 
 export const getGasToTransfer = async (network: string, ticker: string) => {
   try {
+    if (network == 'poygon') {
+      network = 'matic'
+    }
     const response = await fetch(
       `https://bridgeapi.umbria.network/api/bridge/getGasToTransfer/?network=${network.toLowerCase}&ticker=${ticker}`
     )
@@ -59,6 +62,10 @@ export const getGasToTransfer = async (network: string, ticker: string) => {
 export const getGasInNativeTokenPrice = async (network: string, ticker: string) => {
   if (ticker == 'weth' || ticker == 'WETH') {
     ticker = 'eth'
+  }
+
+  if (network == 'polygon') {
+    network = 'matic'
   }
 
   const response = await fetch(
@@ -97,6 +104,9 @@ export const getTransactionDetails = async (transactionHash: string) => {
 
 export const getMaxAssetBridge = async (destinationNetwork: string, ticker: string) => {
   try {
+    if (destinationNetwork.toLowerCase() == 'polygon') {
+      destinationNetwork = 'matic'
+    }
     const response = await fetch(
       `https://bridgeapi.umbria.network/api/bridge/getAvailableLiquidity/?network=${destinationNetwork.toLowerCase()}&currency=${ticker}`
     )
