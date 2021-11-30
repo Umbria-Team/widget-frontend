@@ -10,7 +10,6 @@ import { ButtonError } from '../../components/Button'
 import ExternalLink from '../../components/ExternalLink'
 import Modal from '../../components/Modal'
 import ModalHeader from '../../components/ModalHeader'
-import { OVERLAY_READY } from '../../entities/FortmaticConnector'
 import Option from './Option'
 import PendingView from './PendingView'
 import ReactGA from 'react-ga'
@@ -113,13 +112,7 @@ export default function WalletModal({
   }
 
   // close wallet modal if fortmatic modal is active
-  useEffect(() => {
-    if (connector?.constructor?.name === 'FormaticConnector') {
-      connector.on(OVERLAY_READY, () => {
-        toggleWalletModal()
-      })
-    }
-  }, [toggleWalletModal, connector])
+  useEffect(() => {}, [toggleWalletModal, connector])
 
   // get wallets user can switch too, depending on device/browser
   function getOptions() {
@@ -254,14 +247,6 @@ export default function WalletModal({
             />
           ) : (
             <div className="flex flex-col space-y-5 overflow-y-auto">{getOptions()}</div>
-          )}
-          {walletView !== WALLET_VIEWS.PENDING && (
-            <div className="flex flex-col text-center">
-              <div className="text-secondary">{i18n._(t`New to Ethereum?`)}</div>
-              <ExternalLink href="https://ethereum.org/wallets/" color="blue">
-                {i18n._(t`Learn more about wallets`)}
-              </ExternalLink>
-            </div>
           )}
         </div>
       </div>

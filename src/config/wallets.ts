@@ -89,21 +89,6 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     color: '#4196FC',
     mobile: true,
   },
-  KEYSTONE: {
-    connector: async () => {
-      const KeystoneConnector = (await import('@keystonehq/keystone-connector')).KeystoneConnector
-      return new KeystoneConnector({
-        chainId: 1,
-        url: RPC[ChainId.MAINNET],
-      })
-    },
-    name: 'Keystone',
-    iconName: 'keystone.png',
-    description: 'Connect to Keystone hardware wallet.',
-    href: null,
-    color: '#4196FC',
-    mobile: true,
-  },
   LATTICE: {
     connector: async () => {
       const LatticeConnector = (await import('@web3-react/lattice-connector')).LatticeConnector
@@ -144,50 +129,6 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     mobile: true,
     mobileOnly: true,
   },
-  FORTMATIC: {
-    connector: async () => {
-      const FortmaticConnector = (await import('@web3-react/fortmatic-connector')).FortmaticConnector
-      return new FortmaticConnector({
-        apiKey: process.env.NEXT_PUBLIC_FORTMATIC_API_KEY ?? '',
-        chainId: 1,
-      })
-    },
-    name: 'Fortmatic',
-    iconName: 'fortmatic.png',
-    description: 'Login using Fortmatic hosted wallet',
-    href: null,
-    color: '#6748FF',
-    mobile: true,
-  },
-  Portis: {
-    connector: async () => {
-      const PortisConnector = (await import('@web3-react/portis-connector')).PortisConnector
-      return new PortisConnector({
-        dAppId: process.env.NEXT_PUBLIC_PORTIS_ID ?? '',
-        networks: [1],
-      })
-    },
-    name: 'Portis',
-    iconName: 'portis.png',
-    description: 'Login using Portis hosted wallet',
-    href: null,
-    color: '#4A6C9B',
-    mobile: true,
-  },
-  Torus: {
-    connector: async () => {
-      const TorusConnector = (await import('@web3-react/torus-connector')).TorusConnector
-      return new TorusConnector({
-        chainId: 1,
-      })
-    },
-    name: 'Torus',
-    iconName: 'torus.png',
-    description: 'Login using Torus hosted wallet',
-    href: null,
-    color: '#315CF5',
-    mobile: true,
-  },
   Binance: {
     connector: async () => {
       const BscConnector = (await import('@binance-chain/bsc-connector')).BscConnector
@@ -206,7 +147,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     connector: async () => {
       const CloverConnector = (await import('@clover-network/clover-connector')).CloverConnector
       return new CloverConnector({
-        supportedChainIds: [1],
+        supportedChainIds: [1, 137],
       })
     },
     name: 'Clover',

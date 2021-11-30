@@ -27,13 +27,13 @@ export default function Option({
   const content = (
     <div
       onClick={onClick}
-      className={`flex items-center justify-between w-full p-3 rounded cursor-pointer ${
+      className={`flex items-center justify-between w-full p-1 rounded cursor-pointer ${
         !active ? 'bg-dark-800 hover:bg-dark-700' : 'bg-dark-1000'
       }`}
     >
       <div>
         <div className="flex items-center">
-          {active && <div className="w-4 h-4 mr-4 rounded-full" style={{ background: color }} />}
+          {active && <div className="w-4 h-1 mr-4 rounded-full" style={{ background: color }} />}
           {header}
         </div>
         {subheader && <div className="mt-2.5 text-xs">{subheader}</div>}

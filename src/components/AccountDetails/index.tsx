@@ -32,7 +32,6 @@ function renderTransactions(transactions: string[]) {
   return (
     <div className="flex flex-col gap-2 flex-nowrap">
       {transactions.map((hash, i) => {
-
         var transaction = <Transaction key={i} hash={hash} />
 
         return transaction
@@ -80,23 +79,6 @@ const AccountDetails: FC<AccountDetailsProps> = ({
       return <WalletIcon src="/wallet-connect.png" alt="Wallet Connect" size={16} />
     } else if (connector.constructor.name === 'WalletLinkConnector') {
       return <WalletIcon src="/coinbase.svg" alt="Coinbase" size={16} />
-    } else if (connector.constructor.name === 'FortmaticConnector') {
-      return <WalletIcon src="/formatic.png" alt="Fortmatic" size={16} />
-    } else if (connector.constructor.name === 'PortisConnector') {
-      return (
-        <WalletIcon src="/portnis.png" alt="Portis" size={16}>
-          <Button
-            onClick={async () => {
-              // casting as PortisConnector here defeats the lazyload purpose
-              ;(connector as any).portis.showPortis()
-            }}
-          >
-            Show Portis
-          </Button>
-        </WalletIcon>
-      )
-    } else if (connector.constructor.name === 'TorusConnector') {
-      return <WalletIcon src="/torus.png" alt="Torus" size={16} />
     }
     return null
   }
@@ -110,8 +92,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({
       <div className="space-y-3">
         <ModalHeader title="Account" onClose={toggleWalletModal} />
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
-          </div>
+          <div className="flex items-center justify-between"></div>
           <div id="web3-account-identifier-row" className="flex flex-col justify-center space-y-3">
             {ENSName ? (
               <div className="bg-dark-800">

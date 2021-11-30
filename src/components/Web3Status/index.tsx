@@ -62,24 +62,6 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
         <Image src="/images/wallets/coinbase.svg" alt={'Coinbase Wallet'} width="16px" height="16px" />
       </IconWrapper>
     )
-  } else if (connector.constructor.name === 'FortmaticConnector') {
-    return (
-      <IconWrapper size={16}>
-        <Image src="/images/wallets/fortmatic.png" alt={'Fortmatic'} width="16px" height="16px" />
-      </IconWrapper>
-    )
-  } else if (connector.constructor.name === 'PortisConnector') {
-    return (
-      <IconWrapper size={16}>
-        <Image src="/images/wallets/portis.png" alt={'Portis'} width="16px" height="16px" />
-      </IconWrapper>
-    )
-  } else if (connector.constructor.name === 'KeystoneConnector') {
-    return (
-      <IconWrapper size={16}>
-        <Image src="/images/wallets/keystone.png" alt={'Keystone'} width="16px" height="16px" />
-      </IconWrapper>
-    )
   }
   return null
 }
