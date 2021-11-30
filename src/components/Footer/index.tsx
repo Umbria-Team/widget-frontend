@@ -15,7 +15,7 @@ const Footer = () => {
       <div className="flex items-center justify-between h-20 px-4">
         <ExternalLink href="https://www.umbria.network/">
           <img src="https://bridge.umbria.network/assets/images/logos/UmbriaPretty128x117.png?v1" width="32px"></img>
-          Made with ♥ by the Umbria Umbria
+          Made with ♥ by the Umbria Team
         </ExternalLink>
 
         {chainId && chainId in ANALYTICS_URL && (
