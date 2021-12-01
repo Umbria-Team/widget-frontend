@@ -40,21 +40,21 @@ function AppBar(): JSX.Element {
                     <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       <div className="px-3 py-2 text-primary text-bold">
                         <span>
-                          <a href="./en/swap">Bridge</a>
+                          <a href="/en/swap">Bridge</a>
                         </span>
                       </div>
                     </div>
                     <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       <div className="px-3 py-2 text-primary text-bold">
                         <span>
-                          <a href="./exchange">Buy FMT</a>
+                          <a href="/exchange">Buy FMT</a>
                         </span>
                       </div>
                     </div>
                     <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       <div className="px-3 py-2 text-primary text-bold">
                         <span>
-                          <a href="./mint">Mint</a>
+                          <a href="/mint">Mint</a>
                         </span>
                       </div>
                     </div>
