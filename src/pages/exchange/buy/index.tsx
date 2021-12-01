@@ -4,6 +4,9 @@ import { BottomGrouping, SwapCallbackError } from '../../../features/exchange-v1
 import { ButtonError } from '../../../components/Button'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAllTokens, useCurrency } from '../../../hooks/Tokens'
+import { useRef } from 'react'
+import { BigNumber } from 'ethers'
+import { hexlify } from '@ethersproject/bytes'
 import {
   useDefaultsFromURLSearch,
   useDerivedSwapInfo,
@@ -55,11 +58,15 @@ import { Contract } from 'ethers'
 import { getAvailability, getMaxAssetBridge, getGasToTransfer } from '../../../services/umbria/fetchers/service'
 import { BRIDGE_ADDRESS_DEFAULT, BRIDGE_PAIRS, NETWORK_LABEL } from '../../../config/networks'
 import { useTransactionAdder } from '../../../state/transactions/hooks'
-import { ERC20_BYTES32_ABI } from '../../../constants/abis/erc20'
-import { setSourceChain, setDestinationChain } from '../../../state/application/actions'
+import { setSourceChain, setDestinationChain, setFMTPrice } from '../../../state/application/actions'
 import { useDispatch } from 'react-redux'
 import Typography from '../../../components/Typography'
 import TradePrice from '../../../features/exchange-v1/swap/TradePrice'
+import { useOutputAmount } from '../../../state/application/hooks'
+import { updateOutputAmount } from '../../../state/application/actions'
+import FMT_ABI from '../../../constants/abis/fmt-vendor.json'
+import { useFMTPrice } from '../../../state/application/hooks'
+import { getSigner } from '../../../functions'
 export default function Buy() {
   const { i18n } = useLingui()
 
@@ -111,6 +118,9 @@ export default function Buy() {
   const [useArcher] = useUserArcherUseRelay()
   const [archerETHTip] = useUserArcherETHTip()
   const [archerGasPrice] = useUserArcherGasPrice()
+  const outputAmount = useOutputAmount()
+
+  const fmtPrice = useFMTPrice()
 
   // archer
   const archerRelay = chainId ? ARCHER_RELAY_URI?.[chainId] : undefined
@@ -239,20 +249,45 @@ export default function Buy() {
   // check if user has gone through approval process, used to show two step buttons, reset on token change
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
 
-  const calculateOutputPrice = function () {
-    let inputAmount = formattedAmounts[Field.INPUT]
-    let outputAmount = formattedAmounts[Field.OUTPUT]
-    let output = 50 * outputAmount
-
+  const getContract = function () {
     let walletSigner = library.getSigner()
 
-    //let contract = new Contract(input.address, ERC20_BYTES32_ABI, walletSigner)
+    var abi = FMT_ABI.abi
 
-    formattedAmounts[Field.INPUT] = output
+    let contract = new Contract('0x4AdB0b7929fC51d711E518E1D494def420441b7b', abi, walletSigner)
+
+    return contract
   }
 
-  // mark when a user has submitted an approval, reset onTokenSelection for input field
+  const componentIsMounted = useRef(true)
+
+  const calculateOutputPrice = async function () {
+    let inputAmount = formattedAmounts[Field.INPUT]
+
+    let calculatedAmount = fmtPrice.valueOf()
+    let inputAmountNumber = formattedAmounts[Field.OUTPUT].valueOf()
+
+    let totalStr = (calculatedAmount * inputAmountNumber).toString()
+
+    formattedAmounts[Field.INPUT] = totalStr
+  }
+
   useEffect(() => {}, [calculateOutputPrice()])
+
+  useEffect(() => {
+    async function fetchPrice() {
+      let price = await getContract().tokensPerEth()
+
+      let bg = BigNumber.from(price)
+      let divisor = BigNumber.from(10).pow(18)
+
+      let pricePer = bg.div(divisor).toNumber()
+
+      dispatch(setFMTPrice(pricePer))
+    }
+
+    fetchPrice()
+  }, [])
 
   const maxInputAmount: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   const showMaxButton = false
@@ -415,20 +450,19 @@ export default function Buy() {
               </Button>
             ) : (
               <ButtonError
-                onClick={() => {
-                  if (isExpertMode) {
-                    handleSwap()
-                  } else {
-                    setSwapState({
-                      attemptingTxn: false,
-                      swapErrorMessage: undefined,
-                      showConfirm: true,
-                      txHash: undefined,
+                onClick={async () => {
+                  try {
+                    let tx = await getContract().buyTokens({
+                      from: library.getSigner()._address,
+                      gasLimit: 5000000,
+                      value: hexlify(2),
                     })
+                  } catch (ex) {
+                    console.log(ex)
                   }
                 }}
                 id="swap-button"
-                disabled={!isValid || !!swapCallbackError}
+                disabled={false}
                 error={isValid && !swapCallbackError}
               >
                 {swapInputError ? i18n._(t`Buy`) : i18n._(t`Buy`)}

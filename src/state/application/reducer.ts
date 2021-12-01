@@ -10,6 +10,7 @@ import {
   updateOutputAmount,
   setSourceChain,
   setDestinationChain,
+  setFMTPrice,
 } from './actions'
 
 type PopupList = Array<{
@@ -23,6 +24,7 @@ export interface ApplicationState {
   readonly blockNumber: { readonly [chainId: number]: number }
   outputAmount: { amount: number; gasFee: number; liquidityProviderFee: number }
   sourceChain: { chainId: string }
+  FMTPrice: number
   destinationChain: { chainId: string }
   readonly popupList: PopupList
   readonly openModal: ApplicationModal | null
@@ -34,6 +36,7 @@ const initialState: ApplicationState = {
   popupList: [],
   outputAmount: { amount: 0, gasFee: 0, liquidityProviderFee: 0 },
   sourceChain: { chainId: '' },
+  FMTPrice: 0,
   destinationChain: { chainId: '' },
   openModal: null,
   kashiApprovalPending: '',
@@ -51,6 +54,9 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setSourceChain, (state, action) => {
       if (state.sourceChain) state.sourceChain = action.payload
+    })
+    .addCase(setFMTPrice, (state, action) => {
+      if (state.sourceChain) state.FMTPrice = action.payload
     })
     .addCase(setDestinationChain, (state, action) => {
       if (state.destinationChain) state.destinationChain = action.payload

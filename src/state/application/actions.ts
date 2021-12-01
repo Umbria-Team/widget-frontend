@@ -35,6 +35,8 @@ export const setSourceChain = createAction<{
   chainId: string
 }>('application/setSourceChain')
 
+export const setFMTPrice = createAction<Number>('application/setFMTPrice')
+
 export const setDestinationChain = createAction<{
   chainId: string
 }>('application/setDestinationChain')

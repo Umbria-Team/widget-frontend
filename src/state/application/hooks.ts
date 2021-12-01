@@ -34,6 +34,11 @@ export function useSourceChain(): string {
   return sourceChain
 }
 
+export function useFMTPrice(): Number {
+  const price = useSelector((state: AppState) => state.application.FMTPrice)
+  return price
+}
+
 export function useOutputAmount(): {
   amount: number
   gasFee: number
