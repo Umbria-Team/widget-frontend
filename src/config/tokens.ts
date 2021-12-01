@@ -40,6 +40,7 @@ export const MATIC: { [key: string]: Token } = {
   USDC: new Token(ChainId.MATIC, '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', 6, 'USDC', 'USD Coin'),
   WBTC: new Token(ChainId.MATIC, '0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6', 8, 'WBTC', 'Wrapped Bitcoin'),
   GHST: new Token(ChainId.MATIC, '0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7', 18, 'GHST', 'GHST'),
+  FMT: new Token(ChainId.MATIC, '0x1d9056048271D1a6e305c81b7f8Cc0b8367e1792', 18, 'FMT', 'FMT'),
   UMBR: new Token(ChainId.MATIC, '0x2e4b0fb46a46c90cb410fe676f24e466753b469f', 18, 'UMBR', 'UMBR'),
   WETH: new Token(ChainId.MATIC, '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619', 18, 'WETH', 'Wrapped Ether'),
   USDT: new Token(ChainId.MATIC, '0xc2132D05D31c914a87C6611C10748AEb04B58e8F', 6, 'USDT', 'Tether USD'),
@@ -173,17 +174,12 @@ export const USDP = new Token(
 )
 export const USDT = new Token(ChainId.MAINNET, '0xdAC17F958D2ee523a2206206994597C13D831ec7', 6, 'USDT', 'Tether USD')
 export const UST = new Token(ChainId.MAINNET, '0xa47c8bf37f92aBed4A126BDA807A7b7498661acD', 18, 'UST', 'Wrapped UST')
-export const XSUSHI_CALL = new Token(
-  ChainId.MAINNET,
-  '0xada279f9301C01A4eF914127a6C2a493Ad733924',
-  18,
-  'XSUc25-0531',
-  'XSUSHI 25 Call [31 May 2021]'
-)
+
 export const WBTC = new Token(ChainId.MAINNET, '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', 8, 'WBTC', 'Wrapped BTC')
 export const UMBR = new Token(ChainId.MAINNET, '0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7', 18, 'UMBR', ' UMBR (Eth)')
 export const GHST = new Token(ChainId.MAINNET, '0x3F382DbD960E3a9bbCeaE22651E88158d2791550', 18, 'GHST', ' GHST')
-export const XSUSHI = new Token(ChainId.MAINNET, '0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272', 18, 'xSUSHI', 'SushiBar')
+export const FMT = new Token(ChainId.MAINNET, '0x3F382DbD960E3a9bbCeaE22651E88158d2791550', 18, 'FMT', ' FMT')
+
 export const WMATIC = new Token(
   ChainId.MAINNET,
   '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
@@ -202,21 +198,6 @@ export const LFBTC = new Token(
 export const CVXCRV = new Token(ChainId.MAINNET, '0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7', 18, 'cvxCRV', 'cvxCRV')
 export const CRV = new Token(ChainId.MAINNET, '0xD533a949740bb3306d119CC777fa900bA034cd52', 18, 'CRV', 'Curve')
 
-export const CRXSUSHI = new Token(
-  ChainId.MAINNET,
-  '0x228619cca194fbe3ebeb2f835ec1ea5080dafbb2',
-  8,
-  'crXSUSHI',
-  'Cream SushiBar'
-)
-export const AXSUSHI = new Token(
-  ChainId.MAINNET,
-  '0xf256cc7847e919fac9b808cc216cac87ccf2f47a',
-  18,
-  'aXSUSHI',
-  'Aave interest bearing XSUSHI'
-)
-
 export const DPI = new Token(ChainId.MAINNET, '0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b', 18, 'DefiPulse', 'DPI')
 
 type ChainTokenMap = {
@@ -225,20 +206,7 @@ type ChainTokenMap = {
 
 // SUSHI
 export const SUSHI: ChainTokenMap = {
-  [ChainId.MAINNET]: new Token(ChainId.MAINNET, SUSHI_ADDRESS[ChainId.MAINNET], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.ROPSTEN]: new Token(ChainId.ROPSTEN, SUSHI_ADDRESS[ChainId.ROPSTEN], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.RINKEBY]: new Token(ChainId.RINKEBY, SUSHI_ADDRESS[ChainId.RINKEBY], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.GÖRLI]: new Token(ChainId.GÖRLI, SUSHI_ADDRESS[ChainId.GÖRLI], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.KOVAN]: new Token(ChainId.KOVAN, SUSHI_ADDRESS[ChainId.KOVAN], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.MATIC]: new Token(ChainId.MATIC, SUSHI_ADDRESS[ChainId.MATIC], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.FANTOM]: new Token(ChainId.FANTOM, SUSHI_ADDRESS[ChainId.FANTOM], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.XDAI]: new Token(ChainId.XDAI, SUSHI_ADDRESS[ChainId.XDAI], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.BSC]: new Token(ChainId.BSC, SUSHI_ADDRESS[ChainId.BSC], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.ARBITRUM]: new Token(ChainId.ARBITRUM, SUSHI_ADDRESS[ChainId.ARBITRUM], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.AVALANCHE]: new Token(ChainId.AVALANCHE, SUSHI_ADDRESS[ChainId.AVALANCHE], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.OKEX]: new Token(ChainId.OKEX, SUSHI_ADDRESS[ChainId.OKEX], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.HARMONY]: new Token(ChainId.HARMONY, SUSHI_ADDRESS[ChainId.HARMONY], 18, 'SUSHI', 'SushiToken'),
-  [ChainId.HECO]: new Token(ChainId.HECO, SUSHI_ADDRESS[ChainId.HECO], 18, 'SUSHI', 'SushiToken'),
+  [ChainId.MATIC]: new Token(ChainId.MATIC, '0x1d9056048271D1a6e305c81b7f8Cc0b8367e1792', 18, 'FMT', 'FMT'),
 }
 
 export const WETH9_EXTENDED: { [chainId: number]: Token } = {

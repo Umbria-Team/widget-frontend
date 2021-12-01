@@ -344,7 +344,8 @@ export function queryParametersToSwapState(parsedQs: ParsedQs, chainId: ChainId 
   let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency)
   let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency)
   const eth = chainId === ChainId.CELO ? WNATIVE_ADDRESS[chainId] : 'ETH'
-  const sushi = SUSHI_ADDRESS[chainId]
+  const sushi = '0x1d9056048271D1a6e305c81b7f8Cc0b8367e1792'
+  console.log(sushi)
   if (inputCurrency === '' && outputCurrency === '') {
     inputCurrency = eth
     outputCurrency = sushi

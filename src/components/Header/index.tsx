@@ -35,29 +35,26 @@ function AppBar(): JSX.Element {
                     {library && library.provider.isMetaMask && <div className="hidden sm:inline-block"></div>}
 
                     <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
-                      {account && chainId && userEthBalance && (
-                        <>
-                          <div className="px-3 py-2 text-primary text-bold">
-                            {userEthBalance?.toSignificant(4)} {NATIVE[chainId].symbol}
-                          </div>
-                        </>
-                      )}
-
                       <Web3Status />
                     </div>
                     <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       <div className="px-3 py-2 text-primary text-bold">
                         <span>
-                          <a href="https://discord.umbria.network" target="_blank">
-                            Discord / Support
-                          </a>
+                          <a href="./en/swap">Bridge</a>
                         </span>
                       </div>
                     </div>
                     <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
                       <div className="px-3 py-2 text-primary text-bold">
                         <span>
-                          <a href="https://bridge.umbria.network/docs/docs-page.html">Docs</a>
+                          <a href="./exchange">Buy FMT</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div className="w-auto flex items-center rounded bg-dark-900 hover:bg-dark-800 p-0.5 whitespace-nowrap text-sm font-bold cursor-pointer select-none pointer-events-auto">
+                      <div className="px-3 py-2 text-primary text-bold">
+                        <span>
+                          <a href="./mint">Mint</a>
                         </span>
                       </div>
                     </div>

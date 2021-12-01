@@ -168,12 +168,12 @@ const MATIC_CHAINLINK_MAPPING = {
     toDecimals: 8,
   },
   // SUSHI / USD
-  '0x49B0c695039243BBfEb8EcD054EB70061fd54aa0': {
-    from: '0x0b3F868E0BE5597D5DB7fEB59E1CADBb0fdDa50a',
+  '0x1d9056048271D1a6e305c81b7f8Cc0b8367e1792': {
+    from: '0x1d9056048271D1a6e305c81b7f8Cc0b8367e1792',
     to: '0x0000000000000000000000000000000000000001',
-    decimals: 8,
+    decimals: 18,
     fromDecimals: 18,
-    toDecimals: 8,
+    toDecimals: 18,
   },
   // UNI / ETH
   '0x162d8c5bF15eB6BEe003a1ffc4049C92114bc931': {

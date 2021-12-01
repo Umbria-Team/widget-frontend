@@ -95,7 +95,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
       return new LatticeConnector({
         chainId: 1,
         url: RPC[ChainId.MAINNET],
-        appName: 'SushiSwap',
+        appName: 'Umbria Bridge',
       })
     },
     name: 'Lattice',
