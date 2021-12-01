@@ -246,7 +246,7 @@ export default function Buy() {
 
     let walletSigner = library.getSigner()
 
-    let contract = new Contract(input.address, ERC20_BYTES32_ABI, walletSigner)
+    //let contract = new Contract(input.address, ERC20_BYTES32_ABI, walletSigner)
 
     formattedAmounts[Field.INPUT] = output
   }
