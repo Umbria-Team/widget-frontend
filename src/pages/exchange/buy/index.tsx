@@ -5,7 +5,9 @@ import { ButtonError } from '../../../components/Button'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAllTokens, useCurrency } from '../../../hooks/Tokens'
 import { useRef } from 'react'
-import { BigNumber } from 'ethers'
+import { BigNumber, utils } from 'ethers'
+import Utils from 'ethers'
+
 import { hexlify } from '@ethersproject/bytes'
 import {
   useDefaultsFromURLSearch,
@@ -254,7 +256,7 @@ export default function Buy() {
 
     var abi = FMT_ABI.abi
 
-    let contract = new Contract('0x4AdB0b7929fC51d711E518E1D494def420441b7b', abi, walletSigner)
+    let contract = new Contract('0xabc996002ecd4b315968a82de3b2d41203047c2c', abi, walletSigner)
 
     return contract
   }
@@ -265,7 +267,10 @@ export default function Buy() {
     let inputAmount = formattedAmounts[Field.INPUT]
 
     let calculatedAmount = fmtPrice.valueOf()
-    let inputAmountNumber = formattedAmounts[Field.OUTPUT].valueOf()
+
+    console.log(fmtPrice)
+
+    let inputAmountNumber = formattedAmounts[Field.OUTPUT].toString()
 
     let totalStr = (calculatedAmount * inputAmountNumber).toString()
 
@@ -276,12 +281,14 @@ export default function Buy() {
 
   useEffect(() => {
     async function fetchPrice() {
-      let price = await getContract().tokensPerEth()
+      let price = await getContract().maticPerToken()
 
       let bg = BigNumber.from(price)
       let divisor = BigNumber.from(10).pow(18)
 
-      let pricePer = bg.div(divisor).toNumber()
+      let pricePer = price.toString()
+
+      console.log(pricePer)
 
       dispatch(setFMTPrice(pricePer))
     }
@@ -452,10 +459,13 @@ export default function Buy() {
               <ButtonError
                 onClick={async () => {
                   try {
+                    console.log(fmtPrice)
+                    // const options = { value: utils.parseEther(formattedAmounts[Field.INPUT].toString()) }
+                    const options = { value: utils.parseEther('0.1') }
                     let tx = await getContract().buyTokens({
                       from: library.getSigner()._address,
-                      gasLimit: 5000000,
-                      value: hexlify(2),
+                      gasLimit: 500000,
+                      value: options.value,
                     })
                   } catch (ex) {
                     console.log(ex)
