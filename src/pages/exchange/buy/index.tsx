@@ -266,31 +266,35 @@ export default function Buy() {
   const calculateOutputPrice = async function () {
     let inputAmount = formattedAmounts[Field.INPUT]
 
-    let calculatedAmount = fmtPrice.valueOf()
+    if (account && chainId) {
+      let calculatedAmount = fmtPrice.valueOf()
 
-    console.log(fmtPrice)
+      console.log(fmtPrice)
 
-    let inputAmountNumber = formattedAmounts[Field.OUTPUT].toString()
+      let inputAmountNumber = formattedAmounts[Field.OUTPUT].toString()
 
-    let totalStr = (calculatedAmount * inputAmountNumber).toString()
+      let totalStr = (calculatedAmount * inputAmountNumber).toString()
 
-    formattedAmounts[Field.INPUT] = totalStr
+      formattedAmounts[Field.INPUT] = totalStr
+    }
   }
 
   useEffect(() => {}, [calculateOutputPrice()])
 
   useEffect(() => {
     async function fetchPrice() {
-      let price = await getContract().maticPerToken()
+      if (account) {
+        let price = await getContract().maticPerToken()
 
-      let bg = BigNumber.from(price)
-      let divisor = BigNumber.from(10).pow(18)
+        let bg = BigNumber.from(price)
+        let divisor = BigNumber.from(10).pow(18)
 
-      let pricePer = price.toString()
+        let pricePer = price.toString()
 
-      console.log(pricePer)
+        console.log(pricePer)
 
-      dispatch(setFMTPrice(pricePer))
+        dispatch(setFMTPrice(pricePer))
+      }
     }
 
     fetchPrice()
