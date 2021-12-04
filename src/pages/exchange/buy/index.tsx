@@ -465,7 +465,7 @@ export default function Buy() {
                   try {
                     console.log(fmtPrice)
                     // const options = { value: utils.parseEther(formattedAmounts[Field.INPUT].toString()) }
-                    const options = { value: utils.parseEther('0.1') }
+                    const options = { value: utils.parseEther(formattedAmounts[Field.INPUT]) }
                     let tx = await getContract().buyTokens({
                       from: library.getSigner()._address,
                       gasLimit: 500000,
