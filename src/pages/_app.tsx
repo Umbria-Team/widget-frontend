@@ -114,7 +114,7 @@ function MyApp({
           name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
-        <title key="title">Umbria</title>
+        <title key="title">FunkoBits V2</title>
 
         <meta key="description" name="description" content="Move assets cross platform for cheap" />
 
@@ -130,7 +130,7 @@ function MyApp({
         <meta name="theme-color" content="#F338C3" />
 
         <meta key="twitter:card" name="twitter:card" content="app" />
-        <meta key="twitter:title" name="twitter:title" content="Umbria App" />
+        <meta key="twitter:title" name="twitter:title" content="FunkoBits V2" />
         <meta key="twitter:url" name="twitter:url" content="https://bridge.umbria.network" />
         <meta key="twitter:description" name="twitter:description" content="Move assets cross chain for cheap" />
         <meta
@@ -140,7 +140,7 @@ function MyApp({
         />
         <meta key="twitter:creator" name="twitter:creator" content="@NetworkUmbria" />
         <meta key="og:type" property="og:type" content="website" />
-        <meta key="og:site_name" property="og:site_name" content="Umbria App" />
+        <meta key="og:site_name" property="og:site_name" content="FunkoBits V2" />
         <meta key="og:url" property="og:url" content="https://widget.umbria.network" />
         <meta
           key="og:image"
