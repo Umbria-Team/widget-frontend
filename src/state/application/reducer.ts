@@ -24,7 +24,7 @@ export interface ApplicationState {
   readonly blockNumber: { readonly [chainId: number]: number }
   outputAmount: { amount: number; gasFee: number; liquidityProviderFee: number }
   sourceChain: { chainId: string }
-  FMTPrice: number
+  FMTPrice: Number
   destinationChain: { chainId: string }
   readonly popupList: PopupList
   readonly openModal: ApplicationModal | null
