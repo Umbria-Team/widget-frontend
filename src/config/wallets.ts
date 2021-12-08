@@ -133,7 +133,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     connector: async () => {
       const BscConnector = (await import('@binance-chain/bsc-connector')).BscConnector
       return new BscConnector({
-        supportedChainIds: [56],
+        supportedChainIds: [1, 137, 56],
       })
     },
     name: 'Binance',
