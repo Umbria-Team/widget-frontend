@@ -10,10 +10,8 @@ import Button from '../Button'
 import CurrencyLogo from '../CurrencyLogo'
 import Dots from '../Dots'
 import DoubleCurrencyLogo from '../DoubleLogo'
-import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../hooks/useActiveWeb3React'
 import { useColor } from '../../hooks'
-import { useLingui } from '@lingui/react'
 import { useRouter } from 'next/router'
 import { useTokenBalance } from '../../state/wallet/hooks'
 import { useTotalSupply } from '../../hooks/useTotalSupply'
@@ -28,7 +26,6 @@ interface PositionCardProps {
 }
 
 export function MinimalPositionCard({ pair, showUnwrapped = false, border }: PositionCardProps) {
-  const { i18n } = useLingui()
   const { account } = useActiveWeb3React()
 
   const currency0 = showUnwrapped ? pair.token0 : unwrappedToken(pair.token0)
@@ -112,7 +109,6 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
 }
 
 export default function FullPositionCard({ pair, border, stakedBalance }: PositionCardProps) {
-  const { i18n } = useLingui()
   const router = useRouter()
   const { account, chainId } = useActiveWeb3React()
 

@@ -77,14 +77,9 @@ function MyApp({
 
       try {
         // Load messages from AWS, use q session param to get latest version from cache
-        const resp = await fetch(`https://d3l928w2mi7nub.cloudfront.net/${locale}.json?q=${sessionId}`)
-        const remoteMessages = await resp.json()
-
-        const messages = remoteLoader({ messages: remoteMessages, format: 'minimal' })
         //i18n.load(locale, messages)
       } catch {
         // Load fallback messages
-        const { messages } = await import(`@lingui/loader!./../../locale/${locale}.json?raw-lingui`)
         //i18n.load(locale, messages)
       }
 

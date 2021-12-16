@@ -12,7 +12,6 @@ interface AddressInputPanelProps {
 }
 
 const AddressInputPanel: FC<AddressInputPanelProps> = ({ id, value, onChange }) => {
-  const { i18n } = useLingui()
   const { address, loading } = useENS(value)
 
   const handleInput = useCallback(

@@ -60,7 +60,6 @@ export default function CurrencyInputPanel({
   locked = false,
   customBalanceText,
 }: CurrencyInputPanelProps) {
-  const { i18n } = useLingui()
   const [modalOpen, setModalOpen] = useState(false)
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)

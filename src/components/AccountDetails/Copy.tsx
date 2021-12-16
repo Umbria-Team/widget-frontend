@@ -14,7 +14,6 @@ interface CopyHelperProps {
 
 const CopyHelper: FC<CopyHelperProps> = ({ className, toCopy, children }) => {
   const [isCopied, setCopied] = useCopyClipboard()
-  const { i18n } = useLingui()
 
   return (
     <div

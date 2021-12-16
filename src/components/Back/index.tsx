@@ -3,7 +3,6 @@ import { useLingui } from '@lingui/react'
 import { useRouter } from 'next/router'
 
 const Back = () => {
-  const { i18n } = useLingui()
   const router = useRouter()
   return (
     <div>

@@ -17,13 +17,10 @@ import QuestionHelper from '../QuestionHelper'
 import Toggle from '../Toggle'
 import TransactionSettings from '../TransactionSettings'
 import Typography from '../Typography'
-import { t } from '@lingui/macro'
 import { useActiveWeb3React } from '../../hooks'
-import { useLingui } from '@lingui/react'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 
 export default function SettingsTab({ placeholderSlippage }: { placeholderSlippage?: Percent }) {
-  const { i18n } = useLingui()
   const { chainId } = useActiveWeb3React()
 
   const node = useRef<HTMLDivElement>(null)
@@ -103,25 +100,6 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
                 toggle={() => (singleHopOnly ? setSingleHopOnly(false) : setSingleHopOnly(true))}
               />
             </div>
-            {/* {chainId == ChainId.MAINNET && (
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <Typography variant="sm" className="text-primary">
-                    {`MEV Shield by Archer DAO`)}
-                  </Typography>
-                  <QuestionHelper
-                    text={i18n._(
-                      t`Send transaction privately to avoid front-running and sandwich attacks. Requires a miner tip to incentivize miners`
-                    )}
-                  />
-                </div>
-                <Toggle
-                  id="toggle-use-archer"
-                  isActive={userUseArcher}
-                  toggle={() => setUserUseArcher(!userUseArcher)}
-                />
-              </div>
-            )} */}
           </div>
         </div>
       )}

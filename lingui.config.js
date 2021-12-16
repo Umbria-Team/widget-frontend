@@ -16,10 +16,7 @@ module.exports = {
   orderBy: 'messageId',
   pseudoLocale: '',
   rootDir: '.',
-  runtimeConfigModule: {
-    i18n: ['@lingui/core', 'i18n'],
-    Trans: ['@lingui/react', 'Trans'],
-  },
+  runtimeConfigModule: {},
 }
 
 // For reference

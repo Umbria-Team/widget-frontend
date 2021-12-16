@@ -9,7 +9,6 @@ interface ExpertModePanelProps {
 }
 
 const ExpertModePanel: FC<ExpertModePanelProps> = ({ active, children, onClose }) => {
-  const { i18n } = useLingui()
   if (!active) return <>{children}</>
 
   return (

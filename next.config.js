@@ -35,6 +35,8 @@ const nextConfig = {
     disable: process.env.NODE_ENV === 'development',
   },
   images: {
+    loader: 'imgix',
+    path: 'https://widget.umbria.network/',
     domains: ['assets.sushi.com', 'res.cloudinary.com', 'raw.githubusercontent.com', 'logos.covalenthq.com'],
   },
   reactStrictMode: true,
@@ -66,11 +68,6 @@ const nextConfig = {
         destination: '/user/balances',
       },
     ]
-  },
-  i18n: {
-    localeDetection: true,
-    locales,
-    defaultLocale: sourceLocale,
   },
 }
 

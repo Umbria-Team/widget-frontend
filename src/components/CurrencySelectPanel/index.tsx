@@ -29,8 +29,6 @@ export default function CurrencySelectPanel({
   id,
   showCommonBases,
 }: CurrencySelectPanelProps) {
-  const { i18n } = useLingui()
-
   const [modalOpen, setModalOpen] = useState(false)
   const { chainId } = useActiveWeb3React()
 
