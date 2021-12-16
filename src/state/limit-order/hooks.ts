@@ -165,24 +165,24 @@ export function useDerivedLimitOrderInfo(): {
   }
 
   if (!parsedInputAmount || !parsedOutputAmount) {
-    inputError = inputError ?? i18n._(t`Enter an amount`)
+    inputError = inputError ?? `Enter an amount`
   }
 
   if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
-    inputError = inputError ?? i18n._(t`Select a token`)
+    inputError = inputError ?? `Select a token`
   }
 
   const formattedTo = isAddress(to)
   if (!to || !formattedTo) {
-    inputError = inputError ?? i18n._(t`Enter a recipient`)
+    inputError = inputError ?? `Enter a recipient`
   }
 
   if (!limitPrice) {
-    inputError = inputError ?? i18n._(t`Select a rate`)
+    inputError = inputError ?? `Select a rate`
   }
 
   if (!orderExpiration) {
-    inputError = inputError ?? i18n._(t`Select an order expiration`)
+    inputError = inputError ?? `Select an order expiration`
   }
 
   // compare input balance to max input based on version
@@ -192,11 +192,11 @@ export function useDerivedLimitOrderInfo(): {
   ]
 
   if (!balanceIn) {
-    inputError = i18n._(t`Loading balance`)
+    inputError = `Loading balance`
   }
 
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
-    inputError = i18n._(t`Insufficient ${currencies[Field.INPUT]?.symbol} balance`)
+    inputError = `Insufficient ${currencies[Field.INPUT]?.symbol} balance`
   }
 
   return {
@@ -269,7 +269,7 @@ export function queryParametersToSwapState(chainId: ChainId, parsedQs: ParsedQs)
     recipient: validatedRecipient(parsedQs.recipient),
     limitPrice: parseTokenAmountURLParameter(parsedQs.exactRate),
     fromBentoBalance: parseBooleanFieldParameter(parsedQs.fromBento),
-    orderExpiration: { value: OrderExpiration.never, label: i18n._(t`Never`) },
+    orderExpiration: { value: OrderExpiration.never, label: `Never` },
   }
 }
 

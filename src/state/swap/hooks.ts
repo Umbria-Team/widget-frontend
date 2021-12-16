@@ -191,23 +191,23 @@ export function useDerivedSwapInfo(doArcher = false): {
   }
 
   if (!parsedAmount) {
-    inputError = inputError ?? i18n._(t`Enter an amount`)
+    inputError = inputError ?? `Enter an amount`
   }
 
   if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
-    inputError = inputError ?? i18n._(t`Select a token`)
+    inputError = inputError ?? `Select a token`
   }
 
   const formattedTo = isAddress(to)
   if (!to || !formattedTo) {
-    inputError = inputError ?? i18n._(t`Enter a recipient`)
+    inputError = inputError ?? `Enter a recipient`
   } else {
     if (
       BAD_RECIPIENT_ADDRESSES?.[chainId]?.[formattedTo] ||
       (bestTradeExactIn && involvesAddress(bestTradeExactIn, formattedTo)) ||
       (bestTradeExactOut && involvesAddress(bestTradeExactOut, formattedTo))
     ) {
-      inputError = inputError ?? i18n._(t`Invalid recipient`)
+      inputError = inputError ?? `Invalid recipient`
     }
   }
 
@@ -217,7 +217,7 @@ export function useDerivedSwapInfo(doArcher = false): {
   const [balanceIn, amountIn] = [currencyBalances[Field.INPUT], v2Trade?.maximumAmountIn(allowedSlippage)]
 
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
-    inputError = i18n._(t`Insufficient ${amountIn.currency.symbol} balance`)
+    inputError = `Insufficient ${amountIn.currency.symbol} balance`
   }
 
   const swapCalls = useSwapCallArguments(v2Trade, allowedSlippage, to, undefined, doArcher)

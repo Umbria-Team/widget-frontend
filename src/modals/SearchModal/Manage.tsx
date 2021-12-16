@@ -31,13 +31,9 @@ function Manage({
 
   return (
     <div className="flex flex-col max-h-[inherit]">
-      <ModalHeader
-        onClose={onDismiss}
-        title={i18n._(t`Manage`)}
-        onBack={() => setModalView(CurrencyModalView.search)}
-      />
+      <ModalHeader onClose={onDismiss} title={`Manage`} onBack={() => setModalView(CurrencyModalView.search)} />
       <div className="flex p-1 rounded bg-dark-800">
-        {[i18n._(t`Lists`), i18n._(t`Tokens`)].map((title, i) => (
+        {[`Lists`, `Tokens`].map((title, i) => (
           <div
             className={classNames(
               tabIndex === i && 'bg-dark-900 text-high-emphesis',

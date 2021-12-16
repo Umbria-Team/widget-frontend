@@ -182,7 +182,7 @@ export function CurrencySearch({
           <input
             type="text"
             id="token-search-input"
-            placeholder={i18n._(t`Search name or paste address`)}
+            placeholder={`Search name or paste address`}
             autoComplete="off"
             value={searchQuery}
             ref={inputRef as RefObject<HTMLInputElement>}
@@ -222,7 +222,7 @@ export function CurrencySearch({
         </div>
       ) : (
         <Column style={{ padding: '20px', height: '100%' }}>
-          <div className="mb-8 text-center">{i18n._(t`No results found`)}</div>
+          <div className="mb-8 text-center">{`No results found`}</div>
         </Column>
       )}
     </div>

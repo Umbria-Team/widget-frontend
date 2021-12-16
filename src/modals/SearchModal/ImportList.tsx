@@ -68,11 +68,7 @@ function ImportList({ listURL, list, setModalView, onDismiss }: ImportProps) {
 
   return (
     <div>
-      <ModalHeader
-        onClose={onDismiss}
-        title={i18n._(t`Import List`)}
-        onBack={() => setModalView(CurrencyModalView.manage)}
-      />
+      <ModalHeader onClose={onDismiss} title={`Import List`} onBack={() => setModalView(CurrencyModalView.manage)} />
       <div className="px-1 space-y-4">
         <div className="flex flex-row items-center px-4">
           {list.logoURI && <ListLogo logoURI={list.logoURI} size="50px" />}

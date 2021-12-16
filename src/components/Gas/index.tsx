@@ -11,8 +11,8 @@ function Gas() {
     (url) => fetch(url).then((r) => r.json())
   )
 
-  if (error) return <div>{i18n._(t`failed to load`)}</div>
-  if (!data) return <div>{i18n._(t`loading...`)}</div>
+  if (error) return <div>{`failed to load`}</div>
+  if (!data) return <div>{`loading...`}</div>
 
   return <div>{data.average / 10}</div>
 }

@@ -106,7 +106,7 @@ function Web3StatusInner() {
           {hasPendingTransactions ? (
             <div className="flex items-center justify-between">
               <div className="pr-2">
-                {pending?.length} {i18n._(t`Pending`)}
+                {pending?.length} {`Pending`}
               </div>{' '}
               <Loader stroke="white" />
             </div>

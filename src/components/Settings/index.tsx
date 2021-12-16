@@ -56,22 +56,22 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
         <div className="absolute top-14 right-0 z-50 -mr-2.5 min-w-20 md:m-w-22 md:-mr-5 bg-dark-900 border-2 border-dark-800 rounded w-80 shadow-lg">
           <div className="p-4 space-y-4">
             <Typography weight={700} className="text-high-emphesis">
-              {i18n._(t`Transaction Settings`)}
+              {`Transaction Settings`}
             </Typography>
 
             <TransactionSettings placeholderSlippage={placeholderSlippage} />
 
             <Typography className="text-high-emphesis" weight={700}>
-              {i18n._(t`Interface Settings`)}
+              {`Interface Settings`}
             </Typography>
 
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <Typography variant="sm" className="text-primary">
-                  {i18n._(t`Toggle Expert Mode`)}
+                  {`Toggle Expert Mode`}
                 </Typography>
                 <QuestionHelper
-                  text={i18n._(t`Bypasses confirmation modals and allows high slippage trades. Use at your own risk.`)}
+                  text={`Bypasses confirmation modals and allows high slippage trades. Use at your own risk.`}
                 />
               </div>
               <Toggle
@@ -93,9 +93,9 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <Typography variant="sm" className="text-primary">
-                  {i18n._(t`Disable Multihops`)}
+                  {`Disable Multihops`}
                 </Typography>
-                <QuestionHelper text={i18n._(t`Restricts swaps to direct pairs only.`)} />
+                <QuestionHelper text={`Restricts swaps to direct pairs only.`} />
               </div>
               <Toggle
                 id="toggle-disable-multihop-button"
@@ -107,7 +107,7 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <Typography variant="sm" className="text-primary">
-                    {i18n._(t`MEV Shield by Archer DAO`)}
+                    {`MEV Shield by Archer DAO`)}
                   </Typography>
                   <QuestionHelper
                     text={i18n._(
@@ -128,19 +128,19 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
 
       <Modal isOpen={showConfirmation} onDismiss={() => setShowConfirmation(false)}>
         <div className="space-y-4">
-          <ModalHeader title={i18n._(t`Are you sure?`)} onClose={() => setShowConfirmation(false)} />
+          <ModalHeader title={`Are you sure?`} onClose={() => setShowConfirmation(false)} />
           <Typography variant="lg">
-            {i18n._(t`Expert mode turns off the confirm transaction prompt and allows high slippage trades
-                                that often result in bad rates and lost funds.`)}
+            {`Expert mode turns off the confirm transaction prompt and allows high slippage trades
+                                that often result in bad rates and lost funds.`}
           </Typography>
           <Typography variant="sm" className="font-medium">
-            {i18n._(t`ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING.`)}
+            {`ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING.`}
           </Typography>
           <Button
             color="red"
             size="lg"
             onClick={() => {
-              // if (window.prompt(i18n._(t`Please type the word "confirm" to enable expert mode.`)) === 'confirm') {
+              // if (window.prompt(`Please type the word "confirm" to enable expert mode.`)) === 'confirm') {
               //   toggleExpertMode()
               //   setShowConfirmation(false)
               // }
@@ -149,7 +149,7 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
             }}
           >
             <Typography variant="lg" id="confirm-expert-mode">
-              {i18n._(t`Turn On Expert Mode`)}
+              {`Turn On Expert Mode`}
             </Typography>
           </Button>
         </div>

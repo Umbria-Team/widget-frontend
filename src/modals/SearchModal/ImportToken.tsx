@@ -41,9 +41,7 @@ export function ImportToken({ tokens, list, onBack, onDismiss, handleCurrencySel
         title={`Import ${plural(tokens.length, { one: 'Token', many: 'Tokens' })}`}
       />
       <Typography className="text-center">
-        {i18n._(
-          t`This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade.`
-        )}
+        {t`This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade.`}
       </Typography>
       {tokens.map((token) => {
         return (
@@ -84,7 +82,7 @@ export function ImportToken({ tokens, list, onBack, onDismiss, handleCurrencySel
         }}
         className=".token-dismiss-button"
       >
-        {i18n._(t`Import`)}
+        {`Import`}
       </Button>
     </div>
   )

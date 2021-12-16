@@ -54,7 +54,7 @@ export default function Web3ReactManager({ children }: { children: JSX.Element }
     return (
       <div className="flex items-center justify-center h-80">
         <div className="text-secondary">
-          {i18n._(t`Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device`)}
+          {`Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device`}
         </div>
       </div>
     )

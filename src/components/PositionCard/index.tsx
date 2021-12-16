@@ -78,7 +78,7 @@ export function MinimalPositionCard({ pair, showUnwrapped = false, border }: Pos
             </div>
             <div className="flex flex-col w-full p-3 mt-3 space-y-1 text-sm rounded bg-dark-900 text-high-emphesis">
               <div className="flex justify-between">
-                <div>{i18n._(t`Your pool share`)}</div>
+                <div>{`Your pool share`}</div>
                 <div className="font-bold">{poolTokenPercentage ? poolTokenPercentage.toFixed(6) + '%' : '-'}</div>
               </div>
               <div className="flex justify-between">
@@ -166,11 +166,11 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
         <div className="flex items-center space-x-4">
           <DoubleCurrencyLogo currency0={currency0} currency1={currency1} size={40} />
           <div className="text-xl font-semibold">
-            {!currency0 || !currency1 ? <Dots>{i18n._(t`Loading`)}</Dots> : `${currency0.symbol}/${currency1.symbol}`}
+            {!currency0 || !currency1 ? <Dots>{`Loading`}</Dots> : `${currency0.symbol}/${currency1.symbol}`}
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          {i18n._(t`Manage`)}
+          {`Manage`}
           {showMore ? (
             <ChevronUpIcon width="20px" height="20px" className="ml-4" />
           ) : (
@@ -191,17 +191,17 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
         <div className="p-4 space-y-4">
           <div className="px-4 py-4 space-y-1 text-sm rounded text-high-emphesis bg-dark-900">
             <div className="flex items-center justify-between">
-              <div>{i18n._(t`Your total pool tokens`)}:</div>
+              <div>{`Your total pool tokens`}:</div>
               <div className="font-semibold">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</div>
             </div>
             {stakedBalance && (
               <div className="flex items-center justify-between">
-                <div>{i18n._(t`Pool tokens in rewards pool`)}:</div>
+                <div>{`Pool tokens in rewards pool`}:</div>
                 <div className="font-semibold">{stakedBalance.toSignificant(4)}</div>
               </div>
             )}
             <div className="flex items-center justify-between">
-              <div>{i18n._(t`Pooled ${currency0?.symbol}`)}:</div>
+              <div>{`Pooled ${currency0?.symbol}`}:</div>
               {token0Deposited ? (
                 <div className="flex items-center space-x-2">
                   <div className="font-semibold">{token0Deposited?.toSignificant(6)}</div>
@@ -213,7 +213,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
             </div>
 
             <div className="flex items-center justify-between">
-              <div>{i18n._(t`Pooled ${currency1?.symbol}`)}:</div>
+              <div>{`Pooled ${currency1?.symbol}`}:</div>
               {token1Deposited ? (
                 <div className="flex items-center space-x-2">
                   <div className="font-semibold ">{token1Deposited?.toSignificant(6)}</div>
@@ -225,7 +225,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
             </div>
 
             <div className="flex items-center justify-between">
-              <div>{i18n._(t`Your pool share`)}:</div>
+              <div>{`Your pool share`}:</div>
               <div className="font-semibold">
                 {poolTokenPercentage
                   ? (poolTokenPercentage.toFixed(2) === '0.00' ? '<0.01' : poolTokenPercentage.toFixed(2)) + '%'
@@ -241,7 +241,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                   router.push(`/add/${currencyId(currency0)}/${currencyId(currency1)}`)
                 }}
               >
-                {i18n._(t`Add`)}
+                {`Add`}
               </Button>
               <Button
                 color="blue"
@@ -249,7 +249,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                   router.push(`/remove/${currencyId(currency0)}/${currencyId(currency1)}`)
                 }}
               >
-                {i18n._(t`Remove`)}
+                {`Remove`}
               </Button>
             </div>
           )}

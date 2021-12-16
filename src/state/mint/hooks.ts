@@ -191,25 +191,25 @@ export function useDerivedMintInfo(
 
   let error: string | undefined
   if (!account) {
-    error = i18n._(t`Connect Wallet`)
+    error = `Connect Wallet`
   }
 
   if (pairState === PairState.INVALID) {
-    error = error ?? i18n._(t`Invalid pair`)
+    error = error ?? `Invalid pair`
   }
 
   if (!parsedAmounts[Field.CURRENCY_A] || !parsedAmounts[Field.CURRENCY_B]) {
-    error = error ?? i18n._(t`Enter an amount`)
+    error = error ?? `Enter an amount`
   }
 
   const { [Field.CURRENCY_A]: currencyAAmount, [Field.CURRENCY_B]: currencyBAmount } = parsedAmounts
 
   if (currencyAAmount && currencyBalances?.[Field.CURRENCY_A]?.lessThan(currencyAAmount)) {
-    error = i18n._(t`Insufficient ${currencies[Field.CURRENCY_A]?.symbol} balance`)
+    error = `Insufficient ${currencies[Field.CURRENCY_A]?.symbol} balance`
   }
 
   if (currencyBAmount && currencyBalances?.[Field.CURRENCY_B]?.lessThan(currencyBAmount)) {
-    error = i18n._(t`Insufficient ${currencies[Field.CURRENCY_B]?.symbol} balance`)
+    error = `Insufficient ${currencies[Field.CURRENCY_B]?.symbol} balance`
   }
 
   return {

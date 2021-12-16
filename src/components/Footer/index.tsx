@@ -25,7 +25,7 @@ const Footer = () => {
             className="text-low-emphesis"
           >
             <div className="flex items-center space-x-2">
-              <div>{i18n._(t`Analytics`)}</div>
+              <div>{`Analytics`}</div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-6 h-6"

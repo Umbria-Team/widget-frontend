@@ -23,7 +23,7 @@ export default function SwapModalFooter({
     <div className="p-6 mt-0 -m-6 rounded bg-dark-800">
       {/* <div className="grid gap-1 pb-6">
         <div className="flex items-center justify-between">
-          <div className="text-sm text-secondary">{i18n._(t`Price`)}</div>
+          <div className="text-sm text-secondary">{`Price`)}</div>
           <div className="text-sm font-bold justify-center items-center flex right-align pl-1.5 text-high-emphesis">
             {formatExecutionPrice(trade, showInverted, chainId)}
             <StyledBalanceMaxMini
@@ -36,8 +36,8 @@ export default function SwapModalFooter({
         <div className="flex items-center justify-between">
           <div className="text-sm text-secondary">
             {trade.tradeType === TradeType.EXACT_INPUT
-              ? i18n._(t`Minimum received`)
-              : i18n._(t`Maximum sold`)}
+              ? `Minimum received`)
+              : `Maximum sold`)}
             <QuestionHelper
               text={i18n._(
                 t`Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.`
@@ -58,7 +58,7 @@ export default function SwapModalFooter({
         <div className="flex items-center justify-between">
           <div className="text-sm text-secondary">
             <div className="text-sm">
-              {i18n._(t`Price Impact`)}
+              {`Price Impact`)}
               <QuestionHelper
                 text={i18n._(
                   t`The difference between the market price and your price due to trade size.`
@@ -70,7 +70,7 @@ export default function SwapModalFooter({
         </div>
         <div className="flex items-center justify-between">
           <div className="text-sm text-secondary">
-            <div className="text-sm">{i18n._(t`Liquidity Provider Fee`)}</div>
+            <div className="text-sm">{`Liquidity Provider Fee`)}</div>
           </div>
           <div className="text-sm font-bold justify-center items-center flex right-align pl-1.5 text-high-emphesis">
             {realizedLPFee
@@ -83,7 +83,7 @@ export default function SwapModalFooter({
         {archerETHTip && (
           <div className="flex items-center justify-between">
             <div className="text-sm text-secondary">
-              <div className="text-sm">{i18n._(t`Miner Tip`)}</div>
+              <div className="text-sm">{`Miner Tip`)}</div>
             </div>
             <div className="text-sm font-bold justify-center items-center flex right-align pl-1.5 text-high-emphesis">
               {Ether.fromRawAmount(archerETHTip).toFixed(4)} ETH
@@ -98,7 +98,7 @@ export default function SwapModalFooter({
         id="confirm-swap-or-send"
         className="text-xl font-semibold"
       >
-        {i18n._(t`Confirm Bridge`)}
+        {`Confirm Bridge`}
       </ButtonError>
 
       {swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}

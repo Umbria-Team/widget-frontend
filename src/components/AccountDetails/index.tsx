@@ -112,12 +112,12 @@ const AccountDetails: FC<AccountDetailsProps> = ({
                   startIcon={<LinkIcon size={16} />}
                   href={chainId && getExplorerLink(chainId, ENSName || account, 'address')}
                 >
-                  <Typography variant="sm">{i18n._(t`View on explorer`)}</Typography>
+                  <Typography variant="sm">{`View on explorer`}</Typography>
                 </ExternalLink>
               )}
               {account && (
                 <Copy toCopy={account}>
-                  <Typography variant="sm">{i18n._(t`Copy Address`)}</Typography>
+                  <Typography variant="sm">{`Copy Address`}</Typography>
                 </Copy>
               )}
             </div>
@@ -126,10 +126,10 @@ const AccountDetails: FC<AccountDetailsProps> = ({
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <Typography weight={700}>{i18n._(t`Recent Transactions`)}</Typography>
+          <Typography weight={700}>{`Recent Transactions`}</Typography>
           <div>
             <Button variant="outlined" color="gray" size="xs" onClick={clearAllTransactionsCallback}>
-              {i18n._(t`Clear all`)}
+              {`Clear all`}
             </Button>
           </div>
         </div>
@@ -140,7 +140,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({
           </>
         ) : (
           <Typography variant="sm" className="text-secondary">
-            {i18n._(t`Your transactions will appear here...`)}
+            {`Your transactions will appear here...`}
           </Typography>
         )}
       </div>

@@ -37,7 +37,7 @@ export default function TransactionList({ transactions }) {
     </div>
   ) : (
     <div className="px-4 text-center text-gray-500 border border-gray-800 rounded py-14">
-      <Dots>{i18n._(t`Loading`)}</Dots>
+      <Dots>{`Loading`}</Dots>
     </div>
   )
 }

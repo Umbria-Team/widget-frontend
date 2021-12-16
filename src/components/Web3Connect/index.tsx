@@ -20,7 +20,7 @@ export default function Web3Connect({ color = 'gray', size = 'sm', className = '
       <div className="mr-1">
         <Activity className="w-4 h-4" />
       </div>
-      {error instanceof UnsupportedChainIdError ? i18n._(t`You are on the wrong network`) : i18n._(t`Error`)}
+      {error instanceof UnsupportedChainIdError ? `You are on the wrong network` : `Error`}
     </div>
   ) : (
     <Button
@@ -32,7 +32,7 @@ export default function Web3Connect({ color = 'gray', size = 'sm', className = '
       size={size}
       {...rest}
     >
-      {i18n._(t`Connect to a wallet`)}
+      {`Connect to a wallet`}
     </Button>
   )
 }

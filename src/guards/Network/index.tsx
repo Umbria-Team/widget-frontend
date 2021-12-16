@@ -22,7 +22,7 @@ const Component: FC<NetworkGuardProps> = ({ children, networks = [] }) => {
 
   const link = (
     <NavLink href="/swap">
-      <a className="text-blue focus:outline-none">{i18n._(t`home page`)}</a>
+      <a className="text-blue focus:outline-none">{`home page`}</a>
     </NavLink>
   )
 
@@ -31,7 +31,7 @@ const Component: FC<NetworkGuardProps> = ({ children, networks = [] }) => {
       <HeadlessUIModal isOpen={!!account && !networks.includes(chainId)} onDismiss={() => null}>
         <div className="flex flex-col gap-7 justify-center">
           <Typography variant="h1" className="max-w-2xl text-white text-center" weight={700}>
-            {i18n._(t`Roll it back - this feature is not yet supported on ${NETWORK_LABEL[chainId]}.`)}
+            {`Roll it back - this feature is not yet supported on ${NETWORK_LABEL[chainId]}.`}
           </Typography>
           <Typography className="text-center">
             <Trans
@@ -41,7 +41,7 @@ const Component: FC<NetworkGuardProps> = ({ children, networks = [] }) => {
             />
           </Typography>
           <Typography className="uppercase text-white text-center text-lg tracking-[.2rem]" weight={700}>
-            {i18n._(t`Available Networks`)}
+            {`Available Networks`}
           </Typography>
           <div
             className={`grid gap-5 md:gap-10 md:grid-cols-[${Math.min(6, networks.length)}] grid-cols-[${Math.min(

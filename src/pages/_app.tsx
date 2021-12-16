@@ -73,7 +73,7 @@ function MyApp({
 
   useEffect(() => {
     async function load(locale) {
-      i18n.loadLocaleData(locale, { plurals: plurals[locale.split('_')[0]] })
+      //i18n.loadLocaleData(locale, { plurals: plurals[locale.split('_')[0]] })
 
       try {
         // Load messages from AWS, use q session param to get latest version from cache
@@ -81,14 +81,14 @@ function MyApp({
         const remoteMessages = await resp.json()
 
         const messages = remoteLoader({ messages: remoteMessages, format: 'minimal' })
-        i18n.load(locale, messages)
+        //i18n.load(locale, messages)
       } catch {
         // Load fallback messages
         const { messages } = await import(`@lingui/loader!./../../locale/${locale}.json?raw-lingui`)
-        i18n.load(locale, messages)
+        //i18n.load(locale, messages)
       }
 
-      i18n.activate(locale)
+      //i18n.activate(locale)
     }
 
     load(locale)

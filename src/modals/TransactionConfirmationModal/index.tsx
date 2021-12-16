@@ -38,10 +38,10 @@ export const ConfirmationPendingContent: FC<ConfirmationPendingContentProps> = (
         <Lottie animationData={loadingRollingCircle} autoplay loop />
       </div>
       <div className="flex flex-col items-center justify-center gap-3">
-        <div className="text-xl font-bold text-high-emphesis">{i18n._(t`Waiting for Confirmation`)}</div>
+        <div className="text-xl font-bold text-high-emphesis">{`Waiting for Confirmation`}</div>
         <div className="font-bold">{pendingText}</div>
         <div className="font-bold">{pendingText2}</div>
-        <div className="text-sm font-bold text-secondary">{i18n._(t`Confirm this transaction in your wallet`)}</div>
+        <div className="text-sm font-bold text-secondary">{`Confirm this transaction in your wallet`}</div>
       </div>
     </div>
   )
@@ -73,7 +73,7 @@ export const TransactionSubmittedContent: FC<TransactionSubmittedContentProps> =
         <ArrowUpCircle strokeWidth={0.5} size={90} className="text-blue" />
       </div>
       <div className="flex flex-col items-center justify-center gap-1">
-        <div className="text-xl font-bold">{i18n._(t`Transaction Submitted`)}</div>
+        <div className="text-xl font-bold">{`Transaction Submitted`}</div>
         {chainId && hash && (
           <ExternalLink href={getExplorerLink(chainId, hash, 'transaction')}>
             <div className="font-bold text-blue">View on explorer</div>
@@ -121,7 +121,7 @@ export const TransactionErrorContent: FC<TransactionErrorContentProps> = ({ mess
     <div className="grid gap-6">
       <div>
         <div className="flex justify-between">
-          <div className="text-lg font-medium text-high-emphesis">{i18n._(t`Error`)}</div>
+          <div className="text-lg font-medium text-high-emphesis">{`Error`}</div>
           <CloseIcon onClick={onDismiss} />
         </div>
         <div className="flex flex-col items-center justify-center gap-3">

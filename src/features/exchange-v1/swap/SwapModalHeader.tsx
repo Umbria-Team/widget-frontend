@@ -145,7 +145,7 @@ export default function SwapModalHeader({
       {recipient !== null ? (
         <div className="flex-start">
           <>
-            {i18n._(t`Output will be sent to`)}{' '}
+            {`Output will be sent to`}{' '}
             <b title={recipient}>{isAddress(recipient) ? shortenAddress(recipient) : recipient}</b>
           </>
         </div>

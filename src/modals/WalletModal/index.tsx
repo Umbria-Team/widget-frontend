@@ -206,18 +206,18 @@ export default function WalletModal({
       return (
         <div>
           <ModalHeader
-            title={error instanceof UnsupportedChainIdError ? i18n._(t`Wrong Network`) : i18n._(t`Error connecting`)}
+            title={error instanceof UnsupportedChainIdError ? `Wrong Network` : `Error connecting`}
             onClose={toggleWalletModal}
           />
           <div>
             {error instanceof UnsupportedChainIdError ? (
-              <h5>{i18n._(t`Please connect to the appropriate Ethereum network.`)}</h5>
+              <h5>{`Please connect to the appropriate Ethereum network.`}</h5>
             ) : (
-              i18n._(t`Error connecting. Try refreshing the page.`)
+              `Error connecting. Try refreshing the page.`
             )}
             <div style={{ marginTop: '1rem' }} />
             <ButtonError error={true} size="sm" onClick={deactivate}>
-              {i18n._(t`Disconnect`)}
+              {`Disconnect`}
             </ButtonError>
           </div>
         </div>

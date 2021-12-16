@@ -132,15 +132,15 @@ export function useDerivedBurnInfo(
 
   let error: string | undefined
   if (!account) {
-    error = i18n._(t`Connect Wallet`)
+    error = `Connect Wallet`
   }
 
   if (!parsedAmounts[Field.LIQUIDITY] || !parsedAmounts[Field.CURRENCY_A] || !parsedAmounts[Field.CURRENCY_B]) {
-    error = error ?? i18n._(t`Enter an amount`)
+    error = error ?? `Enter an amount`
   }
 
   if (parsedAmounts[Field.CURRENCY_A]?.equalTo(ZERO) && parsedAmounts[Field.CURRENCY_B]?.equalTo(ZERO)) {
-    error = error ?? i18n._(t`Insufficient SLP balance`)
+    error = error ?? `Insufficient SLP balance`
   }
 
   return { pair, parsedAmounts, error, userLiquidity }

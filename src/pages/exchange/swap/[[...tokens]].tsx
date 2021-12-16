@@ -540,7 +540,7 @@ export default function Swap() {
           <div>
             <CurrencyInputPanel
               // priceImpact={priceImpact}
-              label={independentField === Field.OUTPUT && !showWrap ? i18n._(t`Swap From (est.):`) : i18n._(t`Asset:`)}
+              label={independentField === Field.OUTPUT && !showWrap ? `Swap From (est.):` : `Asset:`}
               value={formattedAmounts[Field.INPUT]}
               showMaxButton={showMaxButton}
               currency={currencies[Field.INPUT]}
@@ -559,18 +559,14 @@ export default function Swap() {
           <BottomGrouping>
             {swapIsUnsupported ? (
               <Button color="red" size="lg" disabled>
-                {i18n._(t`Unsupported Asset`)}
+                {`Unsupported Asset`}
               </Button>
             ) : !account ? (
               <Web3Connect size="lg" color="blue" className="w-full" />
             ) : showWrap ? (
               <Button color="gradient" size="lg" disabled={Boolean(wrapInputError)} onClick={onWrap}>
                 {wrapInputError ??
-                  (wrapType === WrapType.WRAP
-                    ? i18n._(t`Wrap`)
-                    : wrapType === WrapType.UNWRAP
-                    ? i18n._(t`Unwrap`)
-                    : null)}
+                  (wrapType === WrapType.WRAP ? `Wrap` : wrapType === WrapType.UNWRAP ? `Unwrap` : null)}
               </Button>
             ) : (
               <ButtonError
@@ -590,7 +586,7 @@ export default function Swap() {
                 disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
                 error={isValid && priceImpactSeverity > 2 && !swapCallbackError}
               >
-                {swapInputError ? i18n._(t`Bridge`) : i18n._(t`Bridge`)}
+                {swapInputError ? `Bridge` : `Bridge`}
               </ButtonError>
             )}
             {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}

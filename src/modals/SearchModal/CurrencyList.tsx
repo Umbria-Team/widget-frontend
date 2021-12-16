@@ -160,12 +160,12 @@ function BreakLineComponent({ style }: { style: CSSProperties }) {
         <RowFixed>
           <TokenListLogoWrapper src="/tokenlist.svg" />
           <Typography variant="sm" className="ml-3">
-            {i18n._(t`Expanded results from inactive Token Lists`)}
+            {`Expanded results from inactive Token Lists`}
           </Typography>
         </RowFixed>
         <QuestionHelper
-          text={i18n._(t`Tokens from inactive lists. Import specific tokens below or
-            click Manage to activate more lists.`)}
+          text={`Tokens from inactive lists. Import specific tokens below or
+            click Manage to activate more lists.`}
         />
       </RowBetween>
     </FixedContentRow>
@@ -203,7 +203,7 @@ export default function CurrencyList({
   const Row = useCallback(
     function TokenRow({ data, index, style }) {
       const row: Currency | BreakLine = data[index]
-      
+
       if (isBreakLine(row)) {
         return <BreakLineComponent style={style} />
       }
@@ -215,7 +215,6 @@ export default function CurrencyList({
       const handleSelect = () => currency && onCurrencySelect(currency)
 
       const token = currency?.wrapped
-
 
       const showImport = index > currencies.length
 

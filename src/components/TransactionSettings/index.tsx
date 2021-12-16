@@ -91,13 +91,11 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
       <div className="grid gap-2">
         <div className="flex items-center">
           <Typography variant="sm" className="text-high-emphesis">
-            {i18n._(t`Slippage tolerance`)}
+            {`Slippage tolerance`}
           </Typography>
 
           <QuestionHelper
-            text={i18n._(
-              t`Your transaction will revert 23if the price changes unfavorably by more than this percentage.`
-            )}
+            text={`Your transaction will revert 23if the price changes unfavorably by more than this percentage.`}
           />
         </div>
         <div className="flex items-center space-x-2">
@@ -148,7 +146,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               parseSlippageInput('')
             }}
           >
-            {i18n._(t`Auto`)}
+            {`Auto`}
           </Button>
         </div>
         {slippageError || tooLow || tooHigh ? (
@@ -161,10 +159,10 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
           >
             <div>
               {slippageError === SlippageError.InvalidInput
-                ? i18n._(t`Enter a valid slippage percentage`)
+                ? `Enter a valid slippage percentage`
                 : slippageError === SlippageError.RiskyLow
-                ? i18n._(t`Your transaction may fail`)
-                : i18n._(t`Your transaction may be frontrun`)}
+                ? `Your transaction may fail`
+                : `Your transaction may be frontrun`}
             </div>
           </Typography>
         ) : null}
@@ -173,10 +171,10 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
       <div className="grid gap-2">
         <div className="flex items-center">
           <Typography variant="sm" className="text-high-emphesis">
-            {i18n._(t`Transaction deadline`)}
+            {`Transaction deadline`}
           </Typography>
 
-          <QuestionHelper text={i18n._(t`Your transaction will revert if it is pending for more than this long.`)} />
+          <QuestionHelper text={`Your transaction will revert if it is pending for more than this long.`} />
         </div>
         <div className="flex items-center">
           <div
@@ -202,7 +200,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               color={deadlineError ? 'red' : ''}
             />
           </div>
-          <Typography variant="sm">{i18n._(t`minutes`)}</Typography>
+          <Typography variant="sm">{`minutes`}</Typography>
         </div>
       </div>
     </div>
