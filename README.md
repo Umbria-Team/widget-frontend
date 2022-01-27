@@ -19,7 +19,9 @@ Please ensure you are using npm v6.14.15 and NodeJS v14.18.0
 To easily manage different versions of NPM and NodeJS, we recommend using [Node Version Manager (NVM)](https://github.com/nvm-sh/nvm/blob/master/README.md). For a package manager, we recommend using yarn. You can install by typing
 
 `yarn install`
+
 `yarn build`
+
 `yarn dev`
 
 This will spin up a development server that allows you to live-edit code and have it re-build on the fly
