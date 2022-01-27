@@ -13,6 +13,11 @@ locales/*
 locales
 public/*
 
+html/*
+html/
+html
+
+
 
 npm-debug.log*
 yarn-debug.log*
