@@ -19,9 +19,13 @@ Under the hood, our bridge is fairly simple. When a user sends funds to one of o
 `0x4103c267Fba03A1Df4fe84Bc28092d629Fa3f422` (Ethereum <-> Polygon)
 We are currently in the process of adding Binance Smart Chain.
 
-Before sending, this codebase calls a numer of our back-end APIs to ensure that a transaction is supported (i.e. we have enough liquidity, it is a supported asset and the bridge is not under maintenance). In order to use these APIs, a key will be required on a per-project / per-domain basis to prevent abuse. You can get one of these by requesting it on our [discord](https://discord.umbria.network/)
+Before sending, this codebase calls a numer of our back-end APIs to ensure that a transaction is supported (i.e. we have enough liquidity, it is a supported asset and the bridge is not under maintenance).
 
 After a user makes a payment is made and confirmed and our oracle detects the payment, the same amount (minus a fee) is sent back from our bridge wallet address back to the same address the payment was work, but on the other network. The fee is used to pay our liquidity providers, as well as the gas fee for us to send the transaction to the user.
+
+## Deploying to production
+
+In order to deploy to public, we recommend using the `yarn export` script. This creates a self-contained production ready version of the bridge in the "out" folder that can be deployed either to s3, or another web server of your choice (i.e. apache or nginx).
 
 ## Support
 

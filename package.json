@@ -12,7 +12,8 @@
     "lingui": "lingui extract --clean --overwrite && lingui compile",
     "lokalise": "lokalise2 --config lokalise.yaml file download --format po --unzip-to . --original-filenames=false",
     "circular": "madge --circular src --extensions ts,tsx,js,jsx",
-    "export": "yarn build; ./node_modules/.bin/next export",
+    "export": "./node_modules/.bin/next export; yarn setup-index",
+    "setup-index": "cp ./out/exchange/swap/[[...tokens]].html ./out/index.html",
     "unused": "next-unused",
     "prepare": "husky install",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}'"

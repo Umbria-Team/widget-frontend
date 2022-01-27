@@ -34,7 +34,7 @@ function Web3Network(): JSX.Element | null {
           onClick={() => toggleWalletModal()}
         >
           <span className="text-primary">
-            Please connect an account before selecting which networks to bridge accross
+            Please connect an account before selecting which networks to bridge across
           </span>
         </div>
         <NetworkModel />

@@ -7,8 +7,8 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { Web3Provider } from '@ethersproject/providers'
 
 const RPC = {
-  [ChainId.MAINNET]: 'https://rpc.umbria.network/eth',
-  [ChainId.MATIC]: 'https://rpc.umbria.network/matic',
+  [ChainId.MAINNET]: 'https://public-rpc-eth.umbria.network/',
+  [ChainId.MATIC]: 'https://public-rpc-matic.umbria.network/',
   [ChainId.BSC]: 'https://rpc.umbria.network/bsc',
 }
 
