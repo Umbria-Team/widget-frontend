@@ -84,7 +84,7 @@ export default function ConfirmSwapModal({
   }, [onConfirm, showAcceptChanges, swapErrorMessage, trade])
 
   // text to show while loading
-  const pendingText = ''
+  const pendingText = 'Loading, please wait'
 
   const pendingText2 = ''
   const confirmationContent = useCallback(

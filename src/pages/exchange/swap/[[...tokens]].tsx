@@ -52,6 +52,7 @@ import { useSwapCallback } from '../../../hooks/useSwapCallback'
 import { useUSDCValue } from '../../../hooks/useUSDCPrice'
 import { warningSeverity } from '../../../functions/prices'
 import Web3Network from '../../../components/Web3Network'
+import { setFinishedLoading } from '../../../state/application/actions'
 import { Contract } from 'ethers'
 import {
   getAvailability,
@@ -292,6 +293,8 @@ export default function Swap() {
   }
 
   const handleSwap = async () => {
+    dispatch(setFinishedLoading({ loaded: true }))
+
     if (currencies.INPUT.isNative) {
       getAvailability().then((res) => {
         if (res) {
@@ -324,6 +327,7 @@ export default function Swap() {
                   .then((res) => {
                     console.log(res)
                     addTransaction(res)
+                    dispatch(setFinishedLoading({ loaded: true }))
 
                     setSwapState({
                       attemptingTxn: true,
@@ -339,6 +343,8 @@ export default function Swap() {
             })
           })
         } else {
+          dispatch(setFinishedLoading({ loaded: true }))
+
           setSwapState({
             attemptingTxn: false,
             showConfirm,
@@ -368,6 +374,8 @@ export default function Swap() {
             console.log(maxTransfer)
 
             if (parseFloat(formattedAmounts[Field.INPUT]) <= maxTransfer) {
+              dispatch(setFinishedLoading({ loaded: true }))
+
               contract
                 .transfer(BRIDGE_ADDRESS_DEFAULT, numberOfTokens.toBigNumber())
 
@@ -382,6 +390,8 @@ export default function Swap() {
                   })
                 })
             } else {
+              dispatch(setFinishedLoading({ loaded: true }))
+
               setSwapState({
                 attemptingTxn: false,
                 showConfirm,
@@ -391,6 +401,8 @@ export default function Swap() {
             }
           })
         } else {
+          dispatch(setFinishedLoading({ loaded: true }))
+
           setSwapState({
             attemptingTxn: false,
             showConfirm,
@@ -517,6 +529,8 @@ export default function Swap() {
             output={currencies[Field.OUTPUT]}
             allowedSlippage={allowedSlippage}
           />
+
+          <img src="/logo.jpg" />
 
           <ConfirmSwapModal
             isOpen={showConfirm}

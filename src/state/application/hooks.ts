@@ -34,6 +34,11 @@ export function useSourceChain(): string {
   return sourceChain
 }
 
+export function useFinishedLoading(): boolean {
+  const finishedLoading = useSelector((state: AppState) => state.application.finishedLoading.loaded)
+  return finishedLoading
+}
+
 export function useOutputAmount(): {
   amount: number
   gasFee: number

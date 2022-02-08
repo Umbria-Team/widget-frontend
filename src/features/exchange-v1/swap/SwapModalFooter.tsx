@@ -5,6 +5,7 @@ import { ButtonError } from '../../../components/Button'
 import { SwapCallbackError } from './styleds'
 import { t } from '@lingui/macro'
 import { useLingui } from '@lingui/react'
+import { useFinishedLoading } from '../../../state/application/hooks'
 
 export default function SwapModalFooter({
   trade,
@@ -18,6 +19,8 @@ export default function SwapModalFooter({
   disabledConfirm: boolean
 }) {
   const { i18n } = useLingui()
+
+  var finishedLoading = useFinishedLoading()
 
   return (
     <div className="p-6 mt-0 -m-6 rounded bg-dark-800">
@@ -101,7 +104,8 @@ export default function SwapModalFooter({
         {`Confirm Bridge`}
       </ButtonError>
 
-      {swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
+      {!finishedLoading ? <SwapCallbackError error="Loading..." /> : null}
+      {swapErrorMessage ? <SwapCallbackError error={finishedLoading ? swapErrorMessage : 'Loading...'} /> : null}
     </div>
   )
 }

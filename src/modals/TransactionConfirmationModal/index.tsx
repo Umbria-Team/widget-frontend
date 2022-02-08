@@ -117,25 +117,7 @@ interface TransactionErrorContentProps {
 export const TransactionErrorContent: FC<TransactionErrorContentProps> = ({ message, onDismiss }) => {
   const { i18n } = useLingui()
 
-  return (
-    <div className="grid gap-6">
-      <div>
-        <div className="flex justify-between">
-          <div className="text-lg font-medium text-high-emphesis">{`Error`}</div>
-          <CloseIcon onClick={onDismiss} />
-        </div>
-        <div className="flex flex-col items-center justify-center gap-3">
-          <AlertTriangle className="text-red" style={{ strokeWidth: 1.5 }} size={64} />
-          <div className="font-bold text-red">{message}</div>
-        </div>
-      </div>
-      <div>
-        <Button color="gradient" size="lg" onClick={onDismiss}>
-          Dismiss
-        </Button>
-      </div>
-    </div>
-  )
+  return <div className="grid gap-6"></div>
 }
 
 interface ConfirmationModalProps {
@@ -159,9 +141,7 @@ const TransactionConfirmationModal: FC<ConfirmationModalProps> = ({
 }) => {
   const { chainId } = useActiveWeb3React()
 
-  if (!chainId) return null
-
-  let pendingText = ''
+  let pendingText = 'Loading, please wait'
   let pendingText2 = ''
 
   // confirmation screen

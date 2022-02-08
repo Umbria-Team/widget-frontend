@@ -10,6 +10,7 @@ import {
   updateOutputAmount,
   setSourceChain,
   setDestinationChain,
+  setFinishedLoading,
 } from './actions'
 
 type PopupList = Array<{
@@ -27,6 +28,7 @@ export interface ApplicationState {
   readonly popupList: PopupList
   readonly openModal: ApplicationModal | null
   kashiApprovalPending: string
+  finishedLoading: { loaded: boolean }
 }
 
 const initialState: ApplicationState = {
@@ -37,6 +39,7 @@ const initialState: ApplicationState = {
   destinationChain: { chainId: '' },
   openModal: null,
   kashiApprovalPending: '',
+  finishedLoading: { loaded: false },
 }
 
 export default createReducer(initialState, (builder) =>
@@ -60,6 +63,9 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setOpenModal, (state, action) => {
       state.openModal = action.payload
+    })
+    .addCase(setFinishedLoading, (state, action) => {
+      state.finishedLoading = action.payload.loaded
     })
     .addCase(addPopup, (state, { payload: { content, key, removeAfterMs = 15000 } }) => {
       state.popupList = (key ? state.popupList.filter((popup) => popup.key !== key) : state.popupList).concat([

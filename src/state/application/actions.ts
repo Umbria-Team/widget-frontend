@@ -39,6 +39,10 @@ export const setDestinationChain = createAction<{
   chainId: string
 }>('application/setDestinationChain')
 
+export const setFinishedLoading = createAction<{
+  loaded: boolean
+}>('application/setFinishedLoading')
+
 export const updateOutputAmount = createAction<{
   amount: number
   gasFee: number
