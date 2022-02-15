@@ -49,7 +49,7 @@ export function CurrencySearch({
   showImportView,
   setImportToken,
   currencyList,
-  includeNativeCurrency = true,
+  includeNativeCurrency = false,
   allowManageTokenList = true,
 }: CurrencySearchProps) {
   const { i18n } = useLingui()

@@ -9,7 +9,9 @@ import QuestionHelper from '../../components/QuestionHelper'
 import React from 'react'
 import Typography from '../../components/Typography'
 import { currencyId } from '../../functions'
-
+import { BRIDGE_PAIRS } from '../../config/networks'
+import { useDestinationChain, useSourceChain } from '../../state/application/hooks'
+import { pairIdsQuery } from '../../services/graph/queries'
 export default function CommonBases({
   chainId,
   onSelect,
@@ -19,8 +21,15 @@ export default function CommonBases({
   selectedCurrency?: Currency | null
   onSelect: (currency: Currency) => void
 }) {
-  const bases = typeof chainId !== 'undefined' ? COMMON_BASES[chainId] ?? [] : []
+  var currentPair
 
+  BRIDGE_PAIRS.forEach((pair) => {
+    if (pair.source.toString() == useSourceChain() && pair.destination.toString() == useDestinationChain()) {
+      currentPair = pair.currencies
+    }
+  })
+
+  const bases = typeof chainId !== 'undefined' ? currentPair ?? [] : []
   return (
     <div className="flex flex-col space-y-2">
       <div className="flex flex-row">
@@ -29,7 +38,7 @@ export default function CommonBases({
       </div>
       <div className="flex flex-wrap">
         {bases.map((currency: Currency) => {
-          if(currency.chainId === chainId) {
+          if (currency.chainId.toString() === useSourceChain()) {
             const isSelected = selectedCurrency?.equals(currency)
             return (
               <Button
@@ -47,7 +56,6 @@ export default function CommonBases({
               </Button>
             )
           }
-
         })}
       </div>
     </div>
