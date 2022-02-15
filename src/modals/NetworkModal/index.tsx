@@ -212,9 +212,13 @@ export default function NetworkModal(): JSX.Element | null {
               if (!account) {
                 toggleWalletModal()
               } else {
-                console.log(params)
                 try {
-                  if (params.chainId.toString() != sourceChain) {
+                  if (sourceChain == destinationChain) {
+                    dispatch(setDestinationChain({
+                      chainId: '137'
+                    }))
+                  }
+                  else if (params.chainId.toString() != sourceChain) {
                     library?.send('wallet_addEthereumChain', [params, account]).then((res) => {})
                     library
                       ?.send('wallet_switchEthereumChain', [{ chainId: `0x${pair.source}` }, account])

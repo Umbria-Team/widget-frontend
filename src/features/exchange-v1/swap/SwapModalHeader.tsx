@@ -80,11 +80,11 @@ export default function SwapModalHeader({
         let outputCurrencySymbol = trade.inputAmount.currency.symbol
 
         if (trade.inputAmount.currency.symbol == 'ETH') {
-          outputCurrencySymbol = 'WETH (On Polygon)'
+          outputCurrencySymbol = 'WETH'
         } else if (trade.inputAmount.currency.symbol == 'WETH') {
           outputCurrencySymbol = 'ETH'
         } else if (trade.inputAmount.currency.symbol == 'MATIC') {
-          outputCurrencySymbol = 'WMATIC (On Ethereum)'
+          outputCurrencySymbol = 'WMATIC'
         } else if (trade.inputAmount.currency.symbol == 'WMATIC') {
           outputCurrencySymbol = 'MATIC'
         }

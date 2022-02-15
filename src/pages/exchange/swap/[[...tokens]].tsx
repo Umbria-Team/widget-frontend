@@ -59,17 +59,17 @@ import {
   getSourceChainName,
   getGasToTransfer,
 } from '../../../services/umbria/fetchers/service'
-import { BRIDGE_ADDRESS_DEFAULT, BRIDGE_PAIRS, NETWORK_LABEL } from '../../../config/networks'
+import { NETWORK_LABEL } from '../../../config/networks'
 import { useTransactionAdder } from '../../../state/transactions/hooks'
 import { ERC20_BYTES32_ABI } from '../../../constants/abis/erc20'
 import { updateOutputAmount } from '../../../state/application/actions'
 import { setSourceChain, setDestinationChain } from '../../../state/application/actions'
-
 import { hexlify } from '@ethersproject/bytes'
 
 import cookie from 'cookie-cutter'
 import { useDispatch } from 'react-redux'
 import { getGasInNativeTokenPrice } from '../../../services/umbria/fetchers/service'
+import { getBridgeAddress } from '../../../config/networks'
 export default function Swap() {
   const { i18n } = useLingui()
 
@@ -121,6 +121,8 @@ export default function Swap() {
   const [useArcher] = useUserArcherUseRelay()
   const [archerETHTip] = useUserArcherETHTip()
   const [archerGasPrice] = useUserArcherGasPrice()
+
+  const bridgeAddress = getBridgeAddress()
 
   // archer
   const archerRelay = chainId ? ARCHER_RELAY_URI?.[chainId] : undefined
@@ -277,19 +279,13 @@ export default function Swap() {
     })
   )
 
-  if (chainId.toString() == '1') {
+  if (destinationChain == "") {
     dispatch(
       setDestinationChain({
         chainId: '137',
       })
     )
-  } else {
-    dispatch(
-      setDestinationChain({
-        chainId: '1',
-      })
-    )
-  }
+  } 
 
   const handleSwap = async () => {
     if (currencies.INPUT.isNative) {
@@ -318,7 +314,7 @@ export default function Swap() {
                 library
                   .getSigner()
                   .sendTransaction({
-                    to: BRIDGE_ADDRESS_DEFAULT,
+                    to: bridgeAddress,
                     value: formattedAmounts[Field.INPUT].toBigNumber(),
                   })
                   .then((res) => {
@@ -369,7 +365,7 @@ export default function Swap() {
 
             if (parseFloat(formattedAmounts[Field.INPUT]) <= maxTransfer) {
               contract
-                .transfer(BRIDGE_ADDRESS_DEFAULT, numberOfTokens.toBigNumber())
+                .transfer(bridgeAddress, numberOfTokens.toBigNumber())
 
                 .then((res) => {
                   console.log(res)

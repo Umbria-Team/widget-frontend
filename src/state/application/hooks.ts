@@ -83,6 +83,7 @@ export function useShowClaimPopup(): boolean {
   return useModalOpen(ApplicationModal.CLAIM_POPUP)
 }
 
+
 export function useToggleShowClaimPopup(): () => void {
   return useToggleModal(ApplicationModal.CLAIM_POPUP)
 }

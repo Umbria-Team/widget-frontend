@@ -1,6 +1,7 @@
 import { ChainId } from '@sushiswap/sdk'
 import { ETH2X_FLI } from './tokens'
 import { WNATIVE } from '@sushiswap/sdk'
+import { useDestinationChain } from '../state/application/hooks'
 const Arbitrum = 'https://raw.githubusercontent.com/sushiswap/icons/master/network/arbitrum.jpg'
 const Avalanche = '/images/networks/avalanche-network.jpg'
 const Bsc = '/images/networks/bsc-network.jpg'
@@ -56,6 +57,32 @@ export const BRIDGE_ADDRESS_AVALANCHE = '0xCe473D30bB1DFda0747EdCCDaeb3DE30042cE
 export const BRIDGE_ADDRESS_FANTOM = '0x9021A2F42087bBf1ebB77639e010164BEbd01e37'
 export const BRIDGE_ADDRESS_ETH_MATIC = BRIDGE_ADDRESS_DEFAULT
 export const BRIDGE_ADDRESS_MATIC_ETH = BRIDGE_ADDRESS_DEFAULT
+
+
+export function getBridgeAddress() {
+  let currentNetwork = useDestinationChain()
+
+  if(currentNetwork.toString() == ChainId.MAINNET.toString()) {
+    return BRIDGE_ADDRESS_DEFAULT
+  }
+  else if(currentNetwork.toString() == ChainId.BSC.toString()) {
+    return BRIDGE_ADDRESS_BSC
+  }
+
+  else if(currentNetwork.toString() == ChainId.AVALANCHE.toString()) {
+    return BRIDGE_ADDRESS_AVALANCHE
+  }
+
+  else if(currentNetwork.toString() == ChainId.FANTOM.toString()) {
+    return BRIDGE_ADDRESS_FANTOM
+  }
+
+  else {
+    console.log("not found")
+    return BRIDGE_ADDRESS_DEFAULT
+  }
+
+}
 
 export const BRIDGE_PAIRS = [
   {
